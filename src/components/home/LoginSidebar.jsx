@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { loginAction } from '../../redux/actions/User.action';
-import { closeLoginSidebarAction } from '../../redux/actions/RightSidebar.action';
+import { getLocalStorage, loginInfo } from '../../common/Config';
+import { sidebarAction } from '../../redux/actions/RightSidebar.action';
+
 class LoginSidebar extends Component {
 
     constructor(props) {
@@ -9,10 +11,9 @@ class LoginSidebar extends Component {
         this.state = {
             taiKhoan: '',
             matKhau: '',
+
         }
     }
-
-
 
     handleOnChange = (event) => {
         this.setState({
@@ -25,9 +26,21 @@ class LoginSidebar extends Component {
         this.props.login(this.state);
     }
 
+    closeSidebar = () => {
+        if (getLocalStorage(loginInfo)) {
+            document.getElementById("loginSidebar").setAttribute("style", "display:none");
+        }
+    }
+
+
+    componentDidUpdate() {
+        this.closeSidebar();
+    }
+
     render() {
+        let style = (this.props.Sidebar.isOpenLogin) ? { width: '380px' } : { width: '0' };
         return (
-            <div id="loginSidebar" className="right-sidebar mostly-customized-scrollbar">
+            <div id="loginSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
                 <h4 className="text-center text-white mb-5">Login</h4>
                 <div className="container">
                     <div className="row btn-part mb-5">
@@ -45,7 +58,6 @@ class LoginSidebar extends Component {
                             <button className="btn-form btnLogin">Login</button>
                         </div>
                     </form>
-
                     <div className="notes-part mt-5">
                         <p>Forgot password</p>
                         <p>Create a new acount</p>
@@ -59,15 +71,16 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (user) => {
             dispatch(loginAction(user));
-        }
+        },
+        closeLoginSidebar: (data) => {
+            dispatch(sidebarAction(data))
+        },
     }
 }
 
-const mapStateToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        closeLoginSidebar: (data) => {
-            dispatch(closeLoginSidebarAction(data));
-        }
+        Sidebar: state.RighSideBarStore
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSidebar);

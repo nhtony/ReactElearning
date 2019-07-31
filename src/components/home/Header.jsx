@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { sidebarAction } from '../../redux/actions/RightSidebar.action';
 class Header extends Component {
 
-  isOpenLogin = false;
-  isOpenSignUp = false;
+  loginSidebar = {
+    isOpenLogin: true,
+    isOpenSignUp: false,
+  }
+
+  signUpSidebar = {
+    isOpenLogin: false,
+    isOpenSignUp: true,
+  }
 
   scrollFunction = () => {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -15,42 +22,10 @@ class Header extends Component {
     }
   }
 
-  openSidebar = (signup) => {
-    signup ? document.getElementById("signupSidebar").style.width = "380px" : document.getElementById("loginSidebar").style.width = "380px";
-  }
-
-  closeSidebar = (signup) => {
-    signup ? document.getElementById("signupSidebar").style.width = "0" : document.getElementById("loginSidebar").style.width = "0";
-  }
-
-  openSignUpSidebar = (signup) => {
-    this.isOpenSignUp = !this.isOpenSignUp;
-    if (this.isOpenSignUp) {
-      this.isOpenLogin = false;
-      this.openSidebar(signup); // Mở signUP
-      this.closeSidebar(this.isOpenLogin); // Không mở login
-    }
-    else {
-      this.closeSidebar(signup); // dong signup
-    }
-  }
-
-  openLoginSidebar = (login) => {
-    this.isOpenLogin = !this.isOpenLogin;
-    if (this.isOpenLogin) {
-      this.isOpenSignUp = false;
-      this.openSidebar(login); // Mở login
-      this.closeSidebar(!this.isOpenSignUp); // Không mở signUp
-    }
-    else {
-      this.closeSidebar(login); // Dong login
-    }
-  }
-
   renderSignLogButton = () => {
     return (<li id="login-item" className="nav-item">
-      <button onClick={() => this.openLoginSidebar(false)} className="btn btn-outline-success my-2 my-sm-0 m-4">Login</button>
-      <button onClick={() => this.openSignUpSidebar(true)} className="btn btn-primary">Sign Up</button>
+      <button onClick={() => this.props.openLoginSidebar(this.loginSidebar)} className="btn btn-outline-success my-2 my-sm-0 m-4">Login</button>
+      <button onClick={() => this.props.openSignUpSidebar(this.signUpSidebar)} className="btn btn-primary">Sign Up</button>
     </li>)
   }
 
@@ -100,12 +75,20 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLogin: state.UserReducerStore.isLogin
+    isLogin: state.UserReducerStore.isLogin,
   }
 }
 
-
-
-export default connect(mapStateToProps, null)(Header);
+const DispatchToProps = (dispatch) => {
+  return {
+    openLoginSidebar: (data) => {
+      dispatch(sidebarAction(data))
+    },
+    openSignUpSidebar: (data) => {
+      dispatch(sidebarAction(data))
+    }
+  }
+}
+export default connect(mapStateToProps, DispatchToProps)(Header);
 
 

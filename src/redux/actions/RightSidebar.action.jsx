@@ -1,8 +1,9 @@
 import * as types from '../contants/RightSidebar.contant';
 
-export const closeLoginSidebarAction = (data) => {
+export const sidebarAction = (data) => {
     return {
-        type: types.CLOSE_LOGIN_SIDEBAR,
+        type: types.OPEN_SIDEBAR,
         data
     }
 }
+

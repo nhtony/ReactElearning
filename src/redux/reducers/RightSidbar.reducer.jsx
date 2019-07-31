@@ -1,14 +1,21 @@
 import * as types from '../contants/RightSidebar.contant';
 
-let toggleState = {
-    isOpenLogin = false,
-    isOpenSignUp = false
+let SidebarState = {
+    isOpenLogin: false,
+    isOpenSignUp: false
 }
 
-const RighSideBarStore = (state = toggleState, action) => {
+const RighSideBarStore = (state = SidebarState, action) => {
     switch (action.type) {
-        case types.CLOSE_LOGIN_SIDEBAR:
-            state.isOpenLogin = action.data;
+        case types.OPEN_SIDEBAR:
+            if (action.data.isOpenLogin) {
+                state.isOpenLogin = !state.isOpenLogin;
+                state.isOpenSignUp = false;
+            }
+            if (action.data.isOpenSignUp) {
+                state.isOpenSignUp = !state.isOpenSignUp;
+                state.isOpenLogin = false;
+            }
             return { ...state };
         default:
             return { ...state };

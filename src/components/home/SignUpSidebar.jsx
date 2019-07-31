@@ -26,11 +26,25 @@ class SignUpSidebar extends Component {
     handleOnSubmit = (event) => {
         event.preventDefault();
         this.props.signUp(this.state);
+        this.resetForm();
+    }
+
+    resetForm = () => {
+        this.setState({
+            taiKhoan: '',
+            matKhau: '',
+            hoTen: '',
+            soDT: '',
+            maLoaiNguoiDung: '',
+            maNhom: '',
+            email: ''
+        })
     }
 
     render() {
+        let style = (this.props.Sidebar.isOpenSignUp) ? { width: '380px' } : { width: '0' }
         return (
-            <div id="signupSidebar" className="right-sidebar mostly-customized-scrollbar">
+            <div id="signupSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
                 <h4 className="text-center text-white mb-5">Sign up</h4>
                 <div className="container">
                     <div className="row btn-part mb-5">
@@ -42,16 +56,15 @@ class SignUpSidebar extends Component {
                         </div>
                     </div>
                     <form className="input-part" onSubmit={this.handleOnSubmit}>
-                        <input className="input-form" type="text" placeholder="Username" name="taiKhoan" onChange={this.handleOnChange} />
+                        <input className="input-form" type="text" placeholder="Username" name="taiKhoan" value={this.state.taiKhoan} onChange={this.handleOnChange} />
 
-                        <input className="input-form" type="password" placeholder="Password" name="matKhau" onChange={this.handleOnChange} />
+                        <input className="input-form" type="password" placeholder="Password" name="matKhau" value={this.state.matKhau} onChange={this.handleOnChange} />
 
-                        <input className="input-form" type="text" placeholder="Fullname" name="hoTen" onChange={this.handleOnChange} />
+                        <input className="input-form" type="text" placeholder="Fullname" name="hoTen" value={this.state.hoTen} onChange={this.handleOnChange} />
 
-                        <input className="input-form" type="tel" placeholder="Phone number" name="soDT" onChange={this.handleOnChange} />
+                        <input className="input-form" type="tel" placeholder="Phone number" name="soDT" value={this.state.soDT} onChange={this.handleOnChange} />
 
-                        <input className="input-form" type="email" placeholder="Email" name="email" onChange={this.handleOnChange} />
-
+                        <input className="input-form" type="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange} />
                         <div className="action-part mt-3">
                             <button className="btn-form btnLogin">Sign up</button>
                         </div>
@@ -61,7 +74,6 @@ class SignUpSidebar extends Component {
                     </div>
                 </div>
             </div >
-
         )
     }
 }
@@ -74,4 +86,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(SignUpSidebar);
+const mapStateToProps = (state) => {
+    return {
+        Sidebar: state.RighSideBarStore
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpSidebar);

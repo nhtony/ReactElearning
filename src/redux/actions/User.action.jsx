@@ -51,7 +51,7 @@ const successAlert = () => {
         type: 'success',
         title: 'Sign up success',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
     })
 }
 

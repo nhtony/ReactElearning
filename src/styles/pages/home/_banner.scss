@@ -1,0 +1,91 @@
+.banner {
+  background-image: url("/img/bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 16.7% 0;
+  position: relative;
+  z-index: 1;
+  &::before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  .container {
+    text-align: center;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+    h3 {
+      color: #fff;
+      font-size: 52px;
+      font-size: 2.5rem;
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    p {
+      color: #fff;
+      font-weight: 400;
+      margin: 5px 0 0;
+      padding: 0;
+      font-size: 21px;
+      font-size: 1.3125rem;
+    }
+    form {
+      #custom-search-input {
+        padding: 0;
+        width: 600px;
+        margin: 20px auto 0;
+        position: relative;
+        .input-group {
+          .search {
+            width: 70%;
+            height: 50px;
+            padding-left: 20px;
+            border: 0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -ms-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 16px;
+            font-size: 1rem;
+            color: #333;
+          }
+          .btn_search {
+            position: absolute;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            right: 90px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            font-size: 0.875rem;
+            top: 0;
+            border: 0;
+            padding: 0 25px;
+            height: 50px;
+            cursor: pointer;
+            outline: 0;
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            -ms-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+            background-color: #92278f;
+          }
+        }
+      }
+    }
+  }
+}

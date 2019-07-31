@@ -1,0 +1,63 @@
+@import "styles/base/reset";
+
+@import "styles/helpers/variable";
+@import "styles/helpers/mixin";
+@import "styles/helpers/extend";
+@import "styles/helpers/animation";
+
+// base/normalize
+
+@import "styles/layouts/header";
+@import "styles/layouts/footer";
+
+// Home
+@import "styles/pages/home/banner";
+@import "styles/pages/home/features";
+@import "styles/pages/home/listcourse";
+@import "styles/pages/home/topic";
+@import "styles/pages/home/review";
+
+@import "styles/componets/right-sidebar";
+@import "styles/componets/btn-form";
+@import "styles/componets/input-form";
+@import "styles/componets/scrollbar";
+@import "styles/componets/avatar";
+
+// Admin
+@import "styles/pages/admin/admin-wrapper";
+@import "styles/pages//admin/sidebar";
+
+
+@import "styles/componets/form-admin";
+
+
+
+// .slick-center .course__item{
+//     opacity: 1 !important;
+//     padding: 0 !important;
+//     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+// }
+
+// @media (min-width: 1200px){
+//     .container {
+//         max-width: 1140px;
+//     }
+// }
+
+// @media (min-width: 992px){
+//     .container {
+//         max-width: 960px;
+//     }
+// }
+
+// @media (min-width: 768px){
+//     .container {
+//         max-width: 720px;
+//     }
+// }
+
+// @media (min-width: 576px){
+//     .container {
+//         max-width: 540px;
+//     }
+// }

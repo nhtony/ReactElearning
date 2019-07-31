@@ -1,0 +1,2 @@
+
+export const GET_LIST_COURSE = "GET_LIST_COURSE";

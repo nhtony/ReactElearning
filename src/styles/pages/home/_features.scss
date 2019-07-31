@@ -1,0 +1,27 @@
+.features {
+  background-color: #121921;
+  color: #fff;
+  padding: 30px 0;
+  text-align: center;
+  &__content {
+    width: 80%;
+    margin: 0 auto;
+    ul {
+      list-style: none;
+      li {
+        h4 {
+          font-size: 1.125rem;
+          margin: 0;
+          color: #ffc107;
+          margin: 5px 0;
+        }
+        span {
+          opacity: 0.7;
+        }
+        i {
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}

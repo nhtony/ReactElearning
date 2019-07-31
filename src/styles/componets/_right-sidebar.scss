@@ -1,0 +1,65 @@
+.right-sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 110px;
+  transition: 0.5s;
+  .container {
+    padding: 0 20px;
+    .btn-part {
+      .btnFb {
+        background-color: #3b55e6;
+        &:hover {
+          background-color: #1d3c78;
+        }
+      }
+      .btnGg {
+        background-color: #df4b38;
+        &:hover {
+          background-color: #cc0000;
+        }
+      }
+    }
+    .input-part {
+      input {
+        margin-bottom: 20px;
+        position: relative;
+      }
+    }
+    .action-part {
+      .btnLogin {
+        background-color: #ffdd3c;
+        color: #111;
+        &:hover {
+          background-color: #ffdc47;
+        }
+      }
+    }
+    .notes-part {
+      p {
+        text-align: center;
+        color: #e1e1e2;
+        font-size: 14px;
+        font-weight: 400;
+        cursor: pointer;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .right-sidebar {
+    padding-top: 15px;
+    a {
+      font-size: 18px;
+    }
+  }
+}

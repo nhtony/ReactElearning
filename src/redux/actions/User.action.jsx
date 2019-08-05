@@ -1,6 +1,6 @@
 import * as types from '../contants/User.contant';
 import Axios from 'axios';
-import { API_USER_SIGN_UP, API_USER_LOGIN, token, loginInfo, setLocalStorage } from '../../common/Config';
+import { API_USER_SIGN_UP, API_USER_LOGIN, token, loginInfo, setLocalStorage, API_USER_PROFILE, getLocalStorage } from '../../common/Config';
 import swal from 'sweetalert2';
 
 export const signUpAction = (userInfo) => {
@@ -13,7 +13,7 @@ export const signUpAction = (userInfo) => {
             if (res.data) {
                 successAlert();
             }
-            dispatch({ type: types.USER_SIGN_UP});
+            dispatch({ type: types.USER_SIGN_UP });
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');
         })
@@ -38,9 +38,27 @@ export const loginAction = (userInfo) => {
             if (res.data) {
                 successAlert();
             }
-            dispatch({ type: types.USER_LOGIN,userLogin});
+            dispatch({ type: types.USER_LOGIN, userLogin });
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');
+        })
+    }
+}
+
+export const getProfileAction = (username) => {
+    return (dispatch) => {
+        Axios({
+            method: 'POST',
+            url: API_USER_PROFILE,
+            data: username,
+            headers: {
+                "Authorization": "Bearer  " + getLocalStorage(token)
+            }
+        }).then((res) => {
+            let userProfile = res.data;
+            dispatch({ type: types.USER_PROFILE, userProfile });
+        }).catch((err) => {
+            console.log("TCL: signUpAction -> err", err)
         })
     }
 }

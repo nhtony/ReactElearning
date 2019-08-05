@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
 export default class Sidebar extends Component {
     render() {
         return (
@@ -8,9 +8,9 @@ export default class Sidebar extends Component {
                 <ul className="list-group rounded-0">
                     <li className="dashboard">DASHBOARD</li>
                     <li>
-                        <a href=" ">
+                        <Link to= "/admin/user">
                             <i className="fa fa-user mr-2" /> Quản lý thành viên
-                    </a>
+                    </Link>
                     </li>
                     <li>
                         <a href=" ">

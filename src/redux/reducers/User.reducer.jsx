@@ -8,11 +8,13 @@ let User = {
 const UserReducerStore = (state = User, action) => {
     switch (action.type) {
         case types.USER_SIGN_UP:
-            state = { ...action.user };
             return { ...state };
         case types.USER_LOGIN:
             state.isLogin = true;
             return { ...state };
+        case types.USER_PROFILE:
+            let updateState = { ...state, userProfile: action.userProfile };
+            return updateState;
         default:
             return { ...state };
     }

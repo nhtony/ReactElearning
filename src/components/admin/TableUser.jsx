@@ -20,6 +20,21 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
+import { API_DELETE_USER } from '../../common/Config';
+import { getLocalStorage, token } from '../../common/Config';
+import { findUserAction } from '../../redux/actions/ListUser.action';
+import { connect } from 'react-redux';
+
+const headRows = [
+    { id: 'taiKhoan', numeric: false, disablePadding: true, label: 'Username' },
+    { id: 'hoTen', numeric: false, disablePadding: true, label: 'Name' },
+    { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
+    { id: 'soDt', numeric: true, disablePadding: false, label: 'Phone' },
+    { id: 'setting', numeric: false, disablePadding: true, label: 'Setting' }
+];
+
+let listDelete = [];
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -45,19 +60,11 @@ function getSorting(order, orderBy) {
     return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-const headRows = [
-    { id: 'taiKhoan', numeric: false, disablePadding: true, label: 'Username' },
-    { id: 'hoTen', numeric: true, disablePadding: false, label: 'Name' },
-    { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-    { id: 'soDt', numeric: true, disablePadding: false, label: 'Phone' },
-];
-
 function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
-
     return (
         <TableHead>
             <TableRow>
@@ -131,10 +138,27 @@ const useToolbarStyles = makeStyles(theme => ({
     },
 }));
 
+
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
-
+    function xoa() {
+        listDelete.forEach(username => {
+            Axios({
+                method: 'DELETE',
+                url: API_DELETE_USER + username,
+                headers:
+                {
+                    "Authorization": "Bearer " + getLocalStorage(token)
+                }
+            }).then((res) => {
+                alert(res.data);
+                window.location.reload();
+            }).catch((err) => {
+                alert('Fail !!!');
+            })
+        });
+    }
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -156,7 +180,7 @@ const EnhancedTableToolbar = props => {
             <div className={classes.actions}>
                 {numSelected > 0 ? (
                     <Tooltip title="Delete">
-                        <IconButton aria-label="delete">
+                        <IconButton aria-label="delete" onClick={() => xoa()}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -171,6 +195,7 @@ const EnhancedTableToolbar = props => {
         </Toolbar>
     );
 };
+
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
@@ -204,8 +229,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function EnhancedTable(props) {
-    var rows = props.users;
+
+
+function EnhancedTable(props) {
+    var rows = props.Users;
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -245,8 +272,8 @@ export default function EnhancedTable(props) {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
+        listDelete = newSelected;
     }
 
     function handleChangePage(event, newPage) {
@@ -262,16 +289,30 @@ export default function EnhancedTable(props) {
         setDense(event.target.checked);
     }
 
+    function handleOnchange(event) {
+        let keyWord = event.target.value;
+        props.findtUser(keyWord);
+    }
+
+  
+
     const isSelected = taiKhoan => selected.indexOf(taiKhoan) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-
     return (
         <div className={classes.root}>
             <h1 className="text-center">USER LIST</h1>
-            <div className="action-group d-flex justify-content-end">
-                <Link to="/admin/add-user" className="btnThem btn btn-success mb-3 text-white border-success" type="button">Add User</Link>
+            <div className="action-group mb-4 row">
+                <div className="col-5 input-group">
+                        <input type="text" className="form-control" name="hoTen" placeholder="Name" onChange={handleOnchange} />
+                        <div className="input-group-append">
+                            <span className="btn btn-secondary">Search</span>
+                        </div>
+                </div>
+                <div className="col-7 text-right">
+                    <Link to="/admin/add-user" className="btnThem btn btn-success text-white border-success" type="button">Add User</Link>
+                </div>
             </div>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -300,7 +341,7 @@ export default function EnhancedTable(props) {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={event => handleClick(event, row.taiKhoan)}
+
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -308,7 +349,7 @@ export default function EnhancedTable(props) {
                                             selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">
-                                                <Checkbox
+                                                <Checkbox onClick={event => handleClick(event, row.taiKhoan)}
                                                     checked={isItemSelected}
                                                     inputProps={{ 'aria-labelledby': labelId }}
                                                 />
@@ -316,9 +357,10 @@ export default function EnhancedTable(props) {
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.taiKhoan}
                                             </TableCell>
-                                            <TableCell align="right">{row.hoTen}</TableCell>
-                                            <TableCell align="right">{row.email}</TableCell>
-                                            <TableCell align="right">{row.soDt}</TableCell>
+                                            <TableCell padding="none" >{row.hoTen}</TableCell>
+                                            <TableCell padding="none">{row.email}</TableCell>
+                                            <TableCell align="right" >{row.soDt}</TableCell>
+                                            <TableCell padding="none" ><Link to={"/admin/edit-user/" + row.taiKhoan} className="btn btn-primary">Edit</Link></TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -353,3 +395,20 @@ export default function EnhancedTable(props) {
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        Users: state.UsersReducerStore.Users
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        findtUser: (username) => {
+            dispatch(findUserAction(username))
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);
+
+
+

@@ -2,15 +2,23 @@ import React, { Component } from 'react'
 import Navbar from '../components/admin/Navbar';
 import Sidebar from '../components/admin/Sidebar';
 import Form from '../components/admin/Form';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { getProfileAction } from '../redux/actions/User.action';
 import {Redirect} from 'react-router-dom';
- class AddUser extends Component {
+class EditUser extends Component {
+    componentDidMount() {
+        let param = {
+            TaiKhoan: '',
+        }
+        param.TaiKhoan = this.props.match.params.tk;
+        this.props.getProfile(param);
+    }
     render() {
         let form = {
-            formTitle :'Add Form',
-            status: false,
+            formTitle :'Edit Form',
+            status: true,
         };
-        if(this.props.addSuccess){
+        if(this.props.editSuccess){
             return (<Redirect to="/admin" />)
         }
         return (
@@ -26,9 +34,16 @@ import {Redirect} from 'react-router-dom';
         )
     }
 }
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        addSuccess: state.UsersReducerStore.isSuccess
+        getProfile: (username) => {
+            dispatch(getProfileAction(username));
+        }
     }
 }
-export default connect(mapStateToProps,null)(AddUser)
+const mapStateToProps = (state) => {
+    return {
+        editSuccess: state.UsersReducerStore.isSuccess
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser);

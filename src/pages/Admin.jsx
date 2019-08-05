@@ -17,18 +17,14 @@ class Admin extends Component {
                 <div id="admin-wrapper">
                     <Navbar></Navbar>
                     <section id="admin-content" className="p-3">
-                        <TableUser users={this.props.Users}></TableUser>
+                    <TableUser></TableUser>
                     </section>
                 </div>
             </div>
         )
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        Users: state.UsersReducerStore
-    }
-}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         getListUser: (users) => {
@@ -36,4 +32,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(null, mapDispatchToProps)(Admin);

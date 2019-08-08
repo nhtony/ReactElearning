@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from '../pages/Home';
+import Home from '../pages/home/Home';
 export default class HomeTemplate extends Component {
   render() {
     return (

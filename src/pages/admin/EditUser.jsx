@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Navbar from '../components/admin/Navbar';
-import Sidebar from '../components/admin/Sidebar';
-import Form from '../components/admin/Form';
+import Navbar from '../../components/admin/Navbar';
+import Sidebar from '../../components/admin/Sidebar';
+import FormUser from '../../components/admin/FormUser';
 import { connect } from 'react-redux';
-import { getProfileAction } from '../redux/actions/User.action';
+import { getProfileAction } from '../../redux/actions/User.action';
 import {Redirect} from 'react-router-dom';
 class EditUser extends Component {
     componentDidMount() {
@@ -27,7 +27,7 @@ class EditUser extends Component {
                 <div id="admin-wrapper">
                     <Navbar></Navbar>
                     <section id="admin-content" className="p-3">
-                        <Form form={form}></Form>
+                        <FormUser form={form}></FormUser>
                     </section>
                 </div>
             </div>

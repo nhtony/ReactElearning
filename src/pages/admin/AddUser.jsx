@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Navbar from '../components/admin/Navbar';
-import Sidebar from '../components/admin/Sidebar';
-import Form from '../components/admin/Form';
+import Navbar from '../../components/admin/Navbar';
+import Sidebar from '../../components/admin/Sidebar';
+import FormUser from '../../components/admin/FormUser';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
  class AddUser extends Component {
@@ -19,7 +19,7 @@ import {Redirect} from 'react-router-dom';
                 <div id="admin-wrapper">
                     <Navbar></Navbar>
                     <section id="admin-content" className="p-3">
-                        <Form form={form}></Form>
+                        <FormUser form={form}></FormUser>
                     </section>
                 </div>
             </div>

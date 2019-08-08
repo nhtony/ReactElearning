@@ -1,5 +1,4 @@
 import * as types from '../contants/ListUser.contant';
-
 let list = {
     Users:[],
     isSuccess: false

@@ -1,10 +1,8 @@
 import Axios from 'axios';
-import { API_GET_USER_LIST, API_ADD_USER, API_EDIT_USER,API_FIND_USER_BY_NAME } from '../../common/Config';
+import { API_GET_USER_LIST, API_ADD_USER, API_EDIT_USER, API_FIND_USER_BY_NAME } from '../../common/Config';
 import * as types from '../contants/ListUser.contant';
 import { getLocalStorage, token } from '../../common/Config';
 import swal from 'sweetalert2';
-
-
 export const getListUserAction = () => {
     return (dispatch) => {
         Axios({
@@ -19,14 +17,15 @@ export const getListUserAction = () => {
 }
 
 export const findUserAction = (username) => {
+    let uri = (username) ? API_FIND_USER_BY_NAME + '&tuKhoa=' + username : API_FIND_USER_BY_NAME;
     return (dispatch) => {
         Axios({
             method: 'GET',
-            url: API_FIND_USER_BY_NAME + username
+            url: uri
         }).then((res) => {
             dispatch(findListUser(res.data));
         }).catch((err) => {
-            console.log("TCL: getListUser -> err", err);
+            console.log("TCL: findUserAction -> err", err)
         })
     }
 }
@@ -52,7 +51,7 @@ export const addUserAction = (user) => {
 }
 
 export const editUserAction = (useredit) => {
-  
+
     return (dispatch) => {
         Axios({
             method: 'PUT',
@@ -63,11 +62,12 @@ export const editUserAction = (useredit) => {
                 "Authorization": "Bearer " + getLocalStorage(token)
             }
         }).then((res) => {
+            console.log("TCL: editUserAction -> res", res.data)
             let isSuccess = true;
             successAlert('Edit user success !');
             dispatch({ type: types.EDIT_USER, status: isSuccess });
         }).catch((err) => {
-            swal.fire("Message", 'Edit Fail !', 'error')
+            swal.fire("Message", err.response.data, 'error')
         })
     }
 }

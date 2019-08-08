@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { addUserAction,editUserAction } from '../../redux/actions/ListUser.action';
 
-class Form extends Component {
+class FormUser extends Component {
      
    
     isEdit = this.props.form.status;
@@ -44,21 +44,26 @@ class Form extends Component {
     render() {
         return (
             <div className="container">
-                <form id="contact" onSubmit={this.handleOnSubmit}>
+                <form id="form" onSubmit={this.handleOnSubmit}>
                     <h3>{this.title}</h3>
                     <fieldset>
+                        <label>Username</label>
                         <input disabled={this.isEdit} placeholder="Your username" type="text" tabIndex={1} required autoFocus name="taiKhoan" value={this.state.taiKhoan} onChange={this.handleOnchange} />
                     </fieldset>
                     <fieldset>
+                    <label>Password</label>
                         <input placeholder="Your password" type="password" name="matKhau" value={this.state.matKhau} tabIndex={2} required autoFocus onChange={this.handleOnchange} />
                     </fieldset>
                     <fieldset>
+                    <label>Name</label>
                         <input placeholder="Your name" type="text" name="hoTen" value={this.state.hoTen} tabIndex={3} required autoFocus onChange={this.handleOnchange} />
                     </fieldset>
                     <fieldset>
-                        <input placeholder="Your Phone Number" type="tel" name="soDT" value={this.state.soDT} tabIndex={4} required onChange={this.handleOnchange} />
+                    <label>Phone number</label>
+                        <input placeholder="Your phone number" type="tel" name="soDT" value={this.state.soDT} tabIndex={4} required onChange={this.handleOnchange} />
                     </fieldset>
                     <fieldset>
+                    <label>User type</label>
                         <select tabIndex="{5}" className="form-control" id="userTypes" name="maLoaiNguoiDung" value={this.state.maLoaiNguoiDung} onChange={this.handleOnchange}>
                             <option>User types</option>
                             <option>GV</option>
@@ -66,7 +71,7 @@ class Form extends Component {
                         </select>
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="exampleFormControlSelect2">Group ID</label>
+                        <label htmlFor="exampleFormControlSelect2">Group ID:<span className="pl-2">{this.state.maNhom}</span></label>
                         <select disabled = {this.isEdit} multiple tabIndex={6} className="form-control" name="maNhom" id="exampleFormControlSelect2" onChange={this.handleOnchange}>
                             <option>GP01</option>
                             <option>GP02</option>
@@ -81,7 +86,8 @@ class Form extends Component {
                         </select>
                     </fieldset>
                     <fieldset>
-                        <input placeholder="Your Email Address" type="email" name="email" value={this.state.email} tabIndex={7} required onChange={this.handleOnchange} />
+                    <label>Email</label>
+                        <input placeholder="Your email address" type="email" name="email" value={this.state.email} tabIndex={7} required onChange={this.handleOnchange} />
                     </fieldset>
                     <fieldset>
                         <button name="submit" type="submit" id="contact-submit">Submit</button>
@@ -109,4 +115,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(FormUser);

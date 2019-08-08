@@ -8,14 +8,14 @@ export default class Sidebar extends Component {
                 <ul className="list-group rounded-0">
                     <li className="dashboard">DASHBOARD</li>
                     <li>
-                        <Link to= "/admin/user">
+                        <Link to= "/admin/users">
                             <i className="fa fa-user mr-2" /> Quản lý thành viên
                     </Link>
                     </li>
                     <li>
-                        <a href=" ">
+                        <Link to= "/admin/courses">
                             <i className="fa fa-book mr-2" /> Quản lý khóa học
-                    </a>
+                    </Link>
                     </li>
                     <li>
                         <a href=" ">

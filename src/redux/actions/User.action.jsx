@@ -2,7 +2,7 @@ import * as types from '../contants/User.contant';
 import Axios from 'axios';
 import { API_USER_SIGN_UP, API_USER_LOGIN, token, loginInfo, setLocalStorage, API_USER_PROFILE, getLocalStorage } from '../../common/Config';
 import swal from 'sweetalert2';
-
+import { userLogoutStorage } from '../../common/Config';
 export const signUpAction = (userInfo) => {
     return (dispatch) => {
         Axios({
@@ -35,10 +35,8 @@ export const loginAction = (userInfo) => {
             userLogin.hoTen = res.data.hoTen;
             setLocalStorage(token, res.data.accessToken);
             setLocalStorage(loginInfo, userLogin);
-            if (res.data) {
-                successAlert();
-            }
             dispatch({ type: types.USER_LOGIN, userLogin });
+            successAlert('Sign up success');
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');
         })
@@ -63,11 +61,18 @@ export const getProfileAction = (username) => {
     }
 }
 
-const successAlert = () => {
+export const userLogoutAction = () => {
+    userLogoutStorage();
+    return {
+        type: types.USER_LOG_OUT
+    }
+}
+
+const successAlert = (content) => {
     swal.fire({
         position: 'center',
         type: 'success',
-        title: 'Sign up success',
+        title: content,
         showConfirmButton: false,
         timer: 1000
     })

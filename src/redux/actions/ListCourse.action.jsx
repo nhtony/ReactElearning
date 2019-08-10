@@ -8,7 +8,7 @@ export const getListCourseAction = () => {
     return (dispatch) => {
         Axios({
             method: 'GET',
-            url: API_GET_COURSE_LIST
+            url: API_GET_COURSE_LIST,
         }).then((res) => {
             dispatch(getListCourse(res.data));
         }).catch((err) => {
@@ -67,7 +67,7 @@ export const editCourseAction = (courseedit, fd) => {
             }).then((res) => {
                 console.log("TCL: addCourseAction -> res", res.data)
             }).catch((err) => {
-                swal.fire("Message", err.response.data, 'error')
+                console.log("TCL: editCourseAction -> err", err)
             })
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error')
@@ -85,8 +85,8 @@ export const findCourseAction = (name) => {
             dispatch(findCourse(res.data));
         }).catch((err) => {
             dispatch({
-               type: types.FIND_COURSE,
-               mess: err.response.data,
+                type: types.FIND_COURSE,
+                mess: err.response.data,
             });
         })
     }

@@ -32,9 +32,9 @@ const headRows = [
     { id: 'tenKhoaHoc', numeric: false, disablePadding: true, label: 'Name' },
     { id: 'moTa', numeric: false, disablePadding: true, label: 'Desc' },
     { id: 'luotXem', numeric: false, disablePadding: true, label: 'views' },
-    { id: 'hinhAnh', numeric: false, disablePadding: true, label: 'Img' },
     { id: 'ngayTao', numeric: false, disablePadding: true, label: 'Date' },
-    { id: 'soLuongHocVien', numeric: true, disablePadding: false, label: 'Users' }
+    { id: 'soLuongHocVien', numeric: true, disablePadding: true, label: 'Students' },
+    { id: 'setting', numeric: true, disablePadding: true, label: 'Setting' }
 ];
 
 let listDelete = [];
@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
                 {headRows.map(row => (
                     <TableCell
                         key={row.id}
-                        align={row.numeric ? 'right' : 'left'}
+                        align={row.numeric ? 'center' : 'left'}
                         padding={row.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === row.id ? order : false}
                     >
@@ -176,7 +176,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
-                            Data Table
+                            Courses Table
           </Typography>
                     )}
             </div>
@@ -237,7 +237,6 @@ const useStyles = makeStyles(theme => ({
 
 function EnhancedTable(props) {
     var rows = props.Courses;
-    const pageInfo = props.pageInfo;
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -351,10 +350,13 @@ function EnhancedTable(props) {
                                             <TableCell padding="none">{row.tenKhoaHoc}</TableCell>
                                             <TableCell padding="none" >{row.moTa}</TableCell>
                                             <TableCell padding="none" >{row.luotXem}</TableCell>
-                                            <TableCell padding="none">{row.hinhAnh}</TableCell>
+                                
                                             <TableCell padding="none" >{row.ngayTao}</TableCell>
-                                            <TableCell align="right">{row.soLuongHocVien}</TableCell>
-                                            <TableCell padding="none" ><Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-primary">Edit</Link></TableCell>
+                                            <TableCell align="center">{row.soLuongHocVien}</TableCell>
+                                            <TableCell padding="none" align="center" >
+                                                <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Edit</Link>
+                                                <Link to={"/admin/register-user/" + row.maKhoaHoc} className="btn btn-outline-primary" >Students</Link>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -384,7 +386,7 @@ function EnhancedTable(props) {
 
     return (
         <div className={classes.root}>
-            <h1 className="text-center">{pageInfo.title}</h1>
+            <h1 className="text-center">LIST COURSES </h1>
             <div className="action-group mb-4 row">
                 <div className="col-5 input-group">
                     <input type="text" className="form-control" name="hoTen" placeholder="Name" onChange={handleOnchange} />
@@ -393,7 +395,7 @@ function EnhancedTable(props) {
                     </div>
                 </div>
                 <div className="col-7 text-right">
-                    <Link to="/admin/add-course" className="btnThem btn btn-success text-white border-success" type="button">{pageInfo.btnName}</Link>
+                    <Link to="/admin/add-course" className="btnThem btn btn-success text-white  border-success" type="button">Add Course</Link>
                 </div>
             </div>
             <Paper className={classes.paper}>

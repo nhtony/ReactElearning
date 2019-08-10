@@ -18,6 +18,8 @@ const RighSideBarStore = (state = SidebarState, action) => {
             }
             return { ...state };
         default:
+            state.isOpenSignUp = false;
+            state.isOpenLogin = false;
             return { ...state };
     }
 }

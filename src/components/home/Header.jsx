@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { sidebarAction } from '../../redux/actions/RightSidebar.action';
+import { userLogoutAction } from '../../redux/actions/User.action';
+import { Redirect } from 'react-router-dom';
+
 class Header extends Component {
 
   loginSidebar = {
@@ -32,7 +35,23 @@ class Header extends Component {
   renderLoginAvatar = () => {
     return (<li id="avatar" className="nav-item avatar">
       <img src="./img/avatar.png" alt="" />
+      <ul id="accDropdownMenu" className="dropdown-menu" aria-labelledby="dropdownId">
+        <li className="dropdown-header text-center"><strong>Account</strong></li>
+        <li className="dropdown-item"><i className="fa fa-bell-o" /><span>Updates</span></li>
+        <li className="dropdown-item"><i className="fa fa-envelope-o" /><span >Messages</span></li>
+        <li className="dropdown-item"><i className="fa fa-comment-o" /><span >Comments</span></li>
+        <li className="dropdown-header text-center"><strong>Setting</strong></li>
+        <li className="dropdown-item"><i className="fa fa-user" /><span>Profile</span></li>
+        <li className="dropdown-item"><i className="fa fa-wrench" /><span>Settings</span></li>
+        <li className="dropdown-item"><i className="fa fa-shield" /><span>Log Account</span></li>
+        <li className="dropdown-item" onClick={() => this.logout()}><i className="fa fa-lock" /><span>Log-out</span></li>
+      </ul>
     </li>);
+  }
+
+  logout() {
+    this.props.userLogOut();
+    return (<Redirect to="/home" />)
   }
 
   checkLoginRender = () => {
@@ -86,7 +105,10 @@ const DispatchToProps = (dispatch) => {
     },
     openSignUpSidebar: (data) => {
       dispatch(sidebarAction(data))
-    }
+    },
+    userLogOut: () => {
+      dispatch(userLogoutAction());
+    },
   }
 }
 export default connect(mapStateToProps, DispatchToProps)(Header);

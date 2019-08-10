@@ -11,14 +11,13 @@ class AdminUsers extends Component {
     }
 
     render() {
-        const usersPage  = {title:'USER LIST',btnName:'Add user'};
         return (
             <div className="d-flex justify-content-between">
                 <Sidebar></Sidebar>
                 <div id="admin-wrapper">
                     <Navbar></Navbar>
                     <section id="admin-content" className="p-3">
-                        <TableUser pageInfo={usersPage}></TableUser>
+                        <TableUser></TableUser>
                     </section>
                 </div>
             </div>

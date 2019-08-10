@@ -1,0 +1,32 @@
+#accDropdownMenu {
+  padding: 0;
+  width: 200px;
+  position: absolute;
+  top: 94%;
+  left: 69%;
+  border-radius: 5px;
+  .dropdown-header {
+    background-color: #e4e7ea;
+    border-bottom: 0.2px solid #bdc3c7;
+  }
+  .dropdown-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 0.2px solid #bdc3c7;
+    padding: 5%;
+    span {
+      text-decoration: none;
+      margin-left: 5%;
+      @include text(200, 300, black);
+    }
+    &:hover {
+      background-color: #fdcb6e;
+    }
+  }
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0px;
+  }
+}

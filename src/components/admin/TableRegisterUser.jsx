@@ -13,28 +13,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
-import { API_DELETE_USER } from '../../common/Config';
-import { getLocalStorage, token } from '../../common/Config';
-import { findUserAction } from '../../redux/actions/ListUser.action';
-import { connect } from 'react-redux';
-import swal from 'sweetalert2';
+
 const headRows = [
     { id: 'taiKhoan', numeric: false, disablePadding: true, label: 'Username' },
-    { id: 'hoTen', numeric: false, disablePadding: true, label: 'Name' },
-    { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
-    { id: 'soDt', numeric: true, disablePadding: false, label: 'Phone' },
-    { id: 'setting', numeric: true, disablePadding: false, label: 'Setting' }
+    { id: 'biDanh', numeric: false, disablePadding: true, label: 'Short name' },
+    { id: 'setting', numeric: false, disablePadding: true, label: 'Setting' }
 ];
-
-let listDelete = [];
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -79,7 +66,7 @@ function EnhancedTableHead(props) {
                 {headRows.map(row => (
                     <TableCell
                         key={row.id}
-                        align={row.numeric ? 'center' : 'left'}
+                        align={row.numeric ? 'right' : 'left'}
                         padding={row.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === row.id ? order : false}
                     >
@@ -142,26 +129,6 @@ const useToolbarStyles = makeStyles(theme => ({
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
-    function xoa() {
-        listDelete.forEach(username => {
-            Axios({
-                method: 'DELETE',
-                url: API_DELETE_USER + username,
-                headers:
-                {
-                    "Authorization": "Bearer " + getLocalStorage(token)
-                }
-            }).then((res) => {
-                successAlert(res.data);
-                window.location.reload();
-
-            }).catch((err) => {
-                swal.fire("Message", err.response.data, 'error');
-                window.location.reload();
-
-            })
-        });
-    }
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -175,26 +142,11 @@ const EnhancedTableToolbar = props => {
           </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
-                            Users Table
+                            Unregistered Users Table
           </Typography>
                     )}
             </div>
             <div className={classes.spacer} />
-            <div className={classes.actions}>
-                {numSelected > 0 ? (
-                    <Tooltip title="Delete">
-                        <IconButton aria-label="delete" onClick={() => xoa()}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                ) : (
-                        <Tooltip title="Filter list">
-                            <IconButton aria-label="filter list">
-                                <FilterListIcon />
-                            </IconButton>
-                        </Tooltip>
-                    )}
-            </div>
         </Toolbar>
     );
 };
@@ -234,8 +186,8 @@ const useStyles = makeStyles(theme => ({
 
 
 
-function EnhancedTable(props) {
-    var rows = props.Users;
+export default function EnhancedTable(props) {
+    var rows = [{}];
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -276,7 +228,7 @@ function EnhancedTable(props) {
             );
         }
         setSelected(newSelected);
-        listDelete = newSelected;
+        // listDelete = newSelected;
     }
 
     function handleChangePage(event, newPage) {
@@ -308,17 +260,10 @@ function EnhancedTable(props) {
 
     return (
         <div className={classes.root}>
-            <h1 className="text-center">LIST USERS</h1>
-            <div className="action-group mb-4 row">
-                <div className="col-5 input-group">
-                    <input type="text" className="form-control" name="hoTen" placeholder="Name" onChange={handleOnchange} />
-                    <div className="input-group-append">
-                        <span className="btn btn-secondary">Search</span>
-                    </div>
-                </div>
-                <div className="col-7 text-right">
-                    <Link to="/admin/add-user" className="btnThem btn btn-success text-white border-success" type="button">Add User</Link>
-                </div>
+            <h1 className="text-center">REGISTER USER PAGE</h1>
+            <div className="action-group mb-4 text-right">
+                <Link to="/admin/register-user" className="btnThem btn btn-danger text-white mr-4 border-danger" type="button">Unregister</Link>
+                <Link to="/admin/add-user" className="btnThem btn btn-secondary text-white border-secondary" type="button">Back</Link>
             </div>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -363,13 +308,9 @@ function EnhancedTable(props) {
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.taiKhoan}
                                             </TableCell>
-                                            <TableCell padding="none" >{row.hoTen}</TableCell>
-                                            <TableCell padding="none">{row.email}</TableCell>
-                                            <TableCell align="center" >{row.soDt}</TableCell>
-                                            <TableCell align="center" padding="none" >
-                                                <Link to={"/admin/edit-user/" + row.taiKhoan} className="btn btn-danger mr-4">Edit</Link>
-                                                <Link to="/admin/register-course" className="btn btn-outline-primary" >Courses</Link>
-                                            </TableCell>
+                                            <TableCell padding="none" >{row.biDanh}</TableCell>
+
+                                            <TableCell padding="none" ><Link to={"/admin/edit-user/" + row.taiKhoan} className="btn btn-primary">Register</Link></TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -404,28 +345,8 @@ function EnhancedTable(props) {
         </div>
     );
 }
-const successAlert = (content) => {
-    swal.fire({
-        position: 'center',
-        type: 'success',
-        title: content,
-        showConfirmButton: false,
-        timer: 1000
-    })
-}
-const mapStateToProps = (state) => {
-    return {
-        Users: state.UsersReducerStore.Users
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        findUser: (username) => {
-            dispatch(findUserAction(username))
-        },
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);
+
+
 
 
 

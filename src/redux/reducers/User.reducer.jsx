@@ -15,6 +15,9 @@ const UserReducerStore = (state = User, action) => {
         case types.USER_PROFILE:
             let updateState = { ...state, userProfile: action.userProfile };
             return updateState;
+        case types.USER_LOG_OUT:
+            state.isLogin = false;
+            return { ...state };
         default:
             return { ...state };
     }

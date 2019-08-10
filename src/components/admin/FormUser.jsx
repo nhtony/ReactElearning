@@ -30,6 +30,7 @@ class FormUser extends Component {
     handleOnSubmit = (event) => {
         event.preventDefault();
         if(this.isEdit){
+            console.log(this.state);
             this.props.editUser(this.state);
         }
         else{

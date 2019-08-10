@@ -11,13 +11,13 @@ export const getListUserAction = () => {
         }).then((res) => {
             dispatch(getListUser(res.data));
         }).catch((err) => {
-            console.log("TCL: getListUser -> err", err);
+            console.log("TCL: getListUser -> err",  err.response.data);
         })
     }
 }
 
 export const findUserAction = (username) => {
-    let uri = (username) ? API_FIND_USER_BY_NAME + '&tuKhoa=' + username : API_FIND_USER_BY_NAME;
+    let uri = (username) ? API_FIND_USER_BY_NAME + '&tuKhoa=' + username : API_GET_USER_LIST;
     return (dispatch) => {
         Axios({
             method: 'GET',
@@ -25,7 +25,7 @@ export const findUserAction = (username) => {
         }).then((res) => {
             dispatch(findListUser(res.data));
         }).catch((err) => {
-            console.log("TCL: findUserAction -> err", err)
+            console.log("TCL: findUserAction -> err",  err.response.data)
         })
     }
 }

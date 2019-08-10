@@ -11,7 +11,6 @@ class AdminCourses extends Component {
     }
 
     render() {
-        const coursePage = { title: 'COURSE LIST', btnName: 'Add course' };
         return (
             <div>
                 <div className="d-flex justify-content-between">
@@ -19,7 +18,7 @@ class AdminCourses extends Component {
                     <div id="admin-wrapper">
                         <Navbar></Navbar>
                         <section id="admin-content" className="p-3">
-                            <TableCourses pageInfo={coursePage}></TableCourses>
+                            <TableCourses></TableCourses>
                         </section>
                     </div>
                 </div>

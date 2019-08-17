@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react'
+import React, { lazy, Suspense } from 'react'
 import './App.scss';
-import AdminTemplate from './templates/AdminTemplate';
-import HomeTemplate from './templates/HomeTemplate';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PageNotFound from './common/PageNotFound';
+const AdminTemplate = lazy(() => import('./templates/AdminTemplate'));
+const HomeTemplate = lazy(() => import('./templates/HomeTemplate'));
 function App() {
   return (
     <BrowserRouter>
-      <Fragment>
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path={'/admin'} component={AdminTemplate}></Route>
           <Route path={'/home'} component={HomeTemplate}></Route>
           <Route path="*" component={PageNotFound} />
         </Switch>
-      </Fragment>
+      </Suspense>
     </BrowserRouter>
   );
 }

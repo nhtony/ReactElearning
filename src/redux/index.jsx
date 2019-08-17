@@ -4,7 +4,7 @@ import UsersReducerStore from './reducers/ListUser.reducer';
 import UserReducerStore from './reducers/User.reducer';
 import RighSideBarStore from './reducers/RightSidbar.reducer';
 import CourseReducerStore from './reducers/Course.reducer';
-import RegisterUserReducerStore from './reducers/RegisterUser.reducer';
+import StudentsReducerStore from './reducers/Students.reducer';
 //store tổng
 const rootReducer = combineReducers({
     // store con (theo nghiệp vụ)
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
     UserReducerStore,
     CourseReducerStore,
     RighSideBarStore,
-    RegisterUserReducerStore
+    StudentsReducerStore
 })
 
 export default rootReducer;

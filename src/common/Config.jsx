@@ -1,5 +1,15 @@
 export const GP = "GP09";
 
+export const token = "accessToken";
+
+export const loginInfo = "userLogin";
+
+export const listTypes = {
+    student: 'ST',
+    notstudent: 'NST',
+    waittinguser: 'APU'
+}
+
 export const setLocalStorage = (name, value) => {
     localStorage.setItem(name, JSON.stringify(value));
 }
@@ -13,9 +23,7 @@ export const userLogoutStorage = () => {
     localStorage.removeItem(loginInfo);
 }
 
-export const token = "accessToken";
 
-export const loginInfo = "userLogin";
 
 export const domain = "http://elearning0706.cybersoft.edu.vn/api/";
 
@@ -47,6 +55,14 @@ export const API_GET_COURSE_INFORMATION = domain + "QuanLyKhoaHoc/LayThongTinKho
 export const API_FIND_COURSE_BY_NAME = domain + 'QuanLyKhoaHoc/LayDanhSachKhoaHoc?tenKhoaHoc=';
 
 export const API_GET_UNREGISTERED_USERS = domain + 'QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh';
+
+export const API_GET_STUDENT_OF_COURSE = domain + 'QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc';
+
+export const API_GET_WATTING_USERS = domain + 'QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet';
+
+export const API_ENROLL = domain + 'QuanLyKhoaHoc/GhiDanhKhoaHoc';
+
+export const API_DISENROLL = domain + 'QuanLyKhoaHoc/HuyGhiDanh';
 
 // USER
 export const API_USER_SIGN_UP = domain + "QuanLyNguoiDung/DangKy";

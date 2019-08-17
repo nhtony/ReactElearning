@@ -15,7 +15,6 @@ class ListCourse extends Component {
     });
   }
 
-
   render() {
     var settings = {
       dots: true,
@@ -52,8 +51,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCourses: (courses) => {
-      dispatch(getListCourseAction(courses))
+    getCourses: () => {
+      dispatch(getListCourseAction())
     }
   }
 }

@@ -1,15 +1,16 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from '../pages/home/Home';
+
+const Home = lazy(() => import('../pages/home/Home'));
 export default class HomeTemplate extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Fragment>
+        <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route path={''} component={Home}></Route>
           </Switch>
-        </Fragment>
+        </Suspense>
       </BrowserRouter>
     )
   }

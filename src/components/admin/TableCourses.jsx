@@ -20,12 +20,9 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
-import { API_DELETE_COURSE } from '../../common/Config';
-import { getLocalStorage, token } from '../../common/Config';
 import { connect } from 'react-redux';
-import swal from 'sweetalert2';
-import { findCourseAction } from '../../redux/actions/ListCourse.action';
+import { findCourseAction, deleteCourseAction, getListCourseAction } from '../../redux/actions/ListCourse.action';
+
 const headRows = [
     { id: 'maKhoaHoc', numeric: false, disablePadding: true, label: 'ID' },
     { id: 'biDanh', numeric: false, disablePadding: true, label: 'Short name' },
@@ -38,6 +35,10 @@ const headRows = [
 ];
 
 let listDelete = [];
+
+let takeProps = {};
+
+let openDeleteBtn = false;
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -64,7 +65,8 @@ function getSorting(order, orderBy) {
 }
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    let { classes, onSelectAllClick, order, orderBy, rowCount, onRequestSort } = props;
+    let numSelected = (openDeleteBtn) ? 0 : props.numSelected;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -115,6 +117,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
+
 const useToolbarStyles = makeStyles(theme => ({
     root: {
         paddingLeft: theme.spacing(2),
@@ -141,28 +144,16 @@ const useToolbarStyles = makeStyles(theme => ({
     },
 }));
 
+const xoa = () => {
+    listDelete.forEach(idcourse => {
+        takeProps.deleteCourse(idcourse);
+    });
+    openDeleteBtn = true;
+}
 
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
-    function xoa() {
-        listDelete.forEach(username => {
-            Axios({
-                method: 'DELETE',
-                url: API_DELETE_COURSE + username,
-                headers:
-                {
-                    "Authorization": "Bearer " + getLocalStorage(token)
-                }
-            }).then((res) => {
-                successAlert(res.data);
-                window.location.reload();
-            }).catch((err) => {
-                swal.fire("Message", err.response.data, 'error');
-                window.location.reload();
-            })
-        });
-    }
+    let numSelected = (openDeleteBtn) ? 0 : props.numSelected;
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -173,11 +164,11 @@ const EnhancedTableToolbar = props => {
                 {numSelected > 0 ? (
                     <Typography color="inherit" variant="subtitle1">
                         {numSelected} selected
-          </Typography>
+              </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
                             Courses Table
-          </Typography>
+              </Typography>
                     )}
             </div>
             <div className={classes.spacer} />
@@ -199,7 +190,6 @@ const EnhancedTableToolbar = props => {
         </Toolbar>
     );
 };
-
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
@@ -233,10 +223,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
-
 function EnhancedTable(props) {
-    var rows = props.Courses;
+    takeProps = props;
+    var rows = takeProps.Courses;
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -261,11 +250,10 @@ function EnhancedTable(props) {
     }
 
     function handleClick(event, maKhoaHoc) {
-        const selectedIndex = selected.indexOf(maKhoaHoc);
         let newSelected = [];
-
+        let selectedIndex = selected.indexOf(maKhoaHoc);
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, maKhoaHoc);
+            newSelected = (openDeleteBtn) ? [] : newSelected.concat(selected, maKhoaHoc);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -278,6 +266,7 @@ function EnhancedTable(props) {
         }
         setSelected(newSelected);
         listDelete = newSelected;
+        openDeleteBtn = false;
     }
 
     function handleChangePage(event, newPage) {
@@ -303,86 +292,83 @@ function EnhancedTable(props) {
         }
     }
 
-    const renderTableContent = () => {
-        if (!props.isNotFound)
-            return (
-                <div className={classes.tableWrapper}>
-                    <Table
-                        className={classes.table}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
-                    >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {stableSort(rows, getSorting(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.maKhoaHoc);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+    const renderTable = () => {
+        return (
+            <div className={classes.tableWrapper}>
+                <Table
+                    className={classes.table}
+                    aria-labelledby="tableTitle"
+                    size={dense ? 'small' : 'medium'}
+                >
+                    <EnhancedTableHead
+                        classes={classes}
+                        numSelected={selected.length}
+                        order={order}
+                        orderBy={orderBy}
+                        onSelectAllClick={handleSelectAllClick}
+                        onRequestSort={handleRequestSort}
+                        rowCount={rows.length}
+                    />
+                    <TableBody>
+                        {stableSort(rows, getSorting(order, orderBy))
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row, index) => {
+                                const isItemSelected = isSelected(row.maKhoaHoc);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+                                return (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.maKhoaHoc}
+                                        selected={isItemSelected}
+                                    >
+                                        <TableCell padding="checkbox">
+                                            <Checkbox onClick={event => handleClick(event, row.maKhoaHoc)}
+                                                checked={isItemSelected}
+                                                inputProps={{ 'aria-labelledby': labelId }}
+                                            />
+                                        </TableCell>
+                                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            {row.maKhoaHoc}
+                                        </TableCell>
+                                        <TableCell padding="none" >{row.biDanh}</TableCell>
+                                        <TableCell padding="none">{row.tenKhoaHoc}</TableCell>
+                                        <TableCell padding="none" >{row.moTa}</TableCell>
+                                        <TableCell padding="none" >{row.luotXem}</TableCell>
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.maKhoaHoc}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox onClick={event => handleClick(event, row.maKhoaHoc)}
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.maKhoaHoc}
-                                            </TableCell>
-                                            <TableCell padding="none" >{row.biDanh}</TableCell>
-                                            <TableCell padding="none">{row.tenKhoaHoc}</TableCell>
-                                            <TableCell padding="none" >{row.moTa}</TableCell>
-                                            <TableCell padding="none" >{row.luotXem}</TableCell>
-                                
-                                            <TableCell padding="none" >{row.ngayTao}</TableCell>
-                                            <TableCell align="center">{row.soLuongHocVien}</TableCell>
-                                            <TableCell padding="none" align="center" >
-                                                <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Edit</Link>
-                                                <Link to={"/admin/register-user/" + row.maKhoaHoc} className="btn btn-outline-primary" >Students</Link>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 49 * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-            );
-        else {
-            return (
-                <div className="text-center">
-                    {props.message}
-                </div>
-            )
-        }
+                                        <TableCell padding="none" >{row.ngayTao}</TableCell>
+                                        <TableCell align="center">{row.soLuongHocVien}</TableCell>
+                                        <TableCell padding="none" align="center" >
+                                            <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Edit</Link>
+                                            <Link to={"/admin/students/" + row.maKhoaHoc} className="btn btn-outline-primary" >Students</Link>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 49 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+        );
     }
 
+    const renderTableContent = () => {
+        return (!props.isNotFound) ? renderTable() : (
+            <div className="text-center">
+                {props.message}
+            </div>)
+    }
 
     const isSelected = maKhoaHoc => selected.indexOf(maKhoaHoc) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
@@ -425,16 +411,6 @@ function EnhancedTable(props) {
     );
 }
 
-const successAlert = (content) => {
-    swal.fire({
-        position: 'center',
-        type: 'success',
-        title: content,
-        showConfirmButton: false,
-        timer: 1000
-    })
-}
-
 const mapStateToProps = (state) => {
     return {
         Courses: state.CoursesReducerStore.Courses,
@@ -442,13 +418,21 @@ const mapStateToProps = (state) => {
         isNotFound: state.CoursesReducerStore.isNotFound,
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         findCourse: (name) => {
             dispatch(findCourseAction(name))
         },
+        deleteCourse: (idcourse) => {
+            dispatch(deleteCourseAction(idcourse));
+        },
+        getListCourse: () => {
+            dispatch(getListCourseAction())
+        }
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);
 
 

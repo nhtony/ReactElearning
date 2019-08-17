@@ -1,7 +1,9 @@
 import Axios from 'axios';
-import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES } from '../../common/Config';
+
+import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, getLocalStorage, token, API_FIND_COURSE_BY_NAME, GP } from '../../common/Config';
+
 import * as types from '../contants/ListCourse.contant';
-import { getLocalStorage, token, API_FIND_COURSE_BY_NAME, GP } from '../../common/Config';
+
 import swal from 'sweetalert2';
 
 export const getListCourseAction = () => {
@@ -28,7 +30,7 @@ export const addCourseAction = (course, fd) => {
                 "Authorization": "Bearer " + getLocalStorage(token)
             }
         }).then((res) => {
-            let isSuccess = true;
+            const isSuccess = true;
             successAlert('Add user success !');
             dispatch({ type: types.ADD_COURSE, status: isSuccess });
             Axios({
@@ -57,7 +59,7 @@ export const editCourseAction = (courseedit, fd) => {
                 "Authorization": "Bearer " + getLocalStorage(token)
             }
         }).then((res) => {
-            let isSuccess = true;
+            const isSuccess = true;
             successAlert('Edit user success !');
             dispatch({ type: types.EDIT_COURSE, status: isSuccess });
             Axios({
@@ -71,6 +73,25 @@ export const editCourseAction = (courseedit, fd) => {
             })
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error')
+        })
+    }
+}
+
+export const deleteCourseAction = (idcourse) => {
+
+    return (dispatch) => {
+        Axios({
+            method: 'DELETE',
+            url: API_DELETE_COURSE + idcourse,
+            headers:
+            {
+                "Authorization": "Bearer " + getLocalStorage(token)
+            }
+        }).then((res) => {
+            dispatch({ type: types.DELETE_COURSE, idcourse: idcourse });
+            successAlert(res.data);
+        }).catch((err) => {
+            swal.fire("Message", err.response.data, 'error');
         })
     }
 }
@@ -108,7 +129,7 @@ export const getCategoriesAction = () => {
 export const getListCourse = (courses) => {
     return {
         type: types.GET_LIST_COURSE,
-        courses
+        courses: courses
     }
 }
 

@@ -38,19 +38,7 @@ class FormCourse extends Component {
         }
     }
 
-    // handleDate = (event) => {
-    //     let date = event.target.value;
-    //     let d = date.replace('-', '/');
-    //     let x = d.replace('-', '/');
-    //     this.setState({
-    //         [event.target.name]: event.target.value
-    //     })
-    //     // this.setState({
-    //     //     [event.target.name]: x
-    //     // })
-    //     console.log("TCL: FormCourse -> handleDate -> x", this.state.ngayTao)
-    // }
-
+  
     uploadHinhAnh = (event) => {
         this.file = event.target.files[0];
         this.setState({

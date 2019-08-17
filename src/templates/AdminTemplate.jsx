@@ -1,30 +1,39 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Admin from '../pages/admin/Admin';
-import AddUser from '../pages/admin/AddUser';
-import EditUser from '../pages/admin/EditUser';
-import AddCourse from '../pages/admin/AddCourse';
-// import EditCourse from '../pages/admin/EditCourse';
-import AdminUsers from '../pages/admin/AdminUsers';
-import AdminCourses from '../pages/admin/AdminCourses';
-import EditCourse from '../pages/admin/EditCourse';
-import RegisterUser from '../pages/admin/RegisterUser';
-export default class HomeTemplate extends Component {
+import Navbar from '../components/admin/Navbar';
+import Sidebar from '../components/admin/Sidebar';
+const Admin = lazy(() => import('../pages/admin/Admin'));
+const UserAdd = lazy(() => import('../pages/admin/UserAdd'));
+const UserEdit = lazy(() => import('../pages/admin/UserEdit'));
+const CourseAdd = lazy(() => import('../pages/admin/CourseAdd'));
+const Users = lazy(() => import('../pages/admin/Users'));
+const Courses = lazy(() => import('../pages/admin/Courses'));
+const CourseEdit = lazy(() => import('../pages/admin/CourseEdit'));
+const Students = lazy(() => import('../pages/admin/Students'));
+export default class AdminTemplate extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Fragment>
-                    <Switch>
-                        <Route path={'/admin/add-user'} component={AddUser}></Route>
-                        <Route path={'/admin/add-course'} component={AddCourse}></Route>
-                        <Route path={'/admin/register-user/:mkh'} component={RegisterUser}></Route>
-                        <Route path={'/admin/edit-user/:tk'} component={EditUser}></Route>
-                        <Route path={'/admin/edit-course/:mkh'} component={EditCourse}></Route>
-                        <Route path={'/admin/users'} component={AdminUsers}></Route>
-                        <Route path={'/admin/courses'} component={AdminCourses}></Route>
-                        <Route path={''} component={Admin}></Route>
-                    </Switch>
-                </Fragment>
+                <div className="d-flex justify-content-between">
+                    <Sidebar></Sidebar>
+                    <div id="admin-wrapper">
+                        <Navbar></Navbar>
+                        <section id="admin-content" className="p-3">
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Switch>
+                                    <Route path={'/admin/add-user'} component={UserAdd}></Route>
+                                    <Route path={'/admin/add-course'} component={CourseAdd}></Route>
+                                    <Route path={'/admin/students/:mkh'} component={Students}></Route>
+                                    <Route path={'/admin/edit-user/:tk'} component={UserEdit}></Route>
+                                    <Route path={'/admin/edit-course/:mkh'} component={CourseEdit}></Route>
+                                    <Route path={'/admin/users'} component={Users}></Route>
+                                    <Route path={'/admin/courses'} component={Courses}></Route>
+                                    <Route path={''} component={Admin}></Route>
+                                </Switch>
+                            </Suspense>
+                        </section>
+                    </div>
+                </div>
             </BrowserRouter>
         )
     }

@@ -24,19 +24,29 @@ const CoursesReducerStore = (state = list, action) => {
                 state.isSuccess = action.status;
                 return { ...state };
             }
+        case types.DELETE_COURSE:
+            {
+                let updateState = [...state.Courses];
+                let index = updateState.findIndex(item => { return item.maKhoaHoc === action.idcourse })
+                if (index !== -1) {
+                    updateState.splice(index, 1);
+                }
+                state.Courses = updateState;
+                return { ...state };
+            }
         case types.GET_CATEGORIES: {
             state.Categories = action.categories;
             return { ...state };
         }
         case types.FIND_COURSE: {
-            if(action.listSearch){
-                let updateState = {...state};
+            if (action.listSearch) {
+                let updateState = { ...state };
                 updateState.Courses = action.listSearch;
                 updateState.isNotFound = false;
                 return updateState;
             }
-            else{
-                let updateState = {...state,message:action.mess};
+            else {
+                let updateState = { ...state, message: action.mess };
                 updateState.isNotFound = true;
                 return updateState;
             }

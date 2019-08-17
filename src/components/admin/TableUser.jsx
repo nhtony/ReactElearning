@@ -20,12 +20,9 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
-import { API_DELETE_USER } from '../../common/Config';
-import { getLocalStorage, token } from '../../common/Config';
-import { findUserAction } from '../../redux/actions/ListUser.action';
+import { findUserAction, deleteUserAction } from '../../redux/actions/ListUser.action';
 import { connect } from 'react-redux';
-import swal from 'sweetalert2';
+
 const headRows = [
     { id: 'taiKhoan', numeric: false, disablePadding: true, label: 'Username' },
     { id: 'hoTen', numeric: false, disablePadding: true, label: 'Name' },
@@ -35,6 +32,8 @@ const headRows = [
 ];
 
 let listDelete = [];
+
+let takeProps = {};
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -144,22 +143,7 @@ const EnhancedTableToolbar = props => {
     const { numSelected } = props;
     function xoa() {
         listDelete.forEach(username => {
-            Axios({
-                method: 'DELETE',
-                url: API_DELETE_USER + username,
-                headers:
-                {
-                    "Authorization": "Bearer " + getLocalStorage(token)
-                }
-            }).then((res) => {
-                successAlert(res.data);
-                window.location.reload();
-
-            }).catch((err) => {
-                swal.fire("Message", err.response.data, 'error');
-                window.location.reload();
-
-            })
+            takeProps.deleteUser(username);
         });
     }
     return (
@@ -235,6 +219,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function EnhancedTable(props) {
+    takeProps = { ...props };
     var rows = props.Users;
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -404,25 +389,21 @@ function EnhancedTable(props) {
         </div>
     );
 }
-const successAlert = (content) => {
-    swal.fire({
-        position: 'center',
-        type: 'success',
-        title: content,
-        showConfirmButton: false,
-        timer: 1000
-    })
-}
+
 const mapStateToProps = (state) => {
     return {
         Users: state.UsersReducerStore.Users
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         findUser: (username) => {
             dispatch(findUserAction(username))
         },
+        deleteUser: (username) => {
+            dispatch(deleteUserAction(username))
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);

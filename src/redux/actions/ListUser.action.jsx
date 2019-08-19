@@ -15,21 +15,7 @@ export const getListUserAction = () => {
         }).then((res) => {
             dispatch(getListUser(res.data));
         }).catch((err) => {
-            console.log("TCL: getListUser -> err", err.response.data);
-        })
-    }
-}
-
-export const findUserAction = (username) => {
-    let uri = (username) ? API_FIND_USER_BY_NAME + '&tuKhoa=' + username : API_GET_USER_LIST;
-    return (dispatch) => {
-        Axios({
-            method: 'GET',
-            url: uri
-        }).then((res) => {
-            dispatch(findListUser(res.data));
-        }).catch((err) => {
-            console.log("TCL: findUserAction -> err", err.response.data)
+            console.log("TCL: getListUser -> err", err);
         })
     }
 }
@@ -84,11 +70,24 @@ export const deleteUserAction = (username) => {
                 "Authorization": "Bearer " + getLocalStorage(token)
             }
         }).then((res) => {
-            dispatch({type: types.DELETE_USER,username: username})
+            dispatch({ type: types.DELETE_USER, username: username })
             successAlert(res.data);
         }).catch((err) => {
-        console.log("TCL: deleteUserAction -> err", err)
-            // swal.fire("Message", err.response.data, 'error');
+            console.log("TCL: deleteUserAction -> err", err)
+        })
+    }
+}
+
+export const findUserAction = (name) => {
+    let uri = (name) ? API_FIND_USER_BY_NAME + '&tuKhoa=' + name : API_GET_USER_LIST;
+    return (dispatch) => {
+        Axios({
+            method: 'GET',
+            url: uri
+        }).then((res) => {
+            dispatch(findListUser(res.data));
+        }).catch((err) => {
+            console.log("TCL: findUserAction -> err.response.data", err.response.data)
         })
     }
 }
@@ -96,14 +95,14 @@ export const deleteUserAction = (username) => {
 export const getListUser = (users) => {
     return {
         type: types.GET_LIST_USER,
-        users
+        payload: users
     }
 }
 
 export const findListUser = (listSearch) => {
     return {
         type: types.FIND_USER,
-        listSearch
+        payload: listSearch
     }
 }
 

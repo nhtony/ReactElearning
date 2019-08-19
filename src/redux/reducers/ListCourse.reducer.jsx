@@ -38,7 +38,7 @@ const CoursesReducerStore = (state = list, action) => {
             state.Categories = action.categories;
             return { ...state };
         }
-        case types.FIND_COURSE: {
+        case types.FIND_COURSE:
             if (action.listSearch) {
                 let updateState = { ...state };
                 updateState.Courses = action.listSearch;
@@ -50,9 +50,8 @@ const CoursesReducerStore = (state = list, action) => {
                 updateState.isNotFound = true;
                 return updateState;
             }
-        }
         default:
-            return { ...state };
+            return state;
     }
 }
 

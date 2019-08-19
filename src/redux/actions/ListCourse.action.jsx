@@ -78,7 +78,6 @@ export const editCourseAction = (courseedit, fd) => {
 }
 
 export const deleteCourseAction = (idcourse) => {
-
     return (dispatch) => {
         Axios({
             method: 'DELETE',

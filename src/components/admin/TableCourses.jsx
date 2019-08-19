@@ -21,7 +21,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { findCourseAction, deleteCourseAction, getListCourseAction } from '../../redux/actions/ListCourse.action';
+import { findCourseAction, deleteCourseAction } from '../../redux/actions/ListCourse.action';
 
 const headRows = [
     { id: 'maKhoaHoc', numeric: false, disablePadding: true, label: 'ID' },
@@ -426,9 +426,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         deleteCourse: (idcourse) => {
             dispatch(deleteCourseAction(idcourse));
-        },
-        getListCourse: () => {
-            dispatch(getListCourseAction())
         }
     }
 }

@@ -35,6 +35,8 @@ let listDelete = [];
 
 let takeProps = {};
 
+let openDeleteBtn = false;
+
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -137,15 +139,16 @@ const useToolbarStyles = makeStyles(theme => ({
     },
 }));
 
+const xoa = () => {
+    listDelete.forEach(username => {
+        takeProps.deleteUser(username);
+    });
+    openDeleteBtn = true;
+}
 
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
-    function xoa() {
-        listDelete.forEach(username => {
-            takeProps.deleteUser(username);
-        });
-    }
+    let numSelected  = (openDeleteBtn) ? 0 : props.numSelected;
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -245,11 +248,10 @@ function EnhancedTable(props) {
     }
 
     function handleClick(event, taiKhoan) {
-        const selectedIndex = selected.indexOf(taiKhoan);
         let newSelected = [];
-
+        let selectedIndex = selected.indexOf(taiKhoan);
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, taiKhoan);
+            newSelected = (openDeleteBtn) ? [] : newSelected.concat(selected, taiKhoan);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -262,6 +264,7 @@ function EnhancedTable(props) {
         }
         setSelected(newSelected);
         listDelete = newSelected;
+        openDeleteBtn = false;
     }
 
     function handleChangePage(event, newPage) {
@@ -287,6 +290,77 @@ function EnhancedTable(props) {
         }
     }
 
+    const renderTable = () => {
+        return (
+            <div className={classes.tableWrapper}>
+                <Table
+                    className={classes.table}
+                    aria-labelledby="tableTitle"
+                    size={dense ? 'small' : 'medium'}
+                >
+                    <EnhancedTableHead
+                        classes={classes}
+                        numSelected={selected.length}
+                        order={order}
+                        orderBy={orderBy}
+                        onSelectAllClick={handleSelectAllClick}
+                        onRequestSort={handleRequestSort}
+                        rowCount={rows.length}
+                    />
+                    <TableBody>
+                        {stableSort(rows, getSorting(order, orderBy))
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row, index) => {
+                                const isItemSelected = isSelected(row.taiKhoan);
+                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                return (
+                                    <TableRow
+                                        hover
+
+                                        role="checkbox"
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.taiKhoan}
+                                        selected={isItemSelected}
+                                    >
+                                        <TableCell padding="checkbox">
+                                            <Checkbox onClick={event => handleClick(event, row.taiKhoan)}
+                                                checked={isItemSelected}
+                                                inputProps={{ 'aria-labelledby': labelId }}
+                                            />
+                                        </TableCell>
+                                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            {row.taiKhoan}
+                                        </TableCell>
+                                        <TableCell padding="none" >{row.hoTen}</TableCell>
+                                        <TableCell padding="none">{row.email}</TableCell>
+                                        <TableCell align="center" >{row.soDt}</TableCell>
+                                        <TableCell align="center" padding="none" >
+                                            <Link to={"/admin/edit-user/" + row.taiKhoan} className="btn btn-danger mr-4">Edit</Link>
+                                            <Link to="/admin/register-course" className="btn btn-outline-primary" >Courses</Link>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 49 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+        )
+    }
+
+    const renderTableContent = () => {
+        return (!props.isNotFound) ? renderTable() : (
+            <div className="text-center">
+                {props.message}
+            </div>)
+    }
+
     const isSelected = taiKhoan => selected.indexOf(taiKhoan) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -307,65 +381,7 @@ function EnhancedTable(props) {
             </div>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
-                <div className={classes.tableWrapper}>
-                    <Table
-                        className={classes.table}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
-                    >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {stableSort(rows, getSorting(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.taiKhoan);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                                    return (
-                                        <TableRow
-                                            hover
-
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.taiKhoan}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox onClick={event => handleClick(event, row.taiKhoan)}
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.taiKhoan}
-                                            </TableCell>
-                                            <TableCell padding="none" >{row.hoTen}</TableCell>
-                                            <TableCell padding="none">{row.email}</TableCell>
-                                            <TableCell align="center" >{row.soDt}</TableCell>
-                                            <TableCell align="center" padding="none" >
-                                                <Link to={"/admin/edit-user/" + row.taiKhoan} className="btn btn-danger mr-4">Edit</Link>
-                                                <Link to="/admin/register-course" className="btn btn-outline-primary" >Courses</Link>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 49 * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
+                {renderTableContent()}
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
@@ -392,14 +408,16 @@ function EnhancedTable(props) {
 
 const mapStateToProps = (state) => {
     return {
-        Users: state.UsersReducerStore.Users
+        Users: state.UsersReducerStore.Users,
+        message: state.UsersReducerStore.message,
+        isNotFound: state.UsersReducerStore.isNotFound
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        findUser: (username) => {
-            dispatch(findUserAction(username))
+        findUser: (name) => {
+            dispatch(findUserAction(name))
         },
         deleteUser: (username) => {
             dispatch(deleteUserAction(username))

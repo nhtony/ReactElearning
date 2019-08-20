@@ -1,11 +1,12 @@
 import * as types from '../contants/User.contant';
 import { getLocalStorage, loginInfo } from '../../common/Config';
 
-let User = {
-    isLogin: getLocalStorage(loginInfo) ? true : false
+let initialState = {
+    isLogin: getLocalStorage(loginInfo) ? true : false,
+    profile: {},
 };
 
-const UserReducerStore = (state = User, action) => {
+const UserReducerStore = (state = initialState, action) => {
     switch (action.type) {
         case types.USER_SIGN_UP:
             return { ...state };
@@ -13,8 +14,8 @@ const UserReducerStore = (state = User, action) => {
             state.isLogin = true;
             return { ...state };
         case types.USER_PROFILE:
-            let updateState = { ...state, userProfile: action.userProfile };
-            return updateState;
+            state.profile = action.payload;
+            return { ...state };
         case types.USER_LOG_OUT:
             state.isLogin = false;
             return { ...state };

@@ -1,20 +1,30 @@
 import * as types from '../contants/Course.contant';
 
-let Course = {
-
+let initialState = {
+    list: [],
+    courseDetail: {},
 };
-const CourseReducerStore = (state = Course, action) => {
+
+const CourseReducerStore = (state = initialState, action) => {
     switch (action.type) {
-        case types.GET_INFO_COURSE: {
-            let updateState = { ...action.courseDetail };
-            return updateState;
-        }
-        case types.ENROLL: {
+        case types.GET_INFO_COURSE:
+            state.courseDetail = action.courseDetail;
             return { ...state };
-        }
-        case types.DISENROLL: {
+        case types.GET_ENROLL_COURSES:
+            state.list = action.payload;
+            return { ...state }
+        case types.GET_NOT_ENROLL_COURSES:
+            state.list = action.payload;
+            return { ...state }
+        case types.GET_WAITING_ENROLL_COURSES:
+            state.list = action.payload;
+            return { ...state }
+        case types.ENROLL:
+            state.list = state.list.filter(item => item.maKhoaHoc !== action.payload);
             return { ...state };
-        }
+        case types.DISENROLL:
+            state.list = state.list.filter(item => item.maKhoaHoc !== action.payload);
+            return { ...state };
         default:
             return state;
     }

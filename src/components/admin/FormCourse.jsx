@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { addCourseAction, editCourseAction, getCategoriesAction } from '../../redux/actions/ListCourse.action';
+import { addCourseAction, editCourseAction, getCategoriesAction } from '../../redux/actions/Courses.action';
 
 class FormCourse extends Component {
 
@@ -172,8 +172,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        Categories: state.CoursesReducerStore.Categories,
-        courseDetail: state.CourseReducerStore
+        Categories: state.CoursesReducer.Categories,
+        courseDetail: state.CourseReducer.courseDetail
     }
 }
 

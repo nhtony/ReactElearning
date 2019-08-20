@@ -1,8 +1,9 @@
 import Axios from 'axios';
 
-import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, getLocalStorage, token, API_FIND_COURSE_BY_NAME, GP } from '../../common/Config';
+import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, API_FIND_COURSE_BY_NAME, GP, getLocalStorage, token } from '../../common/Config';
 
-import * as types from '../contants/ListCourse.contant';
+
+import * as types from '../contants/Courses.contant';
 
 import swal from 'sweetalert2';
 
@@ -125,21 +126,21 @@ export const getCategoriesAction = () => {
     }
 }
 
-export const getListCourse = (courses) => {
+const getListCourse = (courses) => {
     return {
         type: types.GET_LIST_COURSE,
         courses: courses
     }
 }
 
-export const getCategories = (categories) => {
+const getCategories = (categories) => {
     return {
         type: types.GET_CATEGORIES,
         categories
     }
 }
 
-export const findCourse = (listSearch) => {
+const findCourse = (listSearch) => {
     return {
         type: types.FIND_COURSE,
         listSearch

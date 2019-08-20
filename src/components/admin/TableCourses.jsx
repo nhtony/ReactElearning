@@ -21,7 +21,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { findCourseAction, deleteCourseAction } from '../../redux/actions/ListCourse.action';
+import { findCourseAction, deleteCourseAction } from '../../redux/actions/Courses.action';
 
 const headRows = [
     { id: 'maKhoaHoc', numeric: false, disablePadding: true, label: 'ID' },
@@ -167,7 +167,7 @@ const EnhancedTableToolbar = props => {
               </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
-                            Courses Table
+                           Bảng: Khóa học
               </Typography>
                     )}
             </div>
@@ -341,8 +341,8 @@ function EnhancedTable(props) {
                                         <TableCell padding="none" >{row.ngayTao}</TableCell>
                                         <TableCell align="center">{row.soLuongHocVien}</TableCell>
                                         <TableCell padding="none" align="center" >
-                                            <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Edit</Link>
-                                            <Link to={"/admin/students/" + row.maKhoaHoc} className="btn btn-outline-primary" >Students</Link>
+                                            <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Cập nhật</Link>
+                                            <Link to={"/admin/students/" + row.maKhoaHoc} className="btn btn-outline-primary" >Học viên</Link>
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -372,8 +372,8 @@ function EnhancedTable(props) {
 
     return (
         <div className={classes.root}>
-            <h1 className="text-center">LIST COURSES </h1>
-            <div className="action-group mb-4 row">
+            <h1 className="text-center mb-5">DANH SÁCH KHÓA HỌC </h1>
+            <div className="action-group mb-5 mt-5 row">
                 <div className="col-5 input-group">
                     <input type="text" className="form-control" name="hoTen" placeholder="Name" onChange={handleOnchange} />
                     <div className="input-group-append">
@@ -381,7 +381,7 @@ function EnhancedTable(props) {
                     </div>
                 </div>
                 <div className="col-7 text-right">
-                    <Link to="/admin/add-course" className="btnThem btn btn-success text-white  border-success" type="button">Add Course</Link>
+                    <Link to="/admin/add-course" className="btnThem btn btn-success text-white  border-success" type="button">Thêm khóa học</Link>
                 </div>
             </div>
             <Paper className={classes.paper}>
@@ -413,9 +413,9 @@ function EnhancedTable(props) {
 
 const mapStateToProps = (state) => {
     return {
-        Courses: state.CoursesReducerStore.Courses,
-        message: state.CoursesReducerStore.message,
-        isNotFound: state.CoursesReducerStore.isNotFound,
+        Courses: state.CoursesReducer.Courses,
+        message: state.CoursesReducer.message,
+        isNotFound: state.CoursesReducer.isNotFound,
     }
 }
 

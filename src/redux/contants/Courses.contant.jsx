@@ -10,3 +10,4 @@ export const DELETE_COURSE = "DELETE_COURSE";
 export const FIND_COURSE = "FIND_COURSE";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
+

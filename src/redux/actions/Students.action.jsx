@@ -1,17 +1,18 @@
 import * as types from '../contants/Students.contant';
 import Axios from 'axios';
-import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, token, listTypes } from '../../common/Config';
+import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, token, listTypes, API_DISENROLL, API_ENROLL } from '../../common/Config';
+import swal from 'sweetalert2';
 
 export const getListAction = (idcourse, listType) => {
     let uri = "";
     switch (listType) {
-        case listTypes.student:
+        case listTypes.student.isstudent:
             uri = API_GET_STUDENT_OF_COURSE;
             break;
-        case listTypes.notstudent:
+        case listTypes.student.notstudent:
             uri = API_GET_UNREGISTERED_USERS;
             break;
-        case listTypes.waittinguser:
+        case listTypes.student.waitinguser:
             uri = API_GET_WATTING_USERS;
             break;
         default:
@@ -36,19 +37,54 @@ export const getListAction = (idcourse, listType) => {
     }
 }
 
+export const studentAction = (idcourse, username, listType) => {
+    let uri = (listType === listTypes.student.isstudent) ? API_DISENROLL : API_ENROLL;
+    let regObj = {
+        "maKhoaHoc": idcourse,
+        "taiKhoan": username
+    }
+    return (dispatch) => {
+        Axios({
+            method: 'POST',
+            url: uri,
+            data: regObj,
+            headers:
+            {
+                "Authorization": "Bearer " + getLocalStorage(token)
+            }
+        }).then((res) => {
+            dispatch(dispatchCourse(listType, username));
+            successAlert(res.data);
+        }).catch((err) => {
+            console.log("TCL: signUpAction -> err", err);
+        })
+    }
+}
+
 const getList = (listType, data) => {
     switch (listType) {
-        case listTypes.student:
-            return { type: types.GET_STUDENTS, students: data }
-        case listTypes.notstudent:
-            return { type: types.GET_UNRESGISTERED_USER, notstudents: data }
-        case listTypes.waittinguser:
-            return { type: types.GET_APPROVING_USER, waittinguser: data }
+        case listTypes.student.isstudent:
+            return { type: types.GET_STUDENTS, payload: data }
+        case listTypes.student.notstudent:
+            return { type: types.GET_UNRESGISTERED_USER, payload: data }
+        case listTypes.student.waitinguser:
+            return { type: types.GET_WATTING_USER, payload: data }
         default:
             break;
     }
 }
 
+const dispatchCourse = (listType, data) => {
+    return (listType === listTypes.student.isstudent) ? { type: types.DISENROLL, payload: data } : { type: types.ENROLL, payload: data }
+}
 
-
+const successAlert = (content) => {
+    swal.fire({
+        position: 'center',
+        type: 'success',
+        title: content,
+        showConfirmButton: false,
+        timer: 1000
+    })
+}
 

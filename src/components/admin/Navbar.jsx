@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Redirect } from 'react-router-dom';
 export default class Navbar extends Component {
     render() {
         return (
@@ -23,4 +23,9 @@ export default class Navbar extends Component {
             </nav>
         )
     }
+
+    logout() {
+        this.props.userLogOut();
+        return (<Redirect to="/home" />)
+      }
 }

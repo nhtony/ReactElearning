@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { addUserAction, editUserAction } from '../../redux/actions/ListUser.action';
+import { addUserAction, editUserAction } from '../../redux/actions/Users.action';
 
 class FormUser extends Component {
-
-
     isEdit = this.props.form.status;
     title = this.props.form.formTitle;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -111,7 +108,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        userProfile: state.UserReducerStore.userProfile,
+        userProfile: state.UserReducer.profile,
     }
 }
 

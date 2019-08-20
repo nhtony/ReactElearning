@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Slider from "react-slick";
 import { connect } from 'react-redux'
-import { getListCourseAction } from '../../redux/actions/ListCourse.action';
+import { getListCourseAction } from '../../redux/actions/Courses.action';
 import Course from './Course';
 class ListCourse extends Component {
 
@@ -45,7 +45,7 @@ class ListCourse extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    Courses: state.CoursesReducerStore.Courses
+    Courses: state.CoursesReducer.Courses
   }
 }
 

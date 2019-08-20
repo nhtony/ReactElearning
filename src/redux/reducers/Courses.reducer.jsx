@@ -1,43 +1,35 @@
-import * as types from '../contants/ListCourse.contant';
+import * as types from '../contants/Courses.contant';
 
-let list = {
+let initialState = {
     Courses: [],
     Categories: [],
     isSuccess: false,
     isNotFound: false,
 }
 
-const CoursesReducerStore = (state = list, action) => {
+const CoursesReducerStore = (state = initialState, action) => {
     switch (action.type) {
-        case types.GET_LIST_COURSE: {
+        case types.GET_LIST_COURSE:
             state.Courses = action.courses;
             state.isSuccess = false;
             return { ...state };
-        }
+
         case types.ADD_COURSE:
-            {
-                state.isSuccess = action.status;
-                return { ...state };
-            }
+            state.isSuccess = action.status;
+            return { ...state };
+
         case types.EDIT_COURSE:
-            {
-                state.isSuccess = action.status;
-                return { ...state };
-            }
+            state.isSuccess = action.status;
+            return { ...state };
+            
         case types.DELETE_COURSE:
-            {
-                let updateState = [...state.Courses];
-                let index = updateState.findIndex(item => { return item.maKhoaHoc === action.idcourse })
-                if (index !== -1) {
-                    updateState.splice(index, 1);
-                }
-                state.Courses = updateState;
-                return { ...state };
-            }
-        case types.GET_CATEGORIES: {
+            state.Courses = state.Courses.filter(course => course.maKhoaHoc !== action.idcourse);
+            return { ...state };
+
+        case types.GET_CATEGORIES:
             state.Categories = action.categories;
             return { ...state };
-        }
+
         case types.FIND_COURSE:
             if (action.listSearch) {
                 let updateState = { ...state };

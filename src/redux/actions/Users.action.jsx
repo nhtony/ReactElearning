@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 import { API_GET_USER_LIST, API_ADD_USER, API_EDIT_USER, API_FIND_USER_BY_NAME, API_DELETE_USER } from '../../common/Config';
 
-import * as types from '../contants/ListUser.contant';
+import * as types from '../contants/Users.contant';
 
 import { getLocalStorage, token } from '../../common/Config';
 import swal from 'sweetalert2';

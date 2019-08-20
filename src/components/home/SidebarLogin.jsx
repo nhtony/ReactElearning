@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loginAction } from '../../redux/actions/User.action';
 
 
-class LoginSidebar extends Component {
+class SidebarLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,8 +65,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        Sidebar: state.RighSideBarStore,
-        isLogin: state.UserReducerStore.isLogin,
+        Sidebar: state.RightSideBarReducer,
+        isLogin: state.UserReducer.isLogin,
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LoginSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarLogin);

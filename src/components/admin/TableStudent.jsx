@@ -18,7 +18,7 @@ import Switch from '@material-ui/core/Switch';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getListAction } from '../../redux/actions/Students.action';
-import { courseAction } from '../../redux/actions/Course.action';
+import { studentAction } from '../../redux/actions/Students.action';
 import { listTypes } from '../../common/Config';
 
 let headRows = [
@@ -28,8 +28,12 @@ let headRows = [
 ];
 
 let isStudents = true;
-let optionValue = listTypes.student;
+
+let optionValue = listTypes.student.isstudent;
+
 let listDisenroll = [];
+
+let openDeleteBtn = false;
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -145,17 +149,17 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    let numSelected = (openDeleteBtn) ? 0 : props.numSelected;
     let tableName = "";
     switch (optionValue) {
-        case listTypes.student:
-            tableName = "Table: Student";
+        case listTypes.student.isstudent:
+            tableName = "Bảng: Học viên";
             break;
-        case listTypes.notstudent:
-            tableName = "Table: Not student";
+        case listTypes.student.notstudent:
+            tableName = "Bảng: Người dùng chưa ghi danh";
             break;
-        case listTypes.waittinguser:
-            tableName = "Table: Waitting student";
+        case listTypes.student.waitinguser:
+            tableName = "Bảng: Người dùng chờ ghi danh";
             break;
         default:
             break;
@@ -171,7 +175,7 @@ const EnhancedTableToolbar = props => {
                 {numSelected > 0 ? (
                     <Typography color="inherit" variant="subtitle1">
                         {numSelected} selected
-          </Typography>
+                    </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
                             {tableName}
@@ -236,17 +240,18 @@ function EnhancedTable(props) {
         if (event.target.checked) {
             const newSelecteds = rows.map(n => n.taiKhoan);
             setSelected(newSelecteds);
+            listDisenroll = newSelecteds;
             return;
         }
+        listDisenroll = [];
         setSelected([]);
     }
 
     function handleClick(event, taiKhoan) {
-        const selectedIndex = selected.indexOf(taiKhoan);
+        let selectedIndex = selected.indexOf(taiKhoan);
         let newSelected = [];
-
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, taiKhoan);
+            newSelected = (openDeleteBtn) ? [] : newSelected.concat(selected, taiKhoan);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -259,6 +264,7 @@ function EnhancedTable(props) {
         }
         setSelected(newSelected);
         listDisenroll = newSelected;
+        openDeleteBtn = false;
     }
 
     function handleChangePage(event, newPage) {
@@ -276,18 +282,19 @@ function EnhancedTable(props) {
 
     const handleOnchange = (event) => {
         optionValue = event.target.value;
-        isStudents = (event.target.value === listTypes.student) ? true : false;
+        isStudents = (event.target.value === listTypes.student.isstudent) ? true : false;
         props.getStudents(props.courseDetail.maKhoaHoc, event.target.value);
     }
 
     const endisrollCourse = (username) => {
-        if (optionValue === listTypes.student) {
+        if (optionValue === listTypes.student.isstudent) {
             listDisenroll.forEach(username => {
-                props.handleCourse(props.courseDetail.maKhoaHoc, username, optionValue);
+                props.handleCourse(props.courseDetail.maKhoaHoc, username, optionValue); // Hủy ghi danh
             })
+            openDeleteBtn = true;
         }
         else {
-            props.handleCourse(props.courseDetail.maKhoaHoc, username, optionValue);
+            props.handleCourse(props.courseDetail.maKhoaHoc, username, optionValue); // Ghi danh
         }
     }
 
@@ -296,11 +303,12 @@ function EnhancedTable(props) {
             <TableCell padding="checkbox">
                 <Checkbox onClick={event => handleClick(event, row.taiKhoan)}
                     checked={isItemSelected}
-                    inputProps={{ 'aria-labelledby': labelId }}
-                />
+                    inputProps={{ 'aria-labelledby': labelId }} />
             </TableCell>
         ) : null;
     }
+
+    const isSelected = taiKhoan => selected.indexOf(taiKhoan) !== -1;
 
     const renderTable = () => {
         return (<Table
@@ -323,7 +331,6 @@ function EnhancedTable(props) {
                     .map((row, index) => {
                         const isItemSelected = isSelected(row.taiKhoan);
                         const labelId = `enhanced-table-checkbox-${index}`;
-
                         return (
                             <TableRow
                                 hover
@@ -331,7 +338,6 @@ function EnhancedTable(props) {
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
                                 key={row.taiKhoan}
-                                selected={isItemSelected}
                             >
                                 {renderCheckBox(isItemSelected, labelId, row)}
                                 <TableCell component="th" id={labelId} scope="row" >
@@ -362,15 +368,13 @@ function EnhancedTable(props) {
     const renderCell = (username) => {
         return (isStudents) ? null : (
             <TableCell padding="none" align="left" >
-                <button onClick={() => endisrollCourse(username)} className="btn btn-outline-success mr-3">Register</button>
+                <button onClick={() => endisrollCourse(username)} className="btn btn-outline-success mr-3">Ghi danh</button>
             </TableCell>);
     }
 
     const renderButton = () => {
-        return (isStudents) ? (<button className="btnThem btn btn-danger text-white mr-4 border-danger" onClick={() => endisrollCourse()} type="button">Disenroll</button>) : null;
+        return (isStudents) ? (<button className="btnThem btn btn-danger text-white mr-4 border-danger" onClick={() => endisrollCourse()} type="button">Hủy ghi danh</button>) : null;
     }
-
-    const isSelected = taiKhoan => selected.indexOf(taiKhoan) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -385,14 +389,14 @@ function EnhancedTable(props) {
             <div className="action-group mb-4 row">
                 <div className="col-2">
                     <select onChange={handleOnchange} className="form-control" name="typeselect">
-                        <option value={listTypes.student}>Student</option>
-                        <option value={listTypes.notstudent}>Not student</option>
-                        <option value={listTypes.waittinguser}>Waiting user...</option>
+                        <option value={listTypes.student.isstudent}>Học viên</option>
+                        <option value={listTypes.student.notstudent}>Chưa ghi danh</option>
+                        <option value={listTypes.student.waitinguser}>Chờ ghi danh</option>
                     </select>
                 </div>
                 <div className="col-10  text-right">
                     {renderButton()}
-                    <Link to="/admin/courses" className="btnThem btn btn-secondary text-white border-secondary" type="button">Back</Link>
+                    <Link to="/admin/courses" className="btnThem btn btn-secondary text-white border-secondary" type="button">Thoát</Link>
                 </div>
             </div>
             <Paper className={classes.paper}>
@@ -424,23 +428,16 @@ function EnhancedTable(props) {
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        Students: state.StudentsReducerStore.list,
-        courseDetail: state.CourseReducerStore
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
         getStudents: (idcourse, listType) => {
             dispatch(getListAction(idcourse, listType));
         },
         handleCourse: (idcourse, username, listType) => {
-            dispatch(courseAction(idcourse, username, listType));
+            dispatch(studentAction(idcourse, username, listType));
         },
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedTable);
+export default connect(null, mapDispatchToProps)(EnhancedTable);
 

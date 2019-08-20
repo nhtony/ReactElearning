@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { API_USER_SIGN_UP, API_USER_LOGIN, token, loginInfo, setLocalStorage, API_USER_PROFILE, getLocalStorage } from '../../common/Config';
 import swal from 'sweetalert2';
 import { userLogoutStorage } from '../../common/Config';
+
 export const signUpAction = (userInfo) => {
     return (dispatch) => {
         Axios({
@@ -48,15 +49,16 @@ export const getProfileAction = (username) => {
         Axios({
             method: 'POST',
             url: API_USER_PROFILE,
-            data: username,
+            data: {
+                "taiKhoan": username
+            },
             headers: {
                 "Authorization": "Bearer  " + getLocalStorage(token)
             }
         }).then((res) => {
-            let userProfile = res.data;
-            dispatch({ type: types.USER_PROFILE, userProfile });
+            dispatch({ type: types.USER_PROFILE, payload: res.data });
         }).catch((err) => {
-            console.log("TCL: signUpAction -> err", err)
+            console.log("TCL: getProfileAction -> err", err.response.data)
         })
     }
 }

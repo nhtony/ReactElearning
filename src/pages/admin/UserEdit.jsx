@@ -5,18 +5,16 @@ import { getProfileAction } from '../../redux/actions/User.action';
 import { Redirect } from 'react-router-dom';
 class UserEdit extends Component {
     componentDidMount() {
-        let param = {
-            TaiKhoan: '',
-        }
-        param.TaiKhoan = this.props.match.params.tk;
-        this.props.getProfile(param);
+        let taiKhoan = "";
+        taiKhoan = this.props.match.params.tk;
+        this.props.getProfile(taiKhoan);
     }
     render() {
         let form = {
             formTitle: 'Edit Form',
             status: true,
         };
-        return (this.props.editSuccess) ? (<Redirect to="/admin/users" />) :(<FormUser form={form}></FormUser>)
+        return (this.props.editSuccess) ? (<Redirect to="/admin/users" />) : (<FormUser form={form}></FormUser>)
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -28,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        editSuccess: state.UsersReducerStore.isSuccess
+        editSuccess: state.UsersReducer.isSuccess
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserEdit);

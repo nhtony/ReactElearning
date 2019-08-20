@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        editSuccess: state.CoursesReducerStore.isSuccess
+        editSuccess: state.CoursesReducer.isSuccess
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CourseEdit);

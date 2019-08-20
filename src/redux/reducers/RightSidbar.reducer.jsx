@@ -1,11 +1,11 @@
 import * as types from '../contants/RightSidebar.contant';
 
-let SidebarState = {
+let initialState = {
     isOpenLogin: false,
     isOpenSignUp: false
 }
 
-const RighSideBarStore = (state = SidebarState, action) => {
+const RighSideBarStore = (state = initialState, action) => {
     switch (action.type) {
         case types.OPEN_SIDEBAR:
             if (action.data.isOpenLogin) {

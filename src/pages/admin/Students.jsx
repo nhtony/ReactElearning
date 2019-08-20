@@ -6,22 +6,20 @@ import { getListAction } from '../../redux/actions/Students.action';
 import { listTypes } from '../../common/Config';
 class Students extends Component {
     componentDidMount() {
-        let param = {
-            maKhoaHoc: '',
-        }
-        param.maKhoaHoc = this.props.match.params.mkh;
-        this.props.getStudents(param.maKhoaHoc,listTypes.student);
-        this.props.getInfoCourse(param.maKhoaHoc);
+        let maKhoaHoc = ""
+        maKhoaHoc = this.props.match.params.mkh;
+        this.props.getStudents(maKhoaHoc, listTypes.student.isstudent);
+        this.props.getInfoCourse(maKhoaHoc);
     }
     render() {
-        return (<TableStudent></TableStudent>)
+        return (<TableStudent courseDetail={this.props.courseDetail} Students={this.props.Students}></TableStudent>)
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getStudents: (idcourse, students) => {
-            dispatch(getListAction(idcourse, students));
+        getStudents: (idcourse, listType) => {
+            dispatch(getListAction(idcourse, listType));
         },
         getInfoCourse: (idcourse) => {
             dispatch(getInfoCourseAction(idcourse));
@@ -29,4 +27,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Students);
+const mapStateToProps = (state) => {
+    return {
+        Students: state.StudentsReducer.list,
+        courseDetail: state.CourseReducer.courseDetail
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Students);

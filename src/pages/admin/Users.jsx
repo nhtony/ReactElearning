@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TableUser from '../../components/admin/TableUser';
 import { connect } from 'react-redux';
-import { getListUserAction } from '../../redux/actions/ListUser.action';
+import { getListUserAction } from '../../redux/actions/Users.action';
 class Users extends Component {
 
     componentDidMount() {

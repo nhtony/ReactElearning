@@ -13,7 +13,7 @@ class CourseAdd extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        addSuccess: state.CoursesReducerStore.isSuccess
+        addSuccess: state.CoursesReducer.isSuccess
     }
 }
 export default connect(mapStateToProps, null)(CourseAdd)

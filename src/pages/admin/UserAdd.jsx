@@ -13,7 +13,7 @@ class UserAdd extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        addSuccess: state.UsersReducerStore.isSuccess
+        addSuccess: state.UsersReducer.isSuccess
     }
 }
 export default connect(mapStateToProps, null)(UserAdd)

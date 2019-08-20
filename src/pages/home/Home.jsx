@@ -5,8 +5,8 @@ import Features from '../../components/home/Features';
 import ListCourse from '../../components/home/ListCourse';
 import Topics from '../../components/home/Topics';
 import Reviews from '../../components/home/Reviews';
-import SignUpSidebar from '../../components/home/SignUpSidebar';
-import LoginSidebar from '../../components/home/LoginSidebar';
+import SidebarSignUp from '../../components/home/SidebarSignUp';
+import SidebarLogin from '../../components/home/SidebarLogin';
 
 export default class Home extends Component {
     render() {
@@ -14,8 +14,8 @@ export default class Home extends Component {
             <div>
                 <Header></Header>
                 <Banner></Banner>
-                <SignUpSidebar></SignUpSidebar>
-                <LoginSidebar></LoginSidebar>
+                <SidebarSignUp></SidebarSignUp>
+                <SidebarLogin></SidebarLogin>
                 <Features></Features>
                 <ListCourse></ListCourse>
                 <Topics></Topics>

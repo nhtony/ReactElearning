@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { connect } from 'react-redux'
 import { getListCourseAction } from '../../redux/actions/Courses.action';
 import Course from './Course';
+
 class ListCourse extends Component {
 
   componentDidMount() {
@@ -17,13 +18,14 @@ class ListCourse extends Component {
 
   render() {
     var settings = {
-      dots: true,
+      dots: false,
       arrows: true,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 5,
       slidesToScroll: 1,
     };
+
     return (
       <section className="courses">
         <div className="container-fluid">
@@ -34,7 +36,7 @@ class ListCourse extends Component {
           </div>
         </div>
         <div className="courses__content container-fluid">
-          <Slider {...settings}>
+          <Slider  {...settings}>
             {this.renderCourses()}
           </Slider>
         </div>

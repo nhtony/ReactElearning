@@ -1,0 +1,17 @@
+.single__head {
+  .page__title {
+    margin-top: 57px;
+    margin-bottom: 34px;
+    padding-bottom: 17px;
+    line-height: 1;
+    text-transform: none;
+    position: relative;
+    right: 20px;
+  }
+  .single__box {
+    justify-content: center;
+    .students-number {
+      border-right: 0.5px solid gray;
+    }
+  }
+}

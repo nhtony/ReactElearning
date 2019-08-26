@@ -1,7 +1,6 @@
 import Axios from 'axios';
 
-import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, API_FIND_COURSE_BY_NAME, GP, getLocalStorage, token } from '../../common/Config';
-
+import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, API_FIND_COURSE_BY_NAME, GP, getLocalStorage, loginInfo } from '../../common/Config';
 
 import * as types from '../contants/Courses.contant';
 
@@ -28,7 +27,7 @@ export const addCourseAction = (course, fd) => {
             data: course,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             const isSuccess = true;
@@ -57,7 +56,7 @@ export const editCourseAction = (courseedit, fd) => {
             data: courseedit,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             const isSuccess = true;
@@ -85,7 +84,7 @@ export const deleteCourseAction = (idcourse) => {
             url: API_DELETE_COURSE + idcourse,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             dispatch({ type: types.DELETE_COURSE, idcourse: idcourse });

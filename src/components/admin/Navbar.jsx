@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom';
-export default class Navbar extends Component {
+import { connect } from 'react-redux';
+import { userLogoutAction } from '../../redux/actions/User.action';
+class Navbar extends Component {
+
+    signOut = () => {
+        this.props.logOut();
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-sm navbar-light bg-light w-100">
@@ -13,9 +19,8 @@ export default class Navbar extends Component {
                                 Cybersoft
                             </a>
                             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
-                                <a className="dropdown-item" href=" ">Thông tin cá nhân</a>
-                                <a className="dropdown-item" href=" ">Cài đặt</a>
-                                <a className="dropdown-item" href=" ">Thoát</a>
+                                <button className="dropdown-item" >Thông tin cá nhân</button>
+                                <button onClick={() => this.signOut()} className="dropdown-item" >Thoát</button>
                             </div>
                         </li>
                     </ul>
@@ -23,9 +28,12 @@ export default class Navbar extends Component {
             </nav>
         )
     }
-
-    logout() {
-        this.props.userLogOut();
-        return (<Redirect to="/home" />)
-      }
 }
+const DispatchToProps = (dispatch) => {
+    return {
+        logOut: () => {
+            dispatch(userLogoutAction());
+        }
+    }
+}
+export default connect(null, DispatchToProps)(Navbar);

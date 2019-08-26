@@ -28,6 +28,19 @@
   }
   .courses__content {
     padding: 0;
-    width: 90%;
+    width: 80%;
+  }
+  .slick-prev {
+    left: -40px;
+  }
+  .slick-prev:before,
+  .slick-next:before {
+    font-family: "slick";
+    font-size: 36px;
+    line-height: 1;
+    opacity: 0.75;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

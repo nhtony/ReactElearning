@@ -4,7 +4,7 @@ import { API_GET_USER_LIST, API_ADD_USER, API_EDIT_USER, API_FIND_USER_BY_NAME, 
 
 import * as types from '../contants/Users.contant';
 
-import { getLocalStorage, token } from '../../common/Config';
+import { getLocalStorage, loginInfo } from '../../common/Config';
 import swal from 'sweetalert2';
 
 export const getListUserAction = () => {
@@ -28,7 +28,7 @@ export const addUserAction = (user) => {
             data: user,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             let isSuccess = true;
@@ -48,7 +48,7 @@ export const editUserAction = (useredit) => {
             data: useredit,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             let isSuccess = true;
@@ -67,7 +67,7 @@ export const deleteUserAction = (username) => {
             url: API_DELETE_USER + username,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             dispatch({ type: types.DELETE_USER, username: username })

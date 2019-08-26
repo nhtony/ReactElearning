@@ -2,6 +2,9 @@ import React, { Component, lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Navbar from '../components/admin/Navbar';
 import Sidebar from '../components/admin/Sidebar';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 const Admin = lazy(() => import('../pages/admin/Admin'));
 const UserAdd = lazy(() => import('../pages/admin/UserAdd'));
 const UserEdit = lazy(() => import('../pages/admin/UserEdit'));
@@ -10,9 +13,10 @@ const Users = lazy(() => import('../pages/admin/Users'));
 const Courses = lazy(() => import('../pages/admin/Courses'));
 const CourseEdit = lazy(() => import('../pages/admin/CourseEdit'));
 const Students = lazy(() => import('../pages/admin/Students'));
-const StudentCourse = lazy(()=> import('../pages/admin/StudentCourse'));
-export default class AdminTemplate extends Component {
-    render() {
+const StudentCourse = lazy(() => import('../pages/admin/StudentCourse'));
+
+class AdminTemplate extends Component {
+    renderTemplate = () => {
         return (
             <BrowserRouter>
                 <div className="d-flex justify-content-between">
@@ -39,4 +43,13 @@ export default class AdminTemplate extends Component {
             </BrowserRouter>
         )
     }
+    render() {
+        return (this.props.isLogin) ? this.renderTemplate() : <Redirect to='/home'></Redirect>
+    }
 }
+const mapStateToProps = (state) => {
+    return {
+        isLogin: state.UserReducer.isLogin,
+    }
+}
+export default connect(mapStateToProps, null)(AdminTemplate);

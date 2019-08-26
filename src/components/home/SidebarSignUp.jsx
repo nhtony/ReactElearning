@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { signUpAction } from '../../redux/actions/User.action';
-
+import Facebook from './Facebook';
+import Google from './Google';
+import { GP } from '../../common/Config';
 class SidebarSignUp extends Component {
 
     constructor(props) {
@@ -12,7 +14,7 @@ class SidebarSignUp extends Component {
             hoTen: '',
             soDT: '',
             maLoaiNguoiDung: 'HV',
-            maNhom: 'GP01',
+            maNhom: GP,
             email: ''
         }
     }
@@ -43,15 +45,16 @@ class SidebarSignUp extends Component {
 
     renderSidebar = () => {
         let style = (this.props.Sidebar.isOpenSignUp) ? { width: '380px' } : { width: '0' }
+        let payload = (this.props.Sidebar.isOpenSignUp) ? "signUp" : "";
         return (<div id="signupSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
             <h4 className="text-center text-white mb-5">Sign up</h4>
             <div className="container">
                 <div className="row btn-part mb-5">
                     <div className="col-6">
-                        <button className="btnFb btn-form"><i className="fa fa-facebook"></i></button>
+                        <Facebook fb={payload}></Facebook>
                     </div>
                     <div className="col-6">
-                        <button className="btnGg btn-form"><i className="fa fa-google"></i></button>
+                        <Google gg={payload}></Google>
                     </div>
                 </div>
                 <form className="input-part" onSubmit={this.handleOnSubmit}>
@@ -67,6 +70,7 @@ class SidebarSignUp extends Component {
                     <div className="action-part mt-3">
                         <button className="btn-form btnLogin">Sign up</button>
                     </div>
+                    
                 </form>
                 <div className="notes-part mt-3">
                     <p>Already have a account?</p>

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { loginAction } from '../../redux/actions/User.action';
-
+import Facebook from './Facebook';
+import Google from './Google';
 
 class SidebarLogin extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -21,20 +23,21 @@ class SidebarLogin extends Component {
 
     handleOnSubmit = (event) => {
         event.preventDefault();
-        this.props.login(this.state);
+        this.props.login(this.state, null);
     }
 
     renderSidebar = () => {
+        let payload = (this.props.Sidebar.isOpenLogin) ? "login" : "";
         let style = (this.props.Sidebar.isOpenLogin) ? { width: '380px' } : { width: '0' };
         return (<div id="loginSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
             <h4 className="text-center text-white mb-5">Login</h4>
             <div className="container">
                 <div className="row btn-part mb-5">
                     <div className="col-6">
-                        <button className="btnFb btn-form"><i className="fa fa-facebook"></i></button>
+                        <Facebook fb={payload}></Facebook>
                     </div>
                     <div className="col-6">
-                        <button className="btnGg btn-form"><i className="fa fa-google"></i></button>
+                        <Google gg={payload}></Google>
                     </div>
                 </div>
                 <form className="input-part" onSubmit={this.handleOnSubmit}>
@@ -51,14 +54,15 @@ class SidebarLogin extends Component {
             </div>
         </div >);
     }
+
     render() {
         return (!this.props.isLogin) ? this.renderSidebar() : null;
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: (user) => {
-            dispatch(loginAction(user));
+        login: (user, avt) => {
+            dispatch(loginAction(user, avt));
         }
     }
 }
@@ -69,4 +73,5 @@ const mapStateToProps = (state) => {
         isLogin: state.UserReducer.isLogin,
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarLogin);

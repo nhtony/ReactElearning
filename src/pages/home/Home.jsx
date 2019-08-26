@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Header from '../../components/home/Header';
+
 import Banner from '../../components/home/Banner';
 import Features from '../../components/home/Features';
 import ListCourse from '../../components/home/ListCourse';
@@ -11,8 +11,7 @@ import SidebarLogin from '../../components/home/SidebarLogin';
 export default class Home extends Component {
     render() {
         return (
-            <div>
-                <Header></Header>
+            <section className="home-page">
                 <Banner></Banner>
                 <SidebarSignUp></SidebarSignUp>
                 <SidebarLogin></SidebarLogin>
@@ -20,7 +19,7 @@ export default class Home extends Component {
                 <ListCourse></ListCourse>
                 <Topics></Topics>
                 <Reviews></Reviews>
-            </div>
+            </section>
         )
     }
 }

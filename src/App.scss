@@ -17,6 +17,19 @@
 @import "styles/pages/home/topic";
 @import "styles/pages/home/review";
 
+
+// Admin
+@import "styles/pages/admin/admin-wrapper";
+@import "styles/pages//admin/sidebar";
+
+
+//Course detail
+@import "styles/pages/course-detail/course-detail-page";
+@import "styles/pages/course-detail/bread-scrumbs";
+@import "styles/pages/course-detail/single-head";
+
+
+//Components
 @import "styles/componets/right-sidebar";
 @import "styles/componets/btn-form";
 @import "styles/componets/input-form";
@@ -25,9 +38,8 @@
 @import "styles/componets/search-bar";
 @import "styles/componets/header-dropdown";
 
-// Admin
-@import "styles/pages/admin/admin-wrapper";
-@import "styles/pages//admin/sidebar";
+
+
 
 
 @import "styles/componets/form-admin";

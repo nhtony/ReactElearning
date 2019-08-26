@@ -1,6 +1,6 @@
 import * as types from '../contants/Students.contant';
 import Axios from 'axios';
-import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, token, listTypes, API_DISENROLL, API_ENROLL } from '../../common/Config';
+import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, loginInfo, listTypes, API_DISENROLL, API_ENROLL } from '../../common/Config';
 import swal from 'sweetalert2';
 
 export const getListAction = (idcourse, listType) => {
@@ -27,7 +27,7 @@ export const getListAction = (idcourse, listType) => {
             },
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             dispatch(getList(listType, res.data));
@@ -50,7 +50,7 @@ export const studentAction = (idcourse, username, listType) => {
             data: regObj,
             headers:
             {
-                "Authorization": "Bearer " + getLocalStorage(token)
+                "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
             dispatch(dispatchCourse(listType, username));

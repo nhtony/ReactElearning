@@ -1,8 +1,6 @@
 //common
 export const GP = "GP09";
 
-export const token = "accessToken";
-
 export const loginInfo = "userLogin";
 
 export const domain = "http://elearning0706.cybersoft.edu.vn/api/";
@@ -86,21 +84,8 @@ export const getLocalStorage = (name) => {
 }
 
 export const userLogoutStorage = () => {
-    localStorage.removeItem(token);
     localStorage.removeItem(loginInfo);
 }
 
 
-// {
-//     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "adminhao",
-//     "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "GV",
-//     "nbf": 1566311228,
-//     "exp": 1566314828
-//   }
 
-// {
-//     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "userhao",
-//     "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "HV",
-//     "nbf": 1566311316,
-//     "exp": 1566314916
-//   }

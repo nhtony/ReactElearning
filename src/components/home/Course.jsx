@@ -5,7 +5,7 @@ export default class Course extends Component {
         let { tenKhoaHoc, hinhAnh, moTa } = this.props.course;
         return (
             <div className="card" style={{ width: '90%', height: '18rem', margin: '0 auto' }}>
-                <img className="card-img-top" style={{ height: '10rem' }} src={hinhAnh} alt=" " />
+                <img className="card-img-top" style={{ height: '8rem' }} src={hinhAnh} alt=" " />
                 <div className="card-body">
                     <h5 style={{
                         whiteSpace: 'nowrap',

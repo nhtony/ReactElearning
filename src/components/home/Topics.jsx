@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 export default class Topics extends Component {
-  
+
     render() {
         return (
             <section className="topic">
@@ -51,6 +51,7 @@ export default class Topics extends Component {
                         </div>
                     </div>
                 </div>
+              
             </section>
 
         )

@@ -1,4 +1,4 @@
-#accDropdownMenu {
+#avtDropdownMenu {
   padding: 0;
   width: 200px;
   position: absolute;
@@ -29,4 +29,13 @@
     border-bottom: none;
     border-radius: 0px;
   }
+}
+
+#courseDropdownMenu{
+  padding: 0;
+  width: 200px;
+  position: absolute;
+  top: 94%;
+  left: 52%;
+  border-radius: 2px;
 }

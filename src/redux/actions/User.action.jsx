@@ -41,33 +41,7 @@ export const loginAction = (userInfo, avt) => {
     }
 }
 
-export const adminLoginAction = (userInfo) => {
-    return (dispatch) => {
-        Axios({
-            method: 'POST',
-            url: API_USER_LOGIN,
-            data: userInfo
-        }).then((res) => {
-            const userLogin = {
-                taiKhoan: res.data.taiKhoan,
-                hoTen: res.data.hoTen,
-                avt: '',
-                accessToken: res.data.accessToken
-            }
-            if (res.data.maLoaiNguoiDung === "GV") {
-                const isAdLogin = true;
-                successAlert("Login success");
-                setLocalStorage(loginInfo, userLogin);
-                dispatch({ type: types.ADMIN_LOGIN, payload: isAdLogin });
-            }
-            else {
-                swal.fire("Message", "Does not accept !!", 'error');
-            }
-        }).catch((err) => {
-            swal.fire("Message", err.response.data, 'error');
-        })
-    }
-}
+
 
 export const getProfileAction = (username) => {
     return (dispatch) => {

@@ -26,7 +26,7 @@ const CourseReducerStore = (state = initialState, action) => {
             state.list = state.list.filter(item => item.maKhoaHoc !== action.payload);
             return { ...state };
         default:
-            return state;
+            return {...state};
     }
 }
 export default CourseReducerStore;

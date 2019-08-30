@@ -44,12 +44,12 @@ class AdminTemplate extends Component {
         )
     }
     render() {
-        return (this.props.isLogin) ? this.renderTemplate() : <Redirect to='/home'></Redirect>
+        return (this.props.isAdminLogin) ? this.renderTemplate() : <Redirect to='/home'></Redirect>
     }
 }
 const mapStateToProps = (state) => {
     return {
-        isLogin: state.UserReducer.isLogin,
+        isAdminLogin: state.AdminReducer.isLogin,
     }
 }
 export default connect(mapStateToProps, null)(AdminTemplate);

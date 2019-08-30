@@ -9,6 +9,9 @@
       span {
         margin-right: 3px;
         text-transform: capitalize;
+        a {
+          color: #999;
+        }
       }
       i {
         font-size: 14px;
@@ -19,63 +22,5 @@
       }
     }
   }
-
 }
-
-// .clearfix {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-
-// }
-// .clearfix:after,
-// .dl-horizontal dd:after,
-// .container:after,
-// .container-fluid:after,
-// .row:after,
-// .nav:after {
-//   clear: both;
-// }
-// .dl-horizontal dd {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-// }
-
-// .container {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-// }
-
-// .container-fluid {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-// }
-
-// .row {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-// }
-
-// .nav {
-//   &:before,
-//   &:after {
-//     content: " ";
-//     display: table;
-//   }
-// }
-
 

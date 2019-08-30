@@ -1,5 +1,25 @@
-@mixin text($fs,$fw,$color) {
-    font-size: $fs;
-    font-weight: $fw;
-    color: $color;
+@mixin text($fs, $fw, $color) {
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+}
+
+@mixin avatar($w, $h, $borderRadius) {
+  width: $w;
+  height: $h;
+  border-radius: $borderRadius;
+}
+
+@mixin divide($pb, $mb, $borb) {
+  padding-bottom: $pb;
+  margin-bottom: $mb;
+  border-bottom: $borb solid #dedede;
+}
+
+@mixin button($w, $h, $bg-color, $color) {
+  width: $w;
+  height: $h;
+  background-color: $bg-color;
+  color: $color;
+  border: none;
 }

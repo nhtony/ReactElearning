@@ -1,0 +1,102 @@
+.course-aside {
+  padding: 40px;
+  background-color: #f5f5f5;
+
+  .take-it {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      width: 173px;
+      height: 40px;
+      border: none;
+      color: white;
+      background-color: #3f51b5;
+    }
+    h4 {
+      color: #3f51b5;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+  .social-author {
+    display: flex;
+    list-style: none;
+    margin-top: 30px;
+    @include divide(50px, 15px, 1px);
+    li {
+      margin-right: 20px;
+    }
+  }
+  .author-aside {
+    text-align: center;
+    align-items: center;
+    @include divide(50px, 15px, 1px);
+    .author-img {
+      @include avatar(90px, 90px, 50%);
+    }
+    .author-info {
+      text-align: center;
+      .instructor__infomation {
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      .btn-follow {
+        width: 95px;
+        height: 30px;
+        background-color: transparent;
+        border: 2px solid #3f51b5;
+        @include text(13px, 400, #3f51b5);
+        &:hover {
+          background-color: #3f51b5;
+          color: white;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+  .enrolled-students {
+    @include divide(50px, 15px, 1px);
+    .student-avatar {
+      .student-img {
+        margin: 8px 3px;
+        @include avatar(60px, 60px, 50%);
+      }
+    }
+  }
+  .course-features {
+    @include divide(40px, 15px, 1px);
+  }
+  .another-author-course {
+    .sidebar-single__title {
+      margin-bottom: 20px;
+      span {
+        @include text(20px, 700, #3f51b5);
+      }
+    }
+    .course-relation {
+      .course-relation-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        img {
+          width: 60px;
+          height: 60px;
+          margin-right: 20px;
+        }
+        .course-name-item {
+          a {
+            text-decoration: none;
+            @include text(16px, 600, black);
+            &:hover {
+              color: #3f51b5;
+              transition: all 0.3s;
+            }
+          }
+        }
+      }
+    }
+  }
+}

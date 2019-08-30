@@ -44,11 +44,11 @@ class Header extends Component {
   }
 
   renderAvatar = () => {
-    const avatar = getLocalStorage(loginInfo).avatar;
-    return (avatar) ?
+    const user = getLocalStorage(loginInfo);
+    return (user.avatar) ?
       <div className="d-flex align-items-center">
         <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mb-0 mr-5 mycourse">My Courses<i className="ml-2 fa fa-angle-down"></i></p>
-        <img onMouseEnter={() => this.hoverOn("avtDropdownMenu")} src={avatar} alt="" />
+        <img onMouseEnter={() => this.hoverOn("avtDropdownMenu")} src={user.avatar} alt="" />
       </div> :
       <div className="d-flex align-items-center">
         <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mycourse mb-0 mr-5">My courses<i className="ml-2 fa fa-angle-down"></i></p>
@@ -80,11 +80,12 @@ class Header extends Component {
   renderSignLogButton = () => {
     return (<li id="login-item" className="nav-item">
       <button onClick={() => this.props.openLoginSidebar(this.loginSidebar)} className="btn btn-outline-success my-2 my-sm-0 m-4">Login</button>
+
       <button onClick={() => this.props.openSignUpSidebar(this.signUpSidebar)} className="btn btn-primary">Sign Up</button>
     </li>)
   }
 
-  logout() {
+  logout = () => {
     this.props.userLogOut();
     return (<Redirect to="/home" />)
   }
@@ -104,7 +105,7 @@ class Header extends Component {
     return (
       <header id="header" className="myHeader">
         <nav className="navbar navbar-expand-sm">
-          <a className="navbar-brand" href="home"><img style={{ maxWidth: 50 }} src="../img/logo.png" alt="logo" /></a>
+          <a className="navbar-brand" href="home"><img style={{ maxWidth: 50 }} src="/img/logo.png" alt="logo" /></a>
           <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
@@ -130,6 +131,7 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     isLogin: state.UserReducer.isLogin,
+
   }
 }
 

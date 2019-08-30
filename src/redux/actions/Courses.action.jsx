@@ -135,14 +135,14 @@ const getListCourse = (courses) => {
 const getCategories = (categories) => {
     return {
         type: types.GET_CATEGORIES,
-        categories
+        categories: categories
     }
 }
 
 const findCourse = (listSearch) => {
     return {
         type: types.FIND_COURSE,
-        listSearch
+        listSearch: listSearch
     }
 }
 

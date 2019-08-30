@@ -1,4 +1,5 @@
 @import "styles/base/reset";
+@import "styles/base/sticky";
 
 @import "styles/helpers/variable";
 @import "styles/helpers/mixin";
@@ -9,6 +10,7 @@
 
 @import "styles/layouts/header";
 @import "styles/layouts/footer";
+@import "styles/layouts/cover-spin";
 
 // Home
 @import "styles/pages/home/banner";
@@ -27,6 +29,10 @@
 @import "styles/pages/course-detail/course-detail-page";
 @import "styles/pages/course-detail/bread-scrumbs";
 @import "styles/pages/course-detail/single-head";
+@import "styles/pages/course-detail/comment";
+@import "styles/pages/course-detail/aside";
+@import "styles/pages/course-detail/related-courses";
+@import "styles/pages/course-detail/card-course";
 
 
 //Components
@@ -37,8 +43,12 @@
 @import "styles/componets/avatar";
 @import "styles/componets/search-bar";
 @import "styles/componets/header-dropdown";
-
-
+@import "styles/componets/accordion";
+@import "styles/componets/author";
+@import "styles/componets/circle";
+@import "styles/componets/curriculum";
+@import "styles/componets/repond";
+@import "styles/componets/card";
 
 
 

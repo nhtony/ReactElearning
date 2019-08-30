@@ -10,23 +10,15 @@ const UserReducerStore = (state = initialState, action) => {
     switch (action.type) {
         case types.USER_SIGN_UP:
             return { ...state };
-
         case types.USER_LOGIN:
             state.isLogin = true;
             return { ...state };
-
-        case types.ADMIN_LOGIN:
-            const newState = { ...state, isAdLogin: action.payload };
-            return newState;
-
         case types.USER_PROFILE:
             state.profile = action.payload;
             return { ...state };
-
         case types.USER_LOG_OUT:
             state.isLogin = false;
             return { ...state };
-            
         default:
             return { ...state };
     }

@@ -1,18 +1,24 @@
 import React, { lazy, Suspense } from 'react'
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
 import PageNotFound from './common/PageNotFound';
 import AdminAuth from './authen/guard/AdminGuard';
 import LoginAdmin from './pages/admin/LoginAdmin';
+import LoadingService from './common/LoadingService';
 
-const AdminTemplate = lazy(() => import('./templates/AdminTemplate'));
 const HomeTemplate = lazy(() => import('./templates/HomeTemplate'));
+
+const AdminTemplate = lazy(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import('./templates/AdminTemplate')), 1000)
+  })
+});
+
 
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingService />}>
         <Switch>
           <Route path={'/home'} component={HomeTemplate}></Route>
           <Route path={'/admin/login'} component={LoginAdmin}></Route>
@@ -20,7 +26,10 @@ function App() {
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Suspense>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
+
+
+
 export default App;

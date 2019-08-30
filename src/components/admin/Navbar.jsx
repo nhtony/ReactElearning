@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { userLogoutAction } from '../../redux/actions/User.action';
+import { adminLogoutAction } from '../../redux/actions/Admin.action';
+
 class Navbar extends Component {
 
     signOut = () => {
@@ -32,7 +33,7 @@ class Navbar extends Component {
 const DispatchToProps = (dispatch) => {
     return {
         logOut: () => {
-            dispatch(userLogoutAction());
+            dispatch(adminLogoutAction());
         }
     }
 }

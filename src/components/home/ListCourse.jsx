@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import Slider from "react-slick";
 import { connect } from 'react-redux'
-import { getListCourseAction } from '../../redux/actions/Courses.action';
+
 import Course from './Course';
 
 class ListCourse extends Component {
 
-  componentDidMount() {
-    this.props.getCourses();
-  }
 
+ 
   renderCourses = () => {
     return this.props.Courses.map((course, index) => {
       return <Course course={course} key={index} />
@@ -36,7 +34,7 @@ class ListCourse extends Component {
           </div>
         </div>
         <div className="courses__content container-fluid">
-          <Slider  {...settings}>
+          <Slider {...settings}>
             {this.renderCourses()}
           </Slider>
         </div>
@@ -51,12 +49,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getCourses: () => {
-      dispatch(getListCourseAction())
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListCourse);
+export default connect(mapStateToProps, null)(ListCourse);

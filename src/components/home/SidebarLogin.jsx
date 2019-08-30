@@ -59,6 +59,7 @@ class SidebarLogin extends Component {
         return (!this.props.isLogin) ? this.renderSidebar() : null;
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return {
         login: (user, avt) => {

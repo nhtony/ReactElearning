@@ -3,9 +3,10 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { connect } from 'react-redux';
-import { adminLoginAction } from '../../redux/actions/User.action';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { adminLoginAction } from '../../redux/actions/Admin.action';
+
 
 class LoginAdmin extends Component {
 
@@ -18,9 +19,15 @@ class LoginAdmin extends Component {
 
     }
 
+
+
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.login(this.state);
+        const user = {
+            taiKhoan: this.state.taiKhoan,
+            matKhau: this.state.matKhau
+        }
+        this.props.login(user);
     }
 
     handleOnchange = (event) => {
@@ -52,17 +59,16 @@ class LoginAdmin extends Component {
                 <div className="mt-5">
                     <Button type="submit" variant="contained" color="primary">
                         Login
-                </Button>
+                    </Button>
                 </div>
             </form>
         </div>);
     }
 
-
     render() {
-        return (this.props.isAdLogin) ? <Redirect to='/admin'></Redirect> : this.renderForm();
-
+        return (this.props.isAdminLogin) ? <Redirect to="/admin"></Redirect> : this.renderForm();
     }
+
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -75,7 +81,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        isAdLogin: state.UserReducer.isAdLogin,
+        isAdminLogin: state.AdminReducer.isLogin
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(LoginAdmin);

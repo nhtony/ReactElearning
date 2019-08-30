@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-
-export default class BreadCrumbs extends Component {
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux';
+class BreadCrumbs extends PureComponent {
     render() {
+        const { tenKhoaHoc } = this.props.courseDetail;
         return (
             <div className="archive__banner-top">
                 <div className="container">
@@ -15,13 +16,19 @@ export default class BreadCrumbs extends Component {
                             </span>
                             <i className="fa fa-angle-right" />
                             <span itemScope itemType="http://data-vocabulary.org/Breadcrumb">
-                                <span itemProp="title">Test-Driven Development in PHP with PHPUnit</span>
+                                <span itemProp="title">{tenKhoaHoc}</span>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
-
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        courseDetail: state.CourseReducer.courseDetail
+
+    }
+}
+export default connect(mapStateToProps, null)(BreadCrumbs);

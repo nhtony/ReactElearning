@@ -7,8 +7,14 @@ import Topics from '../../components/home/Topics';
 import Reviews from '../../components/home/Reviews';
 import SidebarSignUp from '../../components/home/SidebarSignUp';
 import SidebarLogin from '../../components/home/SidebarLogin';
+import { connect } from 'react-redux';
+import { getListCourseAction } from '../../redux/actions/Courses.action';
+class Home extends Component {
 
-export default class Home extends Component {
+    componentDidMount() {
+        this.props.getCourses();
+    }
+
     render() {
         return (
             <section className="home-page">
@@ -24,4 +30,12 @@ export default class Home extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCourses: () => {
+            dispatch(getListCourseAction())
+        }
+    }
+}
 
+export default connect(null, mapDispatchToProps)(Home)

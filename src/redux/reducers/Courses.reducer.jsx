@@ -4,7 +4,7 @@ let initialState = {
     Courses: [],
     Categories: [],
     isSuccess: false,
-    isNotFound: false,
+    isNotFound: false
 }
 
 const CoursesReducerStore = (state = initialState, action) => {

@@ -7,7 +7,7 @@ class Courses extends Component {
     componentDidMount() {
         this.props.getListCourse();
     }
-    
+
     render() {
         return (<TableCourses></TableCourses>)
     }

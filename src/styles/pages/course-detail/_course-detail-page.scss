@@ -1,3 +1,36 @@
-.course-detail-page{
-    padding:100px 0
+.course-detail-page {
+  padding: 100px 0;
+  .nav-tabs {
+    border: none;
+    border-bottom: 1px solid grey;
+    .nav-link {
+      border: none;
+      font-size: 18px;
+      padding: 10px 35px;
+      color: black;
+      position: relative;
+      &::before {
+        content: "";
+        width: 0%;
+        height: 2px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to right, #6441a5, #3f51b5);
+        transition: all 0.3s linear;
+      }
+      &:hover::before {
+        width: 100%;
+      }
+      &.active {
+        color: #3f51b5;
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .main-content {
+    margin-bottom: 100px;
+  }
 }

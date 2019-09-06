@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { courseContent } from '../../common/CourseService';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
-import RelatedCourseItem from './RelatedCourseItem';
+import CourseFromAuthor from './CourseFromAuthor';
 
 
 class CourseAside extends Component {
 
-    relatedCourses = [];
+    relatedOtherCourseOfAuhor = [];
 
     getCourseByAuthorName = (list, name) => {
         return list.filter(course => course.nguoiTao.hoTen === name);
     }
 
-    getRelatedCourses = (list, id) => {
+    getRelatedCoursesOfAuthor = (list, id) => {
         return list.filter(course => course.maKhoaHoc !== id)
     }
 
@@ -21,22 +21,22 @@ class CourseAside extends Component {
         this.props.getListCourse();
     }
 
-    renderRelatedCourseItem = () => {
-        return this.relatedCourses.map((course, index) => {
-            return (<RelatedCourseItem  course={course} key={index}></RelatedCourseItem>)
+    renderCourseFormAuthor = () => {
+        return this.relatedOtherCourseOfAuhor.map((course, index) => {
+            return (<CourseFromAuthor course={course} key={index}></CourseFromAuthor>)
         })
     }
 
     render() {
 
-        let author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : this.props.courseDetail.nguoiTao;
+        const author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : this.props.courseDetail.nguoiTao;
 
         const authorCourse = this.getCourseByAuthorName(this.props.Courses, author.hoTen);
 
-        this.relatedCourses = this.getRelatedCourses(authorCourse, this.props.courseDetail.maKhoaHoc);
+        this.relatedOtherCourseOfAuhor = this.getRelatedCoursesOfAuthor(authorCourse, this.props.courseDetail.maKhoaHoc);
 
         const { duration } = courseContent[this.props.maKH];
-        
+
         return (
             <aside className="course-aside sticky">
                 <div className="take-it">
@@ -81,7 +81,7 @@ class CourseAside extends Component {
                             <span className="social-text">Lectures</span>
                         </div>
                         <div className="col-4">
-                            <span>{this.relatedCourses.length + 1}</span>
+                            <span>{this.relatedOtherCourseOfAuhor.length + 1}</span>
                         </div>
                     </div>
                     <div className="row mb-3">
@@ -133,7 +133,7 @@ class CourseAside extends Component {
                 <div className="another-author-course">
                     <h5 className="sidebar-single__title">FROM <span>{author.hoTen}</span></h5>
                     <div className="course-relation">
-                        {this.renderRelatedCourseItem()}
+                        {this.renderCourseFormAuthor()}
                     </div>
                 </div>
             </aside>

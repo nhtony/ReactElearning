@@ -33,6 +33,8 @@ export const API_FIND_COURSE_BY_NAME = domain + 'QuanLyKhoaHoc/LayDanhSachKhoaHo
 
 export const API_GET_CATEGORIES = domain + "QuanLyKhoaHoc/LayDanhMucKhoaHoc";
 
+export const API_GET_CATE_COURSES = domain + "QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc"
+
 export const API_UPLOAD_HINH = domain + "QuanLyKhoaHoc/UploadHinhAnhKhoaHoc";
 
 export const API_GET_USER_LIST = domain + `QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${GP}`;

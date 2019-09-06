@@ -1,15 +1,45 @@
-.example-enter {
-  opacity: 0.01;
-}
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.example-leave {
-  opacity: 1;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+#curriculum {
+  .curriculum-accor {
+    .accordion {
+      background-color: transparent;
+      color: #444;
+      cursor: pointer;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      transition: 0.4s;
+      margin-bottom: 5px;
+      .accordion__item {
+        margin-bottom: 10px;
+        .accordion__heading {
+          .accordion__button {
+            padding: 15px;
+            background-color: #eee;
+            outline: none;
+            .row {
+              .col-lectures {
+                text-align: center;
+              }
+              .col-times {
+                text-align: right;
+              }
+            }
+          }
+        }
+        .accordion__panel {
+          .lesson-panel {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #eee;
+            p{
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }

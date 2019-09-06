@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import Slider from "react-slick";
 import { connect } from 'react-redux'
 
-import Course from './Course';
+import CourseItem from '../genaral/CourseItem';
 
 class ListCourse extends Component {
 
-
- 
   renderCourses = () => {
     return this.props.Courses.map((course, index) => {
-      return <Course course={course} key={index} />
+      return <CourseItem courseContent={course} key={index} />
     });
   }
 

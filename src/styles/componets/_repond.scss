@@ -1,48 +1,49 @@
 .comment-respond {
-    .rating-star {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      .dv-star-rating {
-        .dv-star-rating-star {
-          i {
-            font-size: 25px;
-          }
+  padding-bottom: 20px;
+  border-bottom: 1px solid #3f51b5;
+  #reply-title{
+    color: #3f51b5;
+  }
+  .rating-star {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    .dv-star-rating {
+      label {
+        color: #dedede;
+        i {
+          font-size: 25px;
         }
-      }
-      span{
-        text-align: left;
-        font-size: 14px;
       }
     }
-    .form-comment{
-        input{
-            width: 230px;
-            height: 33px;
-            padding-left: 20px;
-            margin-right: 13px;
-        }
-        input[type="checkbox"]{
-            width: 15px;
-            height: 15px;
-        }
-        label{
-            font-size: 13px;
-        }
-        .submit-btn{
-            width: 100%;
-            text-align: center;
-            margin-top: 20px;
-            button{
-                border: none;
-                color: white;
-                background-color: #3F51B5;
-                width: 112px;
-                height: 41px;
-                border-radius: 2px;
-            }
-        }
-    
+    span {
+      text-align: left;
+      font-size: 14px;
     }
   }
+  .form-comment {
+    input {
+      width: 230px;
+      height: 33px;
+      padding-left: 20px;
+      margin-right: 13px;
+    }
+    input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+    }
+    label {
+      font-size: 13px;
+    }
+    .submit-btn {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      button {
+        @include button(112px, 41px, #3f51b5, white);
+        border-radius: 2px;
+      }
+    }
+  }
+}

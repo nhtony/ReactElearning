@@ -1,0 +1,7 @@
+.list-num{
+    list-style: none;
+    li{
+        margin-bottom: 10px;
+        @include text(16px,700,#3f51b5)
+    }
+}

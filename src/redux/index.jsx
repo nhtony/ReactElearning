@@ -6,6 +6,7 @@ import RighSideBarStore from './reducers/RightSidbar.reducer';
 import CourseReducerStore from './reducers/Course.reducer';
 import StudentsReducerStore from './reducers/Students.reducer';
 import AdminReducerStore from './reducers/Admin.reducer';
+import ReviewReducerStore from './reducers/Review.reducer';
 
 const rootReducer = combineReducers({
     CoursesReducer: CoursesReducerStore,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     UserReducer: UserReducerStore,
     RightSideBarReducer: RighSideBarStore,
     StudentsReducer: StudentsReducerStore,
-    AdminReducer: AdminReducerStore
+    AdminReducer: AdminReducerStore,
+    ReviewReducer: ReviewReducerStore,
 })
 
 export default rootReducer;

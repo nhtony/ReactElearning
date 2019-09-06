@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 
 export default class Instructor extends Component {
     render() {
+        const { nguoiTao } = this.props.courseDatail;
         return (
             <div className="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                 <h4 className="pt-4 pb-4">INSTRUCTOR</h4>
                 <div className="main__content__author">
                     <div className="col-sm-2 author-avatar">
-                        <img className="author-img" alt="hinh" src="../img/1.jpg" />
+                        <img className="author-img" alt="hinh" src="/img/1.jpg" />
                     </div>
                     <div className="col-sm-10 author__info">
-                        <h4>Henry H. Garrick</h4>
+                        <h4>{nguoiTao.hoTen}</h4>
                         <div className="author__info__line">
                             <div />
                         </div>

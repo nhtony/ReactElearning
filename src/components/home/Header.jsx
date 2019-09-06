@@ -4,7 +4,8 @@ import { sidebarAction } from '../../redux/actions/RightSidebar.action';
 import { userLogoutAction } from '../../redux/actions/User.action';
 import { getLocalStorage, loginInfo } from '../../common/Config';
 import { Redirect } from 'react-router-dom';
-
+import { getCategoriesAction } from '../../redux/actions/Courses.action'
+import Categories from './Categories';
 class Header extends Component {
 
   loginSidebar = {
@@ -99,6 +100,9 @@ class Header extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getCategories();
+  }
 
   render() {
     window.onscroll = () => this.scrollFunction();
@@ -112,10 +116,12 @@ class Header extends Component {
           <div className="collapse navbar-collapse" id="collapsibleNavId">
             <ul className="navbar-nav menu-nav col-6">
               <li className="nav-item active">
-                <a className="nav-link" href="home">Home <span className="sr-only">(current)</span></a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="home">Link</a>
+                <div className="dropdown">
+                  <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                    </button>
+                  <Categories></Categories>
+                </div>
               </li>
             </ul>
             <ul className="action-nav navbar-nav col-6">
@@ -131,11 +137,10 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     isLogin: state.UserReducer.isLogin,
-
   }
 }
 
-const DispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     openLoginSidebar: (data) => {
       dispatch(sidebarAction(data))
@@ -146,8 +151,11 @@ const DispatchToProps = (dispatch) => {
     userLogOut: () => {
       dispatch(userLogoutAction());
     },
+    getCategories: () => {
+      dispatch(getCategoriesAction())
+    }
   }
 }
-export default connect(mapStateToProps, DispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 

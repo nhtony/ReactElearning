@@ -1,135 +1,72 @@
 import React, { Component } from 'react'
 import Repond from './Repond';
-export default class Reviews extends Component {
+import ReviewValueChart from './ReviewValueChart';
+import ReviewItem from './ReviewItem';
+import { connect } from 'react-redux';
+
+class Reviews extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: 3,
+            loading: false
+        };
+        this.loadMore = this.loadMore.bind(this);
+    }
+
+    loadMore() {
+        this.setState({
+            loading: true
+        });
+        setTimeout(() => {
+            this.setState({
+                visible: this.state.visible + 3,
+                loading: false
+            });
+        }, 1000);
+    }
+
+
+    renderReviewItem = () => {
+        return this.props.comments.slice(0, this.state.visible).map((item, index) => {
+            return (<ReviewItem content={item} key={index}></ReviewItem>)
+        })
+    }
+
+
+    renderLoadMoreButton = () => {
+        const { loading } = this.state;
+        return (this.state.visible > this.props.comments.length) ? null : (<button disabled={false} className="load-more-btn text-right" onClick={this.loadMore}>
+            {loading && (
+                <i
+                    className="fa fa-refresh fa-spin"
+                    style={{ marginRight: "5px" }}
+                />
+            )}
+            {loading && <span>Loading...</span>}
+            {!loading && <span>Load more</span>}
+        </button>)
+    }
+
+
     render() {
         return (
             <div className="tab-pane fade" id="review-course" role="tabpanel" aria-labelledby="review-course-tab">
                 <h4 className="pt-4 pb-4">REVIEWS</h4>
-                <div className="row">
-                    <div className="ratingCircle col-sm-4">
-                        <span className="rating-circle">0.0</span>
-                    </div>
-                    <div className="rating-breakdown col-sm-8">
-                        <ul data-view="ratingBreakdown" className="js-rating-breakdown">
-                            <li className="key_5">
-                                <span className="rating-breakdown__key">5 Star </span>
-                                <div className="progress">
-                                    <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={{ width: '0%' }}>
-                                    </div>
-                                </div>
-                                <span className="rating-breakdown__count">0%</span>
-                            </li>
-                            <li className="key_4">
-                                <span className="rating-breakdown__key">4 Star </span>
-                                <div className="progress">
-                                    <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={{ width: '0%' }}>
-                                    </div>
-                                </div>
-                                <span className="rating-breakdown__count">0%</span>
-                            </li>
-                            <li className="key_3">
-                                <span className="rating-breakdown__key">3 Star </span>
-                                <div className="progress">
-                                    <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={{ width: '0%' }}>
-                                    </div>
-                                </div>
-                                <span className="rating-breakdown__count">0%</span>
-                            </li>
-                            <li className="key_2">
-                                <span className="rating-breakdown__key">2 Star </span>
-                                <div className="progress">
-                                    <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={{ width: '0%' }}>
-                                    </div>
-                                </div>
-                                <span className="rating-breakdown__count">0%</span>
-                            </li>
-                            <li className="key_1">
-                                <span className="rating-breakdown__key">1 Star </span>
-                                <div className="progress">
-                                    <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={{ width: '0%' }}>
-                                    </div>
-                                </div>
-                                <span className="rating-breakdown__count">0%</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <ul data-rating="0.0" className="rating">
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <span>(0 Ratings)</span>
-                    </ul>
-                </div>
+                <ReviewValueChart maKhoaHoc={this.props.maKhoaHoc}></ReviewValueChart>
+                <Repond maKhoaHoc={this.props.maKhoaHoc}></Repond>
                 <ul className="review-list">
-                    <li className="review-section">
-                        <div className="row">
-                            <div className="col-3 review-info">
-                                <img className="review-img" src="../img/avatar.png" alt="" />
-                                <div className="info">
-                                    <h6>Name</h6>
-                                    <p>Time</p>
-                                </div>
-                            </div>
-                            <div className="col-9 review-content">
-                                <ul className="review-rating">
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                </ul>
-                                <p>really cool , i think Edwin diaz best teacher and i really joy this crash course , please make a complete course of vuejs cause your way of understanding people is amazing</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li className="review-section">
-                        <div className="row">
-                            <div className="col-3 review-info">
-                                <img className="review-img" src="../img/avatar.png" alt="" />
-                                <div className="info">
-                                    <h6>Name</h6>
-                                    <p>Time</p>
-                                </div>
-                            </div>
-                            <div className="col-9 review-content">
-                                <ul className="review-rating">
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                </ul>
-                                <p>really cool , i think Edwin diaz best teacher and i really joy this crash course , please make a complete course of vuejs cause your way of understanding people is amazing</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li className="review-section">
-                        <div className="row">
-                            <div className="col-3 review-info">
-                                <img className="review-img" src="../img/avatar.png" alt="" />
-                                <div className="info">
-                                    <h6>Name</h6>
-                                    <p>Time</p>
-                                </div>
-
-                            </div>
-                            <div className="col-9 review-content">
-                                <ul className="review-rating">
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                    <li><i className="fa fa-star"></i></li>
-                                </ul>
-                                <p>really cool , i think Edwin diaz best teacher and i really joy this crash course , please make a complete course of vuejs cause your way of understanding people is amazing</p>
-                            </div>
-                        </div>
-                    </li>
+                    {this.renderReviewItem()}
                 </ul>
-                <Repond></Repond>
+                {this.renderLoadMoreButton()}
             </div>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        comments: state.ReviewReducer.comments
+    }
+}
+export default connect(mapStateToProps, null)(Reviews)

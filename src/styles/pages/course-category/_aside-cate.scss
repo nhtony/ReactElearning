@@ -1,0 +1,22 @@
+.category-aside {
+  background-color: #f5f5f5;
+  padding: 15px 30px;
+  .all-cate-course {
+    .widget-title {
+      position: relative;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      &::before {
+        content: "";
+        position: absolute;
+        background: blue;
+        width: 30px;
+        height: 3px;
+        bottom: 0;
+      }
+    }
+    .list-type{
+      display: flex;
+    }
+  }
+}

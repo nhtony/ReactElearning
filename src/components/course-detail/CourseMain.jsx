@@ -6,10 +6,11 @@ import Reviews from './Reviews';
 export default class CourseMain extends PureComponent {
 
     render() {
+        const { maKhoaHoc, hinhAnh } = this.props.courseDatail;
         return (
             <div className="courseMain">
                 <div className="imgCourse">
-                    <img width="100%" src="/img/bg1.jpg" alt="hinh" />
+                    <img width="100%" height="470px" src={hinhAnh} alt="hinh" />
                 </div>
                 <ul className="nav nav-tabs mt-4" id="myTab" role="tablist">
                     <li className="nav-item">
@@ -26,10 +27,10 @@ export default class CourseMain extends PureComponent {
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
-                    <About></About>
-                    <Curriculum></Curriculum>
-                    <Instructor></Instructor>
-                    <Reviews></Reviews>
+                    <About ></About>
+                    <Curriculum maKH={maKhoaHoc}></Curriculum>
+                    <Instructor courseDatail={this.props.courseDatail}></Instructor>
+                    <Reviews maKhoaHoc={maKhoaHoc}></Reviews>
                 </div>
             </div>
         )

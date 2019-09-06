@@ -24,9 +24,17 @@
       }
     }
   }
+  .dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown > .dropdown-toggle:active {
+    pointer-events: none;
+  }
 }
 .bgColor {
   background: linear-gradient(to right, #480048, #c04848);
   padding: 5px;
   transition: all 1s;
 }
+

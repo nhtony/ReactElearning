@@ -11,3 +11,5 @@ export const FIND_COURSE = "FIND_COURSE";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
 
+export const GET_CATEGORY_COURSES = "GET_CATEGORY_COURSES";
+

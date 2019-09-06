@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, API_FIND_COURSE_BY_NAME, GP, getLocalStorage, loginInfo } from '../../common/Config';
+import { API_GET_COURSE_LIST, API_ADD_COURSE, API_EDIT_COURSE, API_UPLOAD_HINH, API_GET_CATEGORIES, API_DELETE_COURSE, API_FIND_COURSE_BY_NAME, API_GET_CATE_COURSES, GP, getLocalStorage, loginInfo } from '../../common/Config';
 
 import * as types from '../contants/Courses.contant';
 
@@ -125,6 +125,20 @@ export const getCategoriesAction = () => {
     }
 }
 
+export const getCoursesByCatogoryAction = (cateID) => {
+    let uri = API_GET_CATE_COURSES + `?maDanhMuc=${cateID}&MaNhom=${GP}`
+    return (dispatch) => {
+        Axios({
+            method: 'GET',
+            url: uri
+        }).then((res) => {
+            dispatch(getCateCourses(res.data));
+        }).catch((err) => {
+            console.log("TCL: getListCourse -> err", err)
+        })
+    }
+}
+
 const getListCourse = (courses) => {
     return {
         type: types.GET_LIST_COURSE,
@@ -136,6 +150,13 @@ const getCategories = (categories) => {
     return {
         type: types.GET_CATEGORIES,
         categories: categories
+    }
+}
+
+const getCateCourses = (data) => {
+    return {
+        type: types.GET_CATEGORY_COURSES,
+        payload: data
     }
 }
 

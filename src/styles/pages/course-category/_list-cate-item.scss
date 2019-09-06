@@ -1,0 +1,15 @@
+.list-cate {
+  list-style: none;
+  .cate-item {
+    margin-bottom: 10px;
+    a {
+      @include text(14px, 400, #212121);
+      text-transform: uppercase;
+      text-align: left;
+      margin-right: 5px;
+    }
+    .col-num {
+      text-align: right;
+    }
+  }
+}

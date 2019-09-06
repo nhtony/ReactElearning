@@ -1,50 +1,121 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import StarRatingComponent from 'react-star-rating-component';
-export default class Repond extends Component {
-    constructor() {
-        super();
+import { submitReviewAction, getIDAction } from '../../redux/actions/Review.action';
+import { connect } from 'react-redux';
 
+class Repond extends PureComponent {
+
+    constructor(props) {
+        super(props);
         this.state = {
-            rating: 1
-        };
+            rating: 1,
+            comment: "",
+            time: "",
+            loading: false
+        }
+    }
+
+    handleOnchange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+            time: this.getCurrentTime()
+        })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.setState({ loading: true });
+        const obj = {
+            rating: this.state.rating,
+            comment: this.state.comment,
+            time: this.state.time
+        }
+        setTimeout(() => {
+            this.setState({ loading: false,comment: "" });
+            this.props.review(obj);
+        }, 2000);
+    }
+
+    getCurrentTime = () => {
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = today.getHours() + ":" + today.getMinutes();
+        return date + ' ' + time;
     }
 
     onStarClick(nextValue, prevValue, name) {
         this.setState({ rating: nextValue });
     }
-    render() {
-        const { rating } = this.state;
-        return (
-            <div id="respond" className="comment-respond">
-                <h3 id="reply-title" className="comment-reply-title">Leave a comment </h3>
-                <div className="rating-star">
-                    <StarRatingComponent
-                        name="rate1"
-                        starCount={5}
-                        value={rating}
-                        onStarClick={this.onStarClick.bind(this)}
-                    />
-                    <span>Your email address will not be published. Required fields are marked *</span>
-                </div>
-                <form className="form-comment">
-                   
-                        <input type="text" placeholder="Your name" />
-                        <input type="email" placeholder="Your email" />
-                        <input type="text" placeholder="Your website" />
-                 
-                    <div className="d-flex align-items-center mt-4 mb-4">
-                        <input type="checkbox" />
-                     <label className="subscribe-label mb-0" id="subscribe-blog-label" htmlFor="subscribe_blog">Notify me of new posts by email.</label>
 
-                    </div>
-                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="8" aria__required="true" placeholder="Your Comment"></textarea>
+    renderTitle = () => {
+        return (this.props.isLogin) ? (<h5 id="reply-title" className="comment-reply-title">Leave a comment hear </h5>) : (<h5 id="reply-title" className="comment-reply-title">Please login to comment !</h5>)
+    }
+
+    renderReviewStars = () => {
+        const { rating } = this.state.rating;
+        return (this.props.isLogin) ? (<div className="rating-star">
+            <StarRatingComponent
+                name="rate1"
+                starCount={5}
+                value={rating}
+                onStarClick={this.onStarClick.bind(this)}
+            />
+            <span>Your email address will not be published. Required fields are marked *</span>
+        </div>) : null;
+    }
+
+
+    render() {
+        const style = {
+            disible: {
+                opacity: 0.5
+            },
+            enable: {
+                opacity: 1
+            }
+        }
+        const { loading } = this.state;
+        this.props.getIdCourse(this.props.maKhoaHoc);
+
+        return (
+
+            <div id="respond" className="comment-respond">
+                {this.renderTitle()}
+                {this.renderReviewStars()}
+                <form className="form-comment" onSubmit={this.handleSubmit}>
+                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="4" aria__required="true" placeholder="Your Comment" onChange={this.handleOnchange} required value={this.state.comment} ></textarea>
                     <div className="submit-btn">
-                    <button type="submit">SUBMIT</button>
+                        <button style={(!this.props.isLogin) ? style.disible : style.enable} disabled={!this.props.isLogin} type="submit">
+                            {loading && (
+                                <i
+                                    className="fa fa-refresh fa-spin"
+                                    style={{ marginRight: "5px" }}
+                                />
+                            )}
+                            {loading && <span>Loading</span>}
+                            {!loading && <span>SUBMIT</span>}
+                        </button>
                     </div>
-              
                 </form>
             </div>
-
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isLogin: state.UserReducer.isLogin,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        review: (comment) => {
+            dispatch(submitReviewAction(comment))
+        },
+        getIdCourse: (idcourse) => {
+            dispatch(getIDAction(idcourse))
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Repond);

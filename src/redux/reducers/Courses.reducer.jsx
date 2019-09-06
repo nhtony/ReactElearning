@@ -3,6 +3,7 @@ import * as types from '../contants/Courses.contant';
 let initialState = {
     Courses: [],
     Categories: [],
+    CategoryCourses: [],
     isSuccess: false,
     isNotFound: false
 }
@@ -21,13 +22,17 @@ const CoursesReducerStore = (state = initialState, action) => {
         case types.EDIT_COURSE:
             state.isSuccess = action.status;
             return { ...state };
-            
+
         case types.DELETE_COURSE:
             state.Courses = state.Courses.filter(course => course.maKhoaHoc !== action.idcourse);
             return { ...state };
 
         case types.GET_CATEGORIES:
             state.Categories = action.categories;
+            return { ...state };
+
+        case types.GET_CATEGORY_COURSES:
+            state.CategoryCourses = action.payload;
             return { ...state };
 
         case types.FIND_COURSE:

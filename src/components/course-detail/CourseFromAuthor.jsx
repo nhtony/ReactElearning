@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getInfoCourseAction } from '../../redux/actions/Course.action';
-class RelatedCourseItem extends Component {
+class CourseFromAuthor extends Component {
     render() {
         const { tenKhoaHoc, hinhAnh, maKhoaHoc } = this.props.course;
         return (
@@ -26,4 +26,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(RelatedCourseItem);
+export default connect(null, mapDispatchToProps)(CourseFromAuthor);

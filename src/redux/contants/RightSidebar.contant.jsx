@@ -1,5 +1,5 @@
 export const OPEN_SIDEBAR = "OPEN_SIDEBAR";
 
-
+export const OPEN_AFTER_SIGN_UP = "OPEN_AFTER_SIGN_UP";
 
 

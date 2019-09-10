@@ -8,14 +8,18 @@ let initialState = {
 const RighSideBarStore = (state = initialState, action) => {
     switch (action.type) {
         case types.OPEN_SIDEBAR:
-            if (action.data.isOpenLogin) {
+            if (action.payload.isOpenLogin) {
                 state.isOpenLogin = !state.isOpenLogin;
                 state.isOpenSignUp = false;
             }
-            if (action.data.isOpenSignUp) {
+            if (action.payload.isOpenSignUp) {
                 state.isOpenSignUp = !state.isOpenSignUp;
                 state.isOpenLogin = false;
             }
+            return { ...state };
+        case "OPEN_AFTER_SIGNUP":
+            state.isOpenLogin = true;
+            state.isOpenSignUp = false;
             return { ...state };
         default:
             state.isOpenSignUp = false;

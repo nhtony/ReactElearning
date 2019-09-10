@@ -25,7 +25,7 @@ export default class Curriculum extends Component {
         })
     }
 
-    test = (id) => {
+    openCollapse = (id) => {
         this.IdElement[id] = !this.IdElement[id];
         document.getElementById(id).innerHTML = (this.IdElement[id]) ? "+" : "-";
     }
@@ -43,7 +43,7 @@ export default class Curriculum extends Component {
     renderAccordionItem = (content) => {
         return content.map((item, index) => {
             return (
-                <AccordionItem key={index} onClick={() => this.test(item.id)}>
+                <AccordionItem key={index} onClick={() => this.openCollapse(item.id)}>
                     <AccordionItemHeading>
                         <AccordionItemButton>
                             <div className="row">
@@ -71,7 +71,7 @@ export default class Curriculum extends Component {
     }
 
     render() {
-        const { lesson } = courseContent[this.props.maKH];
+        const { lesson } = (courseContent.hasOwnProperty(this.props.maKH)) ? courseContent[this.props.maKH] : { lesson: [] };
         return (
             <div className="tab-pane mt-4  fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                 <h4 className="mb-4">CURRICULUM</h4>

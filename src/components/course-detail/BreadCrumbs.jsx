@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux';
-class BreadCrumbs extends PureComponent {
+export default class BreadCrumbs extends PureComponent {
     render() {
         const { tenKhoaHoc } = this.props.courseDetail;
         return (
@@ -25,10 +24,3 @@ class BreadCrumbs extends PureComponent {
         )
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        courseDetail: state.CourseReducer.courseDetail
-
-    }
-}
-export default connect(mapStateToProps, null)(BreadCrumbs);

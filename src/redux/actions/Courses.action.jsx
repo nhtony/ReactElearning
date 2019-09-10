@@ -8,19 +8,27 @@ import swal from 'sweetalert2';
 
 export const getListCourseAction = () => {
     return (dispatch) => {
-        Axios({
-            method: 'GET',
-            url: API_GET_COURSE_LIST,
-        }).then((res) => {
-            dispatch(getListCourse(res.data));
-        }).catch((err) => {
-            console.log("TCL: getListCourseAction -> err", err)
-        })
+        dispatch({ type: types.GET_COURSES['REQUEST'] });
+        Axios.get(API_GET_COURSE_LIST)
+            .then((res) => {
+                setTimeout(() => {
+                    dispatch({
+                        type: types.GET_COURSES['SUCCESS'],
+                        payload: res.data
+                    });
+                }, 2500);
+            }).catch((err) => {
+                dispatch({
+                    type: types.GET_COURSES['SUCCESS'],
+                    payload: err
+                });
+            })
     }
 }
 
 export const addCourseAction = (course, fd) => {
     return (dispatch) => {
+        dispatch({ type: types.ADD_COURSE['REQUEST'] });
         Axios({
             method: 'POST',
             url: API_ADD_COURSE,
@@ -30,9 +38,8 @@ export const addCourseAction = (course, fd) => {
                 "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
-            const isSuccess = true;
             successAlert('Add user success !');
-            dispatch({ type: types.ADD_COURSE, status: isSuccess });
+            dispatch({ type: types.ADD_COURSE['SUCCESS'], payload: res.data });
             Axios({
                 method: 'POST',
                 url: API_UPLOAD_HINH,
@@ -50,6 +57,7 @@ export const addCourseAction = (course, fd) => {
 
 export const editCourseAction = (courseedit, fd) => {
     return (dispatch) => {
+        dispatch({ type: types.EDIT_COURSE['REQUEST'] });
         Axios({
             method: 'PUT',
             url: API_EDIT_COURSE,
@@ -59,9 +67,8 @@ export const editCourseAction = (courseedit, fd) => {
                 "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
-            const isSuccess = true;
             successAlert('Edit user success !');
-            dispatch({ type: types.EDIT_COURSE, status: isSuccess });
+            dispatch({ type: types.EDIT_COURSE['SUCCESS'], payload: res.data });
             Axios({
                 method: 'POST',
                 url: API_UPLOAD_HINH,
@@ -79,6 +86,7 @@ export const editCourseAction = (courseedit, fd) => {
 
 export const deleteCourseAction = (idcourse) => {
     return (dispatch) => {
+        dispatch({ type: types.DELETE_COURSE['REQUEST'] });
         Axios({
             method: 'DELETE',
             url: API_DELETE_COURSE + idcourse,
@@ -87,7 +95,7 @@ export const deleteCourseAction = (idcourse) => {
                 "Authorization": "Bearer " + getLocalStorage(loginInfo).accessToken
             }
         }).then((res) => {
-            dispatch({ type: types.DELETE_COURSE, idcourse: idcourse });
+            dispatch({ type: types.DELETE_COURSE['SUCCESS'], payload: idcourse });
             successAlert(res.data);
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');
@@ -114,49 +122,33 @@ export const findCourseAction = (name) => {
 
 export const getCategoriesAction = () => {
     return (dispatch) => {
+        dispatch({ type: types.GET_CATEGORIES['REQUEST'] });
         Axios({
             method: 'GET',
             url: API_GET_CATEGORIES
         }).then((res) => {
-            dispatch(getCategories(res.data));
+
+            dispatch({ type: types.GET_CATEGORIES['SUCCESS'], payload: res.data });
         }).catch((err) => {
-            console.log("TCL: getListCourse -> err", err)
+            dispatch({ type: types.GET_CATEGORIES['FAILED'], payload: err.response.data });
         })
     }
 }
 
-export const getCoursesByCatogoryAction = (cateID) => {
+export const getCateCourseAction = (cateID) => {
     let uri = API_GET_CATE_COURSES + `?maDanhMuc=${cateID}&MaNhom=${GP}`
     return (dispatch) => {
+        dispatch({ type: types.GET_CATEGORY_COURSES['REQUEST'] });
         Axios({
             method: 'GET',
             url: uri
         }).then((res) => {
-            dispatch(getCateCourses(res.data));
+            setTimeout(() => {
+                dispatch({ type: types.GET_CATEGORY_COURSES['SUCCESS'], payload: res.data });
+            }, 1000);
         }).catch((err) => {
-            console.log("TCL: getListCourse -> err", err)
+            dispatch({ type: types.GET_CATEGORY_COURSES['FAILED'], payload: err.response.data });
         })
-    }
-}
-
-const getListCourse = (courses) => {
-    return {
-        type: types.GET_LIST_COURSE,
-        courses: courses
-    }
-}
-
-const getCategories = (categories) => {
-    return {
-        type: types.GET_CATEGORIES,
-        categories: categories
-    }
-}
-
-const getCateCourses = (data) => {
-    return {
-        type: types.GET_CATEGORY_COURSES,
-        payload: data
     }
 }
 
@@ -166,6 +158,7 @@ const findCourse = (listSearch) => {
         listSearch: listSearch
     }
 }
+
 
 const successAlert = (content) => {
     swal.fire({

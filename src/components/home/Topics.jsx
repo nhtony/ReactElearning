@@ -51,9 +51,7 @@ export default class Topics extends Component {
                         </div>
                     </div>
                 </div>
-              
             </section>
-
         )
     }
 }

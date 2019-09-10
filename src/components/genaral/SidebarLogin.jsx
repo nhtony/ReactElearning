@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loginAction } from '../../redux/actions/User.action';
 import Facebook from './Facebook';
 import Google from './Google';
-
+import { sidebarAction } from '../../redux/actions/RightSidebar.action';
 class SidebarLogin extends Component {
 
     constructor(props) {
@@ -11,9 +11,13 @@ class SidebarLogin extends Component {
         this.state = {
             taiKhoan: '',
             matKhau: '',
-
         }
     }
+
+    signUpSidebar = {
+        isOpenLogin: false,
+        isOpenSignUp: true,
+      }
 
     handleOnChange = (event) => {
         this.setState({
@@ -49,7 +53,7 @@ class SidebarLogin extends Component {
                 </form>
                 <div className="notes-part mt-5">
                     <p>Forgot password</p>
-                    <p>Create a new acount</p>
+                    <p onClick={() => { this.props.openSignUpSidebar(this.signUpSidebar) }}>Create a new acount</p>
                 </div>
             </div>
         </div >);
@@ -64,6 +68,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (user, avt) => {
             dispatch(loginAction(user, avt));
+        },
+        openSignUpSidebar: (data) => {
+            dispatch(sidebarAction(data))
         }
     }
 }

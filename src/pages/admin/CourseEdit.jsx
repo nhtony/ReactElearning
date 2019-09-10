@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import FormCourse from '../../components/admin/FormCourse';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getInfoCourseAction } from '../../redux/actions/Course.action';
+import { getDetailCourseAction } from '../../redux/actions/Course.action';
 class CourseEdit extends Component {
     componentDidMount() {
         let param = {
@@ -22,7 +22,7 @@ class CourseEdit extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         getInfoCourse: (idcourse) => {
-            dispatch(getInfoCourseAction(idcourse));
+            dispatch(getDetailCourseAction(idcourse));
         }
     }
 }

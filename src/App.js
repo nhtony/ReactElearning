@@ -8,6 +8,8 @@ import LoadingService from './common/LoadingService';
 
 const HomeTemplate = lazy(() => import('./templates/HomeTemplate'));
 
+
+
 const AdminTemplate = lazy(() => {
   return new Promise(resolve => {
     setTimeout(() => resolve(import('./templates/AdminTemplate')), 1000)
@@ -20,12 +22,15 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<LoadingService />}>
         <Switch>
-          <Route path={'/home'} component={HomeTemplate}></Route>
+          <Route path={'/home'} component={HomeTemplate}>
+          </Route>
           <Route path={'/admin/login'} component={LoginAdmin}></Route>
-          <AdminAuth path={'/admin'} Component={AdminTemplate}></AdminAuth>
+          <AdminAuth path={'/admin'} Component={AdminTemplate}>
+          </AdminAuth>
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Suspense>
+ 
     </BrowserRouter >
   );
 }

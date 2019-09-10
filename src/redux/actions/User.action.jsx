@@ -6,21 +6,24 @@ import { userLogoutStorage } from '../../common/Config';
 
 export const signUpAction = (userInfo) => {
     return (dispatch) => {
+        dispatch({type:types.USER_SIGN_UP['REQUEST']});
         Axios({
             method: 'POST',
             url: API_USER_SIGN_UP,
             data: userInfo
-        }).then(() => {
+        }).then((res) => {
             successAlert("Sign up success");
-            dispatch({ type: types.USER_SIGN_UP });
+            dispatch({ type: types.USER_SIGN_UP['SUCCESS'], payload: res.data });
         }).catch((err) => {
-            swal.fire("Message", err.response.data, 'error');
+        console.log("TCL: signUpAction -> err", err.response.data)
+            // swal.fire("Message", err.response.data, 'error');
         })
     }
 }
 
 export const loginAction = (userInfo, avt) => {
     return (dispatch) => {
+        dispatch(types.USER_LOGIN['REQUEST']);
         Axios({
             method: 'POST',
             url: API_USER_LOGIN,
@@ -33,7 +36,7 @@ export const loginAction = (userInfo, avt) => {
                 accessToken: res.data.accessToken
             }
             setLocalStorage(loginInfo, userLogin);
-            dispatch({ type: types.USER_LOGIN });
+            dispatch({ type: types.USER_LOGIN['SUCCESS'], payload: res.data });
             successAlert("Login success");
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');

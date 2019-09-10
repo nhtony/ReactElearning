@@ -6,6 +6,7 @@ import { getLocalStorage, loginInfo } from '../../common/Config';
 import { Redirect } from 'react-router-dom';
 import { getCategoriesAction } from '../../redux/actions/Courses.action'
 import Categories from './Categories';
+import { Link } from 'react-router-dom';
 class Header extends Component {
 
   loginSidebar = {
@@ -109,7 +110,7 @@ class Header extends Component {
     return (
       <header id="header" className="myHeader">
         <nav className="navbar navbar-expand-sm">
-          <a className="navbar-brand" href="home"><img style={{ maxWidth: 50 }} src="/img/logo.png" alt="logo" /></a>
+          <Link to="/home" className="navbar-brand"><img style={{ maxWidth: 50 }} src="/img/logo.png" alt="logo" /></Link>
           <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>

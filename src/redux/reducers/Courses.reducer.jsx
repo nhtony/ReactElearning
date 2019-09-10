@@ -10,31 +10,56 @@ let initialState = {
 
 const CoursesReducerStore = (state = initialState, action) => {
     switch (action.type) {
-        case types.GET_LIST_COURSE:
-            state.Courses = action.courses;
+        // Lấy danh sách khóa học
+        case types.GET_COURSES['SUCCESS']:
+            state.Courses = action.payload;
             state.isSuccess = false;
-            return { ...state };
-
-        case types.ADD_COURSE:
-            state.isSuccess = action.status;
-            return { ...state };
-
-        case types.EDIT_COURSE:
-            state.isSuccess = action.status;
-            return { ...state };
-
-        case types.DELETE_COURSE:
-            state.Courses = state.Courses.filter(course => course.maKhoaHoc !== action.idcourse);
-            return { ...state };
-
-        case types.GET_CATEGORIES:
-            state.Categories = action.categories;
-            return { ...state };
-
-        case types.GET_CATEGORY_COURSES:
+            return { ...state, coursesLoading: false };
+        case types.GET_COURSES['REQUEST']:
+            return { ...state, coursesLoading: true };
+        case types.GET_COURSES['FAILED']:
+            return { ...state, coursesLoading: false };
+        // Thêm khóa học
+        case types.ADD_COURSE['SUCCESS']:
+            state.isSuccess = (typeof action.payload === Object) ? true : false;
+            return { ...state, addLoading: false };
+        case types.ADD_COURSE['REQUEST']:
+            return { ...state, addLoading: true };
+        case types.ADD_COURSE['FAILED']:
+            return { ...state, addLoading: false };
+        // Sửa khóa học
+        case types.EDIT_COURSE['SUCCESS']:
+            state.isSuccess = (typeof action.payload === Object) ? true : false;
+            return { ...state, editLoading: false };
+        case types.EDIT_COURSE['REQUEST']:
+            return { ...state, editLoading: true };
+        case types.EDIT_COURSE['FAILED']:
+            return { ...state, editLoading: false };
+        // Xóa khóa học
+        case types.DELETE_COURSE['SUCCESS']:
+            state.Courses = state.Courses.filter(course => course.maKhoaHoc !== action.payload);
+            return { ...state, deleteLoading: false };
+        case types.DELETE_COURSE['REQUEST']:
+            return { ...state, deleteLoading: true };
+        case types.DELETE_COURSE['FAILED']:
+            return { ...state, deleteLoading: false };
+        // Lấy danh mục khóa học
+        case types.GET_CATEGORIES['SUCCESS']:
+            state.Categories = action.payload;
+            return { ...state, cateLoading: false };
+        case types.GET_CATEGORIES['REQUEST']:
+            return { ...state, cateLoading: true };
+        case types.GET_CATEGORIES['FAILED']:
+            return { ...state, cateLoading: false };
+        //Lấy khóa học theo danh mục
+        case types.GET_CATEGORY_COURSES['SUCCESS']:
             state.CategoryCourses = action.payload;
-            return { ...state };
-
+            return { ...state, catCoursesLoading: false };
+        case types.GET_CATEGORY_COURSES['REQUEST']:
+            return { ...state, catCoursesLoading: true };
+        case types.GET_CATEGORY_COURSES['FAILED']:
+            return { ...state, catCoursesLoading: false };
+        //Tìm kiếm khóa học theo tên
         case types.FIND_COURSE:
             if (action.listSearch) {
                 let updateState = { ...state };
@@ -48,7 +73,7 @@ const CoursesReducerStore = (state = initialState, action) => {
                 return updateState;
             }
         default:
-            return state;
+            return { ...state};
     }
 }
 

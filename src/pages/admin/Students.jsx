@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TableStudent from '../../components/admin/TableStudent';
 import { connect } from 'react-redux';
-import { getInfoCourseAction } from '../../redux/actions/Course.action';
+import { getDetailCourseAction } from '../../redux/actions/Course.action';
 import { getListAction } from '../../redux/actions/Students.action';
 import { listTypes } from '../../common/Config';
 class Students extends Component {
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(getListAction(idcourse, listType));
         },
         getInfoCourse: (idcourse) => {
-            dispatch(getInfoCourseAction(idcourse));
+            dispatch(getDetailCourseAction(idcourse));
         }
     }
 }

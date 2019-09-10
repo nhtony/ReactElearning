@@ -75,7 +75,8 @@ class Repond extends PureComponent {
             }
         }
         const { loading } = this.state;
-        this.props.getIdCourse(this.props.maKhoaHoc);
+
+        this.props.getIdCourse(this.props.maKH);
 
         return (
 

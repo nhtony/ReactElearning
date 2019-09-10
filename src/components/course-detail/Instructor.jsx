@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-
-export default class Instructor extends Component {
+import { connect } from 'react-redux';
+class Instructor extends Component {
     render() {
-        const { nguoiTao } = this.props.courseDatail;
+        const author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : this.props.courseDetail.nguoiTao;
+        const { hoTen } = author;
         return (
             <div className="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                 <h4 className="pt-4 pb-4">INSTRUCTOR</h4>
@@ -11,7 +12,7 @@ export default class Instructor extends Component {
                         <img className="author-img" alt="hinh" src="/img/1.jpg" />
                     </div>
                     <div className="col-sm-10 author__info">
-                        <h4>{nguoiTao.hoTen}</h4>
+                        <h4>{hoTen}</h4>
                         <div className="author__info__line">
                             <div />
                         </div>
@@ -23,3 +24,9 @@ export default class Instructor extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        courseDetail: state.CourseReducer.courseDetail
+    }
+}
+export default connect(mapStateToProps, null)(Instructor);

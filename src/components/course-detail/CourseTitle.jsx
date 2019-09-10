@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux';
 import { courseContent } from '../../common/CourseService';
-class CourseTitle extends PureComponent {
+export default class CourseTitle extends PureComponent {
     render() {
-        const { tenKhoaHoc, soLuongHocVien } = this.props.courseDetail;
-        const { duration } = courseContent[this.props.maKH];
+        const { tenKhoaHoc, soLuongHocVien, maKhoaHoc } = this.props.courseDetail;
+        const { duration } = (courseContent.hasOwnProperty(maKhoaHoc)) ? courseContent[maKhoaHoc] : {};
         return (
             <div className="single__head">
                 <div className="container ">
@@ -32,10 +31,3 @@ class CourseTitle extends PureComponent {
         )
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        courseDetail: state.CourseReducer.courseDetail
-    }
-}
-export default connect(mapStateToProps, null)(CourseTitle);

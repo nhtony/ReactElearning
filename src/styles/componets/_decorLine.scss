@@ -1,0 +1,11 @@
+
+.decorLine {
+  &::before {
+    content: "";
+    position: absolute;
+    background: #7cb342;
+    width: 40px;
+    height: 2px;
+    bottom: 0;
+  }
+}

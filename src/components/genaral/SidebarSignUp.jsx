@@ -4,6 +4,7 @@ import { signUpAction } from '../../redux/actions/User.action';
 import Facebook from './Facebook';
 import Google from './Google';
 import { GP } from '../../common/Config';
+import { sidebarAction, openAfterAction } from '../../redux/actions/RightSidebar.action';
 class SidebarSignUp extends Component {
 
     constructor(props) {
@@ -17,6 +18,11 @@ class SidebarSignUp extends Component {
             maNhom: GP,
             email: ''
         }
+    }
+
+    loginSidebar = {
+        isOpenLogin: true,
+        isOpenSignUp: false,
     }
 
     handleOnChange = (event) => {
@@ -70,13 +76,19 @@ class SidebarSignUp extends Component {
                     <div className="action-part mt-3">
                         <button className="btn-form btnLogin">Sign up</button>
                     </div>
-                    
+
                 </form>
                 <div className="notes-part mt-3">
-                    <p>Already have a account?</p>
+                    <p onClick={() => { this.props.openSignUpSidebar(this.loginSidebar) }}>Already have a account?</p>
                 </div>
             </div>
         </div >)
+    }
+
+    componentDidUpdate() {
+        if (this.props.signUpSuccess) {
+            this.props.openAfterSignUp();
+        }
     }
 
     render() {
@@ -88,6 +100,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         signUp: (user) => {
             dispatch(signUpAction(user));
+        },
+        openSignUpSidebar: (data) => {
+            dispatch(sidebarAction(data))
+        },
+        openAfterSignUp: () => {
+            dispatch(openAfterAction())
         }
     }
 }
@@ -96,6 +114,7 @@ const mapStateToProps = (state) => {
     return {
         Sidebar: state.RightSideBarReducer,
         isLogin: state.UserReducer.isLogin,
+        signUpSuccess: state.UserReducer.isSuccess
     }
 }
 

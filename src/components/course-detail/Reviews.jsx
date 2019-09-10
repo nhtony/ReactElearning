@@ -54,8 +54,8 @@ class Reviews extends Component {
         return (
             <div className="tab-pane fade" id="review-course" role="tabpanel" aria-labelledby="review-course-tab">
                 <h4 className="pt-4 pb-4">REVIEWS</h4>
-                <ReviewValueChart maKhoaHoc={this.props.maKhoaHoc}></ReviewValueChart>
-                <Repond maKhoaHoc={this.props.maKhoaHoc}></Repond>
+                <ReviewValueChart></ReviewValueChart>
+                <Repond maKH={this.props.maKH}></Repond>
                 <ul className="review-list">
                     {this.renderReviewItem()}
                 </ul>

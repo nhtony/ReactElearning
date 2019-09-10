@@ -4,17 +4,25 @@ import { API_GET_COURSE_INFORMATION, API_GET_ENROLL_COURSES, API_GET_NOT_ENROLL_
 import swal from 'sweetalert2';
 
 
-export const getInfoCourseAction = (idcourse) => {
+export const getDetailCourseAction = (idcourse) => {
     return (dispatch) => {
+        dispatch({ type: types.GET_DETAIL_COURSE['REQUEST'] });
         Axios({
             method: 'GET',
             url: API_GET_COURSE_INFORMATION + idcourse,
         }).then((res) => {
-            dispatch({
-                type: types.GET_INFO_COURSE, courseDetail: res.data
-            });
+            setTimeout(() => {
+                dispatch({
+                    type: types.GET_DETAIL_COURSE['SUCCESS'],
+                    payload: res.data
+                });
+            }, 1000);
+         
         }).catch((err) => {
-            console.log("TCL: getInfoCourseAction -> err", err)
+            dispatch({
+                type: types.GET_DETAIL_COURSE['FAILED'],
+                payload: err.response.data
+            });
         })
     }
 }

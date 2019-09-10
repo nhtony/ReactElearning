@@ -6,14 +6,8 @@ import Slider from "react-slick";
 
 class RelatedCourses extends PureComponent {
 
-
-
     getCourseFromOthers = (list, name) => {
         return list.filter(course => course.nguoiTao.hoTen !== name);
-    }
-
-    componentDidMount() {
-        this.props.getListCourse();
     }
 
     renderRelatedCourseItem = (list) => {
@@ -22,6 +16,10 @@ class RelatedCourses extends PureComponent {
                 <CourseItem key={index} courseContent={item}></CourseItem>
             )
         })
+    }
+
+    componentDidMount() {
+        this.props.getListCourse();
     }
 
     render() {
@@ -57,7 +55,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        courseDetail: state.CourseReducer.courseDetail,
         Courses: state.CoursesReducer.Courses,
     }
 }

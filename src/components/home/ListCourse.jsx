@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import Slider from "react-slick";
-import { connect } from 'react-redux'
-
 import CourseItem from '../genaral/CourseItem';
 
-class ListCourse extends Component {
+export default class ListCourse extends Component {
 
   renderCourses = () => {
     return this.props.Courses.map((course, index) => {
@@ -41,10 +39,3 @@ class ListCourse extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    Courses: state.CoursesReducer.Courses
-  }
-}
-
-export default connect(mapStateToProps, null)(ListCourse);

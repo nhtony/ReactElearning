@@ -5,6 +5,7 @@ import ListCateItem from './ListCateItem'
 export default class AsideCate extends PureComponent {
 
     render() {  
+       
         return (
             <aside className="category-aside sticky">
                 <div className="all-cate-course">

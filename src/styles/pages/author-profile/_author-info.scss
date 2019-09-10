@@ -1,0 +1,22 @@
+.author-profile-page {
+  .img {
+    .author-img {
+      border-radius: 3px;
+    }
+  }
+  .author-profile {
+    margin-bottom: 100px;
+    .author-name {
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .social-author {
+      display: flex;
+      list-style: none;
+      margin-top: 30px;
+      li {
+        margin-right: 20px;
+      }
+    }
+  }
+}

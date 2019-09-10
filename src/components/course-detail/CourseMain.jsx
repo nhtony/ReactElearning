@@ -3,10 +3,11 @@ import About from './About';
 import Curriculum from './Curriculum';
 import Instructor from './Instructor';
 import Reviews from './Reviews';
-export default class CourseMain extends PureComponent {
+
+ export default class CourseMain extends PureComponent {
 
     render() {
-        const { maKhoaHoc, hinhAnh } = this.props.courseDatail;
+        const { maKhoaHoc, hinhAnh } = this.props.courseDetail;
         return (
             <div className="courseMain">
                 <div className="imgCourse">
@@ -27,10 +28,10 @@ export default class CourseMain extends PureComponent {
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
-                    <About ></About>
+                    <About></About>
                     <Curriculum maKH={maKhoaHoc}></Curriculum>
-                    <Instructor courseDatail={this.props.courseDatail}></Instructor>
-                    <Reviews maKhoaHoc={maKhoaHoc}></Reviews>
+                    <Instructor></Instructor>
+                    <Reviews maKH={maKhoaHoc}></Reviews>
                 </div>
             </div>
         )

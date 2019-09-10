@@ -1,28 +1,32 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getInfoCourseAction } from '../../redux/actions/Course.action';
+import { getDetailCourseAction } from '../../redux/actions/Course.action';
 class CourseItem extends Component {
+
     render() {
+      
+        
         const { maKhoaHoc, hinhAnh, tenKhoaHoc, nguoiTao, soLuongHocVien } = this.props.courseContent
         return (
             <div className="item-course-list">
                 <div className="featured-course">
                     <div className="featured-course__thumb">
-                        <Link onClick={() => this.props.getInfoCourse(maKhoaHoc)} to={"/home/course-detail/" + maKhoaHoc}>
+                        <Link onClick={() => this.props.getInfoCourse(maKhoaHoc)} to={"/home/course/detail/" + maKhoaHoc}>
                             <img src={hinhAnh} alt="" />
                         </Link>
                     </div>
                     <div className="featured-course__wrap">
                         <div className="featured-course__text">
                             <h5>
-                                <Link onClick={() => this.props.getInfoCourse(maKhoaHoc)} to={"/home/course-detail/" + maKhoaHoc}>{tenKhoaHoc}</Link>
+                                <Link onClick={() => this.props.getInfoCourse(maKhoaHoc)} to={"/home/course/detail/" + maKhoaHoc}>{tenKhoaHoc}
+                                </Link>
                             </h5>
                             <div className="course-author">
                                 <img className="author-img" src="/img/1.jpg" alt="" />
                                 <div className="course-author__text">
                                     <h6>{nguoiTao.hoTen}</h6>
-                                    <Link to={"/home/author-profile/" + nguoiTao.hoTen} onClick={() => this.props.getInfoCourse(maKhoaHoc)}>VIEW PROFILE</Link>
+                                    <Link to={"/home/author/profile/" + nguoiTao.hoTen}>VIEW PROFILE</Link>
                                 </div>
                             </div>
                             <div className="featured-course__meta ">
@@ -43,8 +47,9 @@ class CourseItem extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         getInfoCourse: (idcourse) => {
-            dispatch(getInfoCourseAction(idcourse));
+            dispatch(getDetailCourseAction(idcourse));
         }
     }
 }
+
 export default connect(null, mapDispatchToProps)(CourseItem);

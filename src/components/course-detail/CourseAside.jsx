@@ -2,40 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { courseContent } from '../../common/CourseService';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
-import CourseFromAuthor from './CourseFromAuthor';
 
+import AuthorCourses from './AuthorCourses';
+import SocialList from '../genaral/SocialList';
+import CourseFeatureAside from './CourseFeatureAside';
 
 class CourseAside extends Component {
-
-    relatedOtherCourseOfAuhor = [];
 
     getCourseByAuthorName = (list, name) => {
         return list.filter(course => course.nguoiTao.hoTen === name);
     }
 
-    getRelatedCoursesOfAuthor = (list, id) => {
-        return list.filter(course => course.maKhoaHoc !== id)
-    }
-
-    componentDidMount() {
+    componentWillMount() {
         this.props.getListCourse();
-    }
-
-    renderCourseFormAuthor = () => {
-        return this.relatedOtherCourseOfAuhor.map((course, index) => {
-            return (<CourseFromAuthor course={course} key={index}></CourseFromAuthor>)
-        })
     }
 
     render() {
 
-        const author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : this.props.courseDetail.nguoiTao;
+        const { maKhoaHoc, nguoiTao } = this.props.courseDetail;
+
+        const author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : nguoiTao;
 
         const authorCourse = this.getCourseByAuthorName(this.props.Courses, author.hoTen);
-
-        this.relatedOtherCourseOfAuhor = this.getRelatedCoursesOfAuthor(authorCourse, this.props.courseDetail.maKhoaHoc);
-
-        const { duration } = courseContent[this.props.maKH];
+    
+        const { duration } = (courseContent.hasOwnProperty(maKhoaHoc)) ? courseContent[maKhoaHoc] : {};
 
         return (
             <aside className="course-aside sticky">
@@ -43,12 +33,7 @@ class CourseAside extends Component {
                     <h4>FREE</h4>
                     <button>ENROLL</button>
                 </div>
-                <ul className="social-author">
-                    <li><i className="fa fa-facebook"></i></li>
-                    <li><i className="fa fa-twitter"></i></li>
-                    <li><i className="fa fa-instagram"></i></li>
-                    <li><i className="fa fa-google-plus"></i></li>
-                </ul>
+                <SocialList></SocialList>
                 <div className="author-aside row">
                     <div className="img col-4">
                         <img className="author-img" src="/img/1.jpg" alt="" />
@@ -71,70 +56,10 @@ class CourseAside extends Component {
                         <img className="student-img" src="https://secure.gravatar.com/avatar/bb90dcb0ceabfc8bf10c550f1ee95ee7?s=60&d=mm&r=g" alt="" />
                     </div>
                 </div>
-                <div className="course-features">
-                    <h5 className="mb-4">COURSE FEATURES</h5>
-                    <div className="row mb-3">
-                        <div className="icon col-2">
-                            <i className="fa fa-file-text mr-5"></i>
-                        </div>
-                        <div className="col-6">
-                            <span className="social-text">Lectures</span>
-                        </div>
-                        <div className="col-4">
-                            <span>{this.relatedOtherCourseOfAuhor.length + 1}</span>
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <div className="icon col-2">
-                            <i className="fa fa-clock-o mr-5"></i>
-                        </div>
-                        <div className="col-6">
-                            <span className="social-text">Duration</span>
-                        </div>
-                        <div className="col-4">
-                            <span>{duration}</span>
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <div className="icon col-2">
-                            <i className="fa fa-level-up mr-5"></i>
-
-                        </div>
-                        <div className="col-6">
-                            <span className="social-text">Skill Level</span>
-                        </div>
-                        <div className="col-4">
-                            <span> Beginner</span>
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <div className="icon col-2">
-                            <i className="fa fa-globe mr-5"></i>
-                        </div>
-                        <div className="col-6">
-                            <span className="social-text">Language</span>
-                        </div>
-                        <div className="col-4">
-                            <span>English</span>
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <div className="icon col-2">
-                            <i className="fa fa-shield mr-5"></i>
-                        </div>
-                        <div className="col-6">
-                            <span className="social-text">Certificate</span>
-                        </div>
-                        <div className="col-4">
-                            No
-                        </div>
-                    </div>
-                </div>
+               <CourseFeatureAside duration={duration} authorCourse={authorCourse}></CourseFeatureAside>
                 <div className="another-author-course">
                     <h5 className="sidebar-single__title">FROM <span>{author.hoTen}</span></h5>
-                    <div className="course-relation">
-                        {this.renderCourseFormAuthor()}
-                    </div>
+                    <AuthorCourses maKH={maKhoaHoc} authorCourse={authorCourse}></AuthorCourses>
                 </div>
             </aside>
         )
@@ -143,7 +68,6 @@ class CourseAside extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        courseDetail: state.CourseReducer.courseDetail,
         Courses: state.CoursesReducer.Courses,
     }
 }

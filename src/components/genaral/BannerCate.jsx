@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 export default class BannerCate extends PureComponent {
 
     render() {
-        const { name } = this.props.content;
+        const name  = this.props.name;
         const title = this.props.title;
         return (
             <section className="cate__banner">

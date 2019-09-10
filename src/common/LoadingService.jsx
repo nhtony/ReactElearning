@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core';
-import { CircleLoader } from 'react-spinners';
+import {HashLoader} from 'react-spinners';
 
 const override = css`
     display: block;
@@ -10,7 +10,7 @@ const override = css`
 export default function LoadingService() {
     return (
         <div id="cover-spin">
-            <CircleLoader
+            <HashLoader
                 css={override}
                 sizeUnit={"px"}
                 color={'#fffbd5'}

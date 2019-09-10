@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { getCoursesByCatogoryAction } from '../../redux/actions/Courses.action';
+import { getCateCourseAction } from '../../redux/actions/Courses.action';
 import { Link } from 'react-router-dom';
 
 class ListCateItem extends PureComponent {
@@ -9,7 +9,7 @@ class ListCateItem extends PureComponent {
         return this.props.Categories.map((item, index) => {
             return (
                 <li key={index} className="cate-item ">
-                    <Link onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={"/home/course-category/" + item.maDanhMuc + "/" + item.tenDanhMuc}>{item.tenDanhMuc}</Link>
+                    <Link onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={"/home/course/category/" + item.maDanhMuc + "/" + item.tenDanhMuc}>{item.tenDanhMuc}</Link>
                 </li>
             )
         })
@@ -25,14 +25,14 @@ class ListCateItem extends PureComponent {
 }
 const mapStateToProps = (state) => {
     return {
-        Categories: state.CoursesReducer.Categories,
+        Categories: state.CoursesReducer.Categories
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getCateCourses: (cateID) => {
-            return dispatch(getCoursesByCatogoryAction(cateID));
+            return dispatch(getCateCourseAction(cateID));
         }
     }
 }

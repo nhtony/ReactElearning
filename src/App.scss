@@ -33,7 +33,6 @@
 @import "styles/pages/course-detail/review-circle";
 @import "styles/pages/course-detail/review-item";
 
-
 //Course category
 @import "styles/pages/course-category/aside-cate";
 @import "styles/pages/course-category/list-cate-item";
@@ -41,6 +40,18 @@
 
 //Author profile
 @import "styles/pages/author-profile/author-info";
+
+//User profile
+@import "styles/pages/user-profile/aside-user";
+@import "styles/pages/user-profile/profile-main";
+@import "styles/pages/user-profile/account-main";
+
+//Player 
+@import "styles/pages/player/player";
+@import "styles/pages/player/course-content-tab";
+@import "styles/pages/player/player-tabs";
+@import "styles/pages/player/overview";
+@import "styles/pages/player/question";
 
 //Components
 @import "styles/componets/right-sidebar";
@@ -58,9 +69,11 @@
 @import "styles/componets/card-course";
 @import "styles/componets/banner-cate";
 @import "styles/componets/decorLine";
-
-
 @import "styles/componets/form-admin";
+@import "styles/componets/error";
+@import "styles/componets/my-header-course";
+@import "styles/componets/load-more-btn";
+@import "styles/componets/ask-form";
 
 // .slick-center .course__item{
 //     opacity: 1 !important;

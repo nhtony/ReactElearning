@@ -9,6 +9,7 @@ import SidebarLogin from '../../components/genaral/SidebarLogin';
 import LoadingService from '../../common/LoadingService';
 import { connect } from 'react-redux';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
+
 class Home extends Component {
 
     componentDidMount() {
@@ -16,7 +17,7 @@ class Home extends Component {
     }
 
     render() {
-        return (!this.props.coursesLoading) ? (
+        return (this.props.coursesLoaded) ? (
             <section className="home-page">
                 <Banner></Banner>
                 <SidebarSignUp></SidebarSignUp>
@@ -32,7 +33,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
     return {
         Courses: state.CoursesReducer.Courses,
-        coursesLoading: state.CoursesReducer.coursesLoading
+        coursesLoaded: state.CoursesReducer.coursesLoaded
     }
 }
 

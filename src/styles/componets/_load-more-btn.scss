@@ -1,0 +1,5 @@
+.load-more-btn{
+    @include button(100px,35px,#49c5b6,white);
+    border-radius: 3px;
+    outline: none;
+}

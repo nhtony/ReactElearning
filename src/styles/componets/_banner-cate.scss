@@ -10,12 +10,29 @@
   padding: 100px;
   &::before {
     content: "";
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #07294d;
+    opacity: 0.8;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
+  }
+  .page__title {
+    color: white;
+  }
+  .breadcrumbs {
+    .root-branch {
+      span {
+        color: white;
+      }
+    }
+    i {
+      color: white;
+    }
+    .current-branch {
+      color: #ffc600;
+    }
   }
 }

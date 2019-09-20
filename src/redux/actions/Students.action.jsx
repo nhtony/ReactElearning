@@ -1,6 +1,6 @@
 import * as types from '../contants/Students.contant';
 import Axios from 'axios';
-import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, loginInfo, listTypes, API_DISENROLL, API_ENROLL } from '../../common/Config';
+import { API_GET_STUDENT_OF_COURSE, API_GET_UNREGISTERED_USERS, API_GET_WATTING_USERS, getLocalStorage, loginInfo, listTypes, API_DISENROLL, API_ENROLL, setLocalStorage } from '../../common/Config';
 import swal from 'sweetalert2';
 
 export const getListAction = (idcourse, listType) => {
@@ -57,6 +57,15 @@ export const studentAction = (idcourse, username, listType) => {
             successAlert(res.data);
         }).catch((err) => {
             console.log("TCL: signUpAction -> err", err);
+        })
+    }
+}
+
+export const setNoifyAction = (noti) => {
+    return (dispatch) => {
+        dispatch({
+            type: types.SET_NOTIFY,
+            payload: noti
         })
     }
 }

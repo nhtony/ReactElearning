@@ -21,6 +21,11 @@ const UserReducerStore = (state = initialState, action) => {
         case types.USER_PROFILE:
             state.profile = action.payload;
             return { ...state };
+        //Dang ky khoa hoc
+        case types.USER_ENROLL['SUCCESS']:
+            return { ...state, enrollLoading: true };
+        case types.USER_ENROLL['REQUEST']:
+            return { ...state, enrollLoading: false };
         //Đăng xuất
         case types.USER_LOG_OUT:
             state.isLogin = false;

@@ -1,0 +1,21 @@
+.my-profile-page {
+  margin-top: 150px;
+  .my-profile-aside {
+    background-color: #f5f5f5;
+    padding: 15px 15px 197px 15px;
+    .my-info {
+      text-align: center;
+      margin-bottom: 20px;
+      img {
+        @include avatar(115px, 115px, 50%);
+        margin-bottom: 10px;
+      }
+    }
+    .my-menu-profile {
+      list-style: none;
+      li {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

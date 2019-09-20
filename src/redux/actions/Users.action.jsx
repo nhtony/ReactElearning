@@ -73,7 +73,7 @@ export const deleteUserAction = (username) => {
             dispatch({ type: types.DELETE_USER, username: username })
             successAlert(res.data);
         }).catch((err) => {
-            console.log("TCL: deleteUserAction -> err", err)
+            swal.fire("Message", err.response.data, 'error')
         })
     }
 }

@@ -9,12 +9,15 @@ import LoadingService from '../../common/LoadingService';
 import { getDetailCourseAction } from '../../redux/actions/Course.action';
 class CourseDetail extends Component {
 
-    componenDidMount() {
+   
+
+    componentWillMount() {
         this.props.getDetailCourse(this.props.match.params.mkh);
     }
 
     render() {
-        return (!this.props.detailLoading) ? (<section className="course-detail-page">
+      
+        return (this.props.detailLoaded) ? (<section className="course-detail-page">
             <section className="course-detail__header">
                 <BreadCrumbs courseDetail={this.props.courseDetail}></BreadCrumbs>
                 <CourseTitle courseDetail={this.props.courseDetail}></CourseTitle>
@@ -39,7 +42,7 @@ class CourseDetail extends Component {
 const mapStateToProps = (state) => {
     return {
         courseDetail: state.CourseReducer.courseDetail,
-        detailLoading: state.CourseReducer.detailLoading
+        detailLoaded: state.CourseReducer.detailLoaded
     }
 }
 

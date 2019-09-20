@@ -17,13 +17,11 @@ const RighSideBarStore = (state = initialState, action) => {
                 state.isOpenLogin = false;
             }
             return { ...state };
-        case "OPEN_AFTER_SIGNUP":
+        case types.OPEN_AFTER_SIGN_UP:
             state.isOpenLogin = true;
             state.isOpenSignUp = false;
             return { ...state };
         default:
-            state.isOpenSignUp = false;
-            state.isOpenLogin = false;
             return { ...state };
     }
 }

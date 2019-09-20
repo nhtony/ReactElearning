@@ -3,16 +3,19 @@
   left: 0;
   top: 0;
   width: 100%;
-  padding: 10px 30px;
+  padding: 0 30px;
   z-index: 999;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
   .navbar {
+    padding: 0;
+
     .collapse {
       .menu-nav {
         justify-content: center;
         .nav-item {
-          .nav-link {
-            color: white;
+          #dropdownMenuButton {
+            @include text(16px, 300, #b1b2b4);
+            letter-spacing: 1px;
           }
         }
       }
@@ -21,20 +24,41 @@
         justify-content: flex-end;
         list-style: none;
         margin-bottom: 0;
+        #btn-login {
+          @include text(16px, 400, #ffdd3c);
+          letter-spacing: 1px;
+          border: none;
+          background: none;
+          outline: none;
+        }
+
+        #btn-sign-up {
+          @include button(80px, 35px, #ffdd3c, #3f4044);
+
+          border-radius: 3px;
+          outline: none;
+        }
+        .mycourse {
+          color:  #b1b2b4;
+        }
       }
     }
   }
   .dropdown:hover > .dropdown-menu {
     display: block;
   }
-  
+
   .dropdown > .dropdown-toggle:active {
     pointer-events: none;
   }
 }
 .bgColor {
   background: linear-gradient(to right, #480048, #c04848);
-  padding: 5px;
+  padding: 0 5px;
   transition: all 1s;
 }
-
+.header-animation {
+  // background: linear-gradient(to right, #480048, #c04848);
+  // height: 60px;
+  // transition: all 1s;
+}

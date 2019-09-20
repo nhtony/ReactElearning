@@ -14,9 +14,9 @@ class AuthorProfile extends Component {
 
     render() {
         const title = "Instructor";
-        return (!this.props.coursesLoading) ? (
+        return (this.props.coursesLoaded) ? (
             <section className="author-profile-page">
-                <BannerCate title={title} name={this.props.match.params.name}></BannerCate>
+                <BannerCate author={true} title={title} name={this.props.match.params.name}></BannerCate>
                 <div className="container">
                     <div className="author-profile row">
                         <div className="img col-3">
@@ -36,9 +36,11 @@ class AuthorProfile extends Component {
     }
 }
 const mapStateToProps = (state) => {
+   
     return {
         Courses: state.CoursesReducer.Courses,
-        coursesLoading: state.CoursesReducer.coursesLoading
+        coursesLoaded: state.CoursesReducer.coursesLoaded
+      
     }
 }
 const mapDispatchToProps = (dispatch) => {

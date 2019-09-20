@@ -5,6 +5,7 @@ import { getProfileAction } from '../../redux/actions/User.action';
 import { listTypes } from '../../common/Config';
 import TableStudentCourse from '../../components/admin/TableStudentCourse'
 class StudentCourse extends Component {
+    
     componentDidMount() {
         let taiKhoan = ""
         taiKhoan = this.props.match.params.tk;
@@ -32,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         StudentsCourse: state.CourseReducer.list,
+     
         profile: state.UserReducer.profile
     }
 }

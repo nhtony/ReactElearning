@@ -37,12 +37,9 @@ class Reviews extends Component {
 
     renderLoadMoreButton = () => {
         const { loading } = this.state;
-        return (this.state.visible > this.props.comments.length) ? null : (<button disabled={false} className="load-more-btn text-right" onClick={this.loadMore}>
+        return (this.state.visible > this.props.comments.length) ? null : (<button disabled={false} className="load-more-btn" onClick={this.loadMore}>
             {loading && (
-                <i
-                    className="fa fa-refresh fa-spin"
-                    style={{ marginRight: "5px" }}
-                />
+                <i className="fa fa-refresh fa-spin" style={{ marginRight: "5px" }} />
             )}
             {loading && <span>Loading...</span>}
             {!loading && <span>Load more</span>}
@@ -59,7 +56,9 @@ class Reviews extends Component {
                 <ul className="review-list">
                     {this.renderReviewItem()}
                 </ul>
-                {this.renderLoadMoreButton()}
+                <div className="load-more text-right">
+                    {this.renderLoadMoreButton()}
+                </div>
             </div>
         )
     }

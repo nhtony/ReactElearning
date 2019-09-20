@@ -5,7 +5,7 @@ import { loginInfo, getLocalStorage } from '../../common/Config';
 
 const AdminAuth = ({ path, Component }) => {
     let role = "";
-    if (getLocalStorage(loginInfo)) {
+    if (localStorage.getItem(loginInfo)) {
         const accesstoken = getLocalStorage(loginInfo).accessToken;
         const deVal = Object.values(decodeToken(accesstoken));
         role = deVal[1];

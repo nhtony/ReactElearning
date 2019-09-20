@@ -1,0 +1,33 @@
+.profile-title {
+  text-align: center;
+  padding: 10px 0;
+  border: 1px solid #dedfe0;
+  p {
+    @include text(15px, 300, #a1a7b3);
+  }
+}
+.profile-content {
+  border-right: 1px solid #dedfe0;
+  border-left: 1px solid #dedfe0;
+  border-bottom: 1px solid #dedfe0;
+  .my-form {
+    padding: 20px 15px;
+    .my-input {
+      input {
+        width: 100%;
+        height: 45px;
+        margin-bottom: 15px;
+        border-radius: 2px;
+        border: 1px solid #a1a7b3;
+        padding: 0 15px;
+      }
+    }
+    .profile-button {
+      text-align: center;
+      .save-button {
+        @include button(60px, 44px, #ec5252, white);
+        border-radius: 2px;
+      }
+    }
+  }
+}

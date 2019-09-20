@@ -10,6 +10,11 @@ export const USER_LOGIN = {
     FAILED: "USER_LOGIN_FAILED"
 }
 
+export const USER_ENROLL = {
+    REQUEST: "USER_ENROLL_REQUEST",
+    SUCCESS: "USER_ENROLL_SUCCESS",
+    FAILED: "USER_ENROLL_FAILED"
+}
 export const ADMIN_LOGIN = "ADMIN_LOGIN";
 
 export const USER_LOG_OUT = "USER_LOG_OUT";

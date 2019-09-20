@@ -84,7 +84,7 @@ class Repond extends PureComponent {
                 {this.renderTitle()}
                 {this.renderReviewStars()}
                 <form className="form-comment" onSubmit={this.handleSubmit}>
-                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="4" aria__required="true" placeholder="Your Comment" onChange={this.handleOnchange} required value={this.state.comment} ></textarea>
+                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="4" aria__required="true" placeholder="Your Comment" onChange={this.handleOnchange} required  ></textarea>
                     <div className="submit-btn">
                         <button style={(!this.props.isLogin) ? style.disible : style.enable} disabled={!this.props.isLogin} type="submit">
                             {loading && (

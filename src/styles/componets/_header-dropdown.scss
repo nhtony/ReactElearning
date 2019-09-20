@@ -16,6 +16,15 @@
     cursor: pointer;
     border-bottom: 0.2px solid #bdc3c7;
     padding: 5%;
+    i{
+      color: #212529;
+    }
+    .link-item {
+      text-decoration: none !important;
+      i{
+        color: #212529;
+      }
+    }
     span {
       text-decoration: none;
       margin-left: 5%;
@@ -31,11 +40,15 @@
   }
 }
 
-#courseDropdownMenu{
+#courseDropdownMenu {
   padding: 0;
   width: 200px;
   position: absolute;
   top: 94%;
   left: 52%;
   border-radius: 2px;
+  padding: 10px;
+  #see-all {
+    text-align: right;
+  }
 }

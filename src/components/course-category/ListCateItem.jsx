@@ -9,7 +9,7 @@ class ListCateItem extends PureComponent {
         return this.props.Categories.map((item, index) => {
             return (
                 <li key={index} className="cate-item ">
-                    <Link onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={"/home/course/category/" + item.maDanhMuc + "/" + item.tenDanhMuc}>{item.tenDanhMuc}</Link>
+                    <Link onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={`/home/course/category/${item.maDanhMuc}/${item.tenDanhMuc}`}>{item.tenDanhMuc}</Link>
                 </li>
             )
         })

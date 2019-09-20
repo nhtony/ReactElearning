@@ -1,0 +1,25 @@
+.ask-form {
+    #question{
+       padding: 5px 10px;
+    }
+    .button-form{
+        margin-top: 12px;
+       .post-question-btn{
+           @include button(130px,35px,#ec5252,white);
+           outline: none;
+           border-radius: 3px;
+           margin-right: 18px;
+       } 
+       .cancel-btn{
+           border: none;
+           background: none;
+           outline: none;
+           color: #007791;
+           font-size: 16px;
+           font-weight: 500;
+           &:hover{
+               color: black;
+           }
+       }
+    }
+}

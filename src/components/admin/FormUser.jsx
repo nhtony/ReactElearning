@@ -108,7 +108,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        userProfile: state.UserReducer.profile,
+        userProfile: state.UserReducer.profile
     }
 }
 

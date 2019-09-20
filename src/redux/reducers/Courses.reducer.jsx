@@ -14,11 +14,11 @@ const CoursesReducerStore = (state = initialState, action) => {
         case types.GET_COURSES['SUCCESS']:
             state.Courses = action.payload;
             state.isSuccess = false;
-            return { ...state, coursesLoading: false };
+            return { ...state, coursesLoaded: true };
         case types.GET_COURSES['REQUEST']:
-            return { ...state, coursesLoading: true };
+            return { ...state, coursesLoaded: false };
         case types.GET_COURSES['FAILED']:
-            return { ...state, coursesLoading: false };
+            return { ...state, coursesLoaded: true };
         // Thêm khóa học
         case types.ADD_COURSE['SUCCESS']:
             state.isSuccess = (typeof action.payload === Object) ? true : false;
@@ -54,11 +54,11 @@ const CoursesReducerStore = (state = initialState, action) => {
         //Lấy khóa học theo danh mục
         case types.GET_CATEGORY_COURSES['SUCCESS']:
             state.CategoryCourses = action.payload;
-            return { ...state, catCoursesLoading: false };
+            return { ...state, catCoursesLoaded: true };
         case types.GET_CATEGORY_COURSES['REQUEST']:
-            return { ...state, catCoursesLoading: true };
+            return { ...state, catCoursesLoaded: false };
         case types.GET_CATEGORY_COURSES['FAILED']:
-            return { ...state, catCoursesLoading: false };
+            return { ...state, catCoursesLoaded: true };
         //Tìm kiếm khóa học theo tên
         case types.FIND_COURSE:
             if (action.listSearch) {

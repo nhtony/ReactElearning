@@ -2,6 +2,8 @@ import * as types from '../contants/Students.contant';
 
 let initialState = {
     list: [],
+    notify: false,
+    notiContent: {},
 };
 
 const StudentsReducerStore = (state = initialState, action) => {
@@ -21,8 +23,13 @@ const StudentsReducerStore = (state = initialState, action) => {
         case types.DISENROLL:
             state.list = state.list.filter(item => item.taiKhoan !== action.payload);
             return { ...state };
+        case types.SET_NOTIFY:
+            state.notiContent = action.payload;
+            state.notify = true;
+            return { ...state };
         default:
             return state;
     }
 }
+
 export default StudentsReducerStore;

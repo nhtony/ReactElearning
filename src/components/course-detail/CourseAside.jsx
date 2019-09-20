@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { courseContent } from '../../common/CourseService';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
-
+import { userEnrollAction } from '../../redux/actions/User.action';
+import { getLocalStorage, loginInfo } from '../../common/Config';
 import AuthorCourses from './AuthorCourses';
 import SocialList from '../genaral/SocialList';
 import CourseFeatureAside from './CourseFeatureAside';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { sidebarAction } from '../../redux/actions/RightSidebar.action';
+import { Link } from 'react-router-dom';
 
+const loginSidebar = {
+    isOpenLogin: true,
+    isOpenSignUp: false,
+}
 class CourseAside extends Component {
 
     getCourseByAuthorName = (list, name) => {
@@ -24,14 +32,19 @@ class CourseAside extends Component {
         const author = (Object.entries(this.props.courseDetail).length === 0 && this.props.courseDetail.constructor === Object) ? {} : nguoiTao;
 
         const authorCourse = this.getCourseByAuthorName(this.props.Courses, author.hoTen);
-    
+
         const { duration } = (courseContent.hasOwnProperty(maKhoaHoc)) ? courseContent[maKhoaHoc] : {};
+
+        const enrollObj = {
+            maKhoaHoc: maKhoaHoc,
+            taiKhoan: (this.props.isLogin) ? getLocalStorage(loginInfo).taiKhoan : ""
+        }
 
         return (
             <aside className="course-aside sticky">
                 <div className="take-it">
                     <h4>FREE</h4>
-                    <button>ENROLL</button>
+                    <button onClick={() => (this.props.isLogin) ? this.props.enrollCourse(enrollObj) : this.props.openLoginSidebar(loginSidebar)}>ENROLL</button>
                 </div>
                 <SocialList></SocialList>
                 <div className="author-aside row">
@@ -56,10 +69,10 @@ class CourseAside extends Component {
                         <img className="student-img" src="https://secure.gravatar.com/avatar/bb90dcb0ceabfc8bf10c550f1ee95ee7?s=60&d=mm&r=g" alt="" />
                     </div>
                 </div>
-               <CourseFeatureAside duration={duration} authorCourse={authorCourse}></CourseFeatureAside>
+                <CourseFeatureAside duration={duration} authorCourse={authorCourse}></CourseFeatureAside>
                 <div className="another-author-course">
-                    <h5 className="sidebar-single__title">FROM <span>{author.hoTen}</span></h5>
-                    <AuthorCourses maKH={maKhoaHoc} authorCourse={authorCourse}></AuthorCourses>
+                    <h5 className="sidebar-single__title">FROM <Link to={`/home/author/profile/${nguoiTao.hoTen}`}><span>{author.hoTen}</span></Link></h5>
+                    {(this.props.coursesLoaded) ? <AuthorCourses maKH={maKhoaHoc} authorCourse={authorCourse}></AuthorCourses> : <BeatLoader></BeatLoader>}
                 </div>
             </aside>
         )
@@ -69,6 +82,8 @@ class CourseAside extends Component {
 const mapStateToProps = (state) => {
     return {
         Courses: state.CoursesReducer.Courses,
+        coursesLoaded: state.CoursesReducer.coursesLoaded,
+        isLogin: state.UserReducer.isLogin
     }
 }
 
@@ -76,6 +91,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getListCourse: () => {
             dispatch(getListCourseAction())
+        },
+        enrollCourse: (data) => {
+            dispatch(userEnrollAction(data))
+        },
+        openLoginSidebar: (data) => {
+            dispatch(sidebarAction(data))
         }
     }
 }

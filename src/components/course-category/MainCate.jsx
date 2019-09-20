@@ -10,10 +10,12 @@ export default class MainCate extends PureComponent {
         })
     }
 
-    render() {   
+    render() {
         return (
-            <section className="main-cate-courses row">
-                {this.renderCourseItem()}
+            <section className="main-cate-courses">
+                <div className="row">
+                    {this.renderCourseItem()}
+                </div>
             </section>
         )
     }

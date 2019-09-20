@@ -1,0 +1,35 @@
+#qa {
+  .qa-header {
+    margin-bottom: 10px;
+    padding: 20px 0;
+    border-bottom: 1px solid #dedede;
+    .col-ask {
+      text-align: right;
+      button {
+        background: none;
+        border: none;
+        outline: none;
+        color: #007791;
+        font-size: 16px;
+        font-weight: 500;
+        &:hover{
+          color: black;
+        }
+      }
+    }
+  }
+  .qa-list {
+    .qa-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #dedede;
+      .qa-content {
+        &__title {
+          margin-bottom: 0;
+        }
+        &__ask {
+          @include text(15px, 400, black);
+        }
+      }
+    }
+  }
+}

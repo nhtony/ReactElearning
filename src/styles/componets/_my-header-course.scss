@@ -1,0 +1,25 @@
+.header-course {
+  margin-bottom: 10px;
+  &__item {
+    align-items: center;
+    text-decoration: none !important;
+    .info {
+      color: black;
+      font-size: 14px;
+      h6 {
+        margin-bottom: 0;
+      }
+      p {
+        margin-bottom: 0;
+        font-size: 13px;
+      }
+    }
+    img {
+      width: 100px;
+      height: 50px;
+    }
+    &:hover h6 {
+      color: blue;
+    }
+  }
+}

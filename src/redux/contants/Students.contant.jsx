@@ -7,3 +7,5 @@ export const GET_WATTING_USER = "GET_WATTING_USER";
 export const ENROLL = "ENROLL";
 
 export const DISENROLL = "DISENROLL";
+
+export const SET_NOTIFY = "SET_NOTIFY";

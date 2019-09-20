@@ -76,6 +76,8 @@ export const API_USER_LOGIN = domain + "QuanLyNguoiDung/DangNhap";
 
 export const API_USER_PROFILE = domain + "QuanLyNguoiDung/ThongTinTaiKhoan";
 
+export const API_USER_ENROLL = domain + "QuanLyKhoaHoc/DangKyKhoaHoc";
+
 // storage
 export const setLocalStorage = (name, value) => {
     localStorage.setItem(name, JSON.stringify(value));

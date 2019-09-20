@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getListAction, courseAction } from '../../redux/actions/Course.action';
 import { listTypes } from '../../common/Config';
+import { setNoifyAction } from '../../redux/actions/Students.action';
 
 let headRows = [
     { id: 'maKhoaHoc', numeric: false, disablePadding: false, label: 'Source ID' },
@@ -150,6 +151,7 @@ const EnhancedTableToolbar = props => {
     let numSelected = (openDeleteBtn) ? 0 : props.numSelected;
     let tableName = "";
     switch (optionValue) {
+
         case listTypes.course.isenroll:
             tableName = "Bảng: Khóa học đã ghi danh";
             break;
@@ -285,15 +287,30 @@ function EnhancedTable(props) {
     }
 
     const endisrollCourse = (idcourse) => {
+        const obj = props.StudentsCourse.find(item => item.maKhoaHoc === idcourse);
+        const noti = {
+            ...obj, content: 'Đã được ghi danh',
+            time: getCurrentTime()
+        }
+        // Hủy đăng ký
         if (optionValue === listTypes.course.isenroll) {
             listDisenroll.forEach(idcourse => {
                 props.handleCourse(idcourse, profile.taiKhoan, optionValue);
             })
             openDeleteBtn = true;
         }
+        // Đăng ký
         else {
             props.handleCourse(idcourse, profile.taiKhoan, optionValue);
+            props.setNotify(noti);
         }
+    }
+
+    const getCurrentTime = () => {
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = today.getHours() + ":" + today.getMinutes();
+        return date + ' ' + time;
     }
 
     const renderCheckBox = (isItemSelected, labelId, row) => {
@@ -341,7 +358,7 @@ function EnhancedTable(props) {
                                 <TableCell component="th" id={labelId} scope="row" >
                                     {row.maKhoaHoc}
                                 </TableCell>
-                                <TableCell  >{row.tenKhoaHoc}</TableCell>
+                                <TableCell>{row.tenKhoaHoc}</TableCell>
                                 {renderCell(row.maKhoaHoc, row.taiKhoan)}
                             </TableRow>
                         );
@@ -358,7 +375,7 @@ function EnhancedTable(props) {
     const renderTableContent = () => {
         return (rows.length > 0) ? renderTable() : (
             <div className="text-center">
-                <p>Chưa có học viên nào...</p>
+                <p>Chưa có khóa học nào...</p>
             </div>)
     }
 
@@ -451,6 +468,10 @@ const mapDispatchToProps = (dispatch) => {
         handleCourse: (idcourse, username, listType) => {
             dispatch(courseAction(idcourse, username, listType));
         },
+        setNotify: (noti) => {
+            dispatch(setNoifyAction(noti));
+        }
+
     }
 }
 

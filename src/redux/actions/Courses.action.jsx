@@ -145,7 +145,7 @@ export const getCateCourseAction = (cateID) => {
         }).then((res) => {
             setTimeout(() => {
                 dispatch({ type: types.GET_CATEGORY_COURSES['SUCCESS'], payload: res.data });
-            }, 1000);
+            }, 300);
         }).catch((err) => {
             dispatch({ type: types.GET_CATEGORY_COURSES['FAILED'], payload: err.response.data });
         })

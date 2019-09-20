@@ -3,21 +3,22 @@ import { connect } from 'react-redux';
 import { sidebarAction } from '../../redux/actions/RightSidebar.action';
 import { userLogoutAction } from '../../redux/actions/User.action';
 import { getLocalStorage, loginInfo } from '../../common/Config';
-import { Redirect } from 'react-router-dom';
 import { getCategoriesAction } from '../../redux/actions/Courses.action'
 import Categories from './Categories';
 import { Link } from 'react-router-dom';
+import MyHeaderCourse from './MyHeaderCourse';
+
+const loginSidebar = {
+  isOpenLogin: true,
+  isOpenSignUp: false,
+}
+
+const signUpSidebar = {
+  isOpenLogin: false,
+  isOpenSignUp: true,
+}
+
 class Header extends Component {
-
-  loginSidebar = {
-    isOpenLogin: true,
-    isOpenSignUp: false,
-  }
-
-  signUpSidebar = {
-    isOpenLogin: false,
-    isOpenSignUp: true,
-  }
 
   scrollFunction = () => {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -47,16 +48,18 @@ class Header extends Component {
 
   renderAvatar = () => {
     const user = getLocalStorage(loginInfo);
-    return (user.avatar) ?
+    const avatar = (user) ? user.avatar : '';
+    return (avatar) ?
       <div className="d-flex align-items-center">
         <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mb-0 mr-5 mycourse">My Courses<i className="ml-2 fa fa-angle-down"></i></p>
         <img onMouseEnter={() => this.hoverOn("avtDropdownMenu")} src={user.avatar} alt="" />
       </div> :
       <div className="d-flex align-items-center">
         <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mycourse mb-0 mr-5">My courses<i className="ml-2 fa fa-angle-down"></i></p>
-        <h6 onMouseEnter={() => this.hoverOn("avtDropdownMenu")} className="text-white mb-0">{getLocalStorage(loginInfo).hoTen}</h6>
+        <h6 onMouseEnter={() => this.hoverOn("avtDropdownMenu")} className="text-white mb-0">{user.hoTen}</h6>
       </div>
   }
+
 
   renderLoginHeader = () => {
     return (
@@ -64,32 +67,43 @@ class Header extends Component {
         {this.renderAvatar()}
         <ul id="avtDropdownMenu" onMouseEnter={() => this.hoverOn("avtDropdownMenu")} onMouseLeave={() => this.hoverOff("avtDropdownMenu")} className="dropdown-menu">
           <li className="dropdown-header text-center"><strong>Account</strong></li>
-          <li className="dropdown-item"><i className="fa fa-bell-o" /><span>Updates</span></li>
-          <li className="dropdown-item"><i className="fa fa-envelope-o" /><span >Messages</span></li>
-          <li className="dropdown-item"><i className="fa fa-comment-o" /><span >Comments</span></li>
+          <li className="dropdown-item">
+            <Link className="link-item" to={`/home/my/profile/notification/${getLocalStorage(loginInfo).taiKhoan}`}><i className="fa fa-bell-o" /><span className="mr-4">Notification</span><span className="badge badge-info text-white">42</span>
+            </Link>
+          </li>
+          <li className="dropdown-item">
+            <Link className="link-item" to={`/home/my/courses/${getLocalStorage(loginInfo).taiKhoan}`}><i className="fa fa-book mr-2"></i><span>My courses</span>
+            </Link>
+          </li>
           <li className="dropdown-header text-center"><strong>Setting</strong></li>
-          <li className="dropdown-item"><i className="fa fa-user" /><span>Profile</span></li>
-          <li className="dropdown-item"><i className="fa fa-wrench" /><span>Settings</span></li>
-          <li className="dropdown-item"><i className="fa fa-shield" /><span>Log Account</span></li>
-          <li className="dropdown-item" onClick={() => this.logout()}><i className="fa fa-lock" /><span>Log-out</span></li>
+          <li className="dropdown-item">
+            <Link className="link-item" to={`/home/my/profile/${getLocalStorage(loginInfo).taiKhoan}`}><i className="fa fa-user  mr-2" /><span>Profile</span>
+            </Link>
+          </li>
+          <li className="dropdown-item" onClick={() => this.logout()}>
+            <Link className="link-item" to='/home'>
+              <i className="fa fa-lock  mr-2" /><span>Log-out</span>
+            </Link>
+          </li>
         </ul>
         <ul id="courseDropdownMenu" onMouseEnter={() => this.hoverOn("courseDropdownMenu")} onMouseLeave={() => this.hoverOff("courseDropdownMenu")} className="dropdown-menu">
-          <li className="dropdown-item">Hello</li>
+          <MyHeaderCourse></MyHeaderCourse>
+          <li id="see-all"><Link to={`/home/my/courses/${getLocalStorage(loginInfo).taiKhoan}`}>See all
+          </Link>
+          </li>
         </ul>
-      </li>);
+      </li>)
   }
 
   renderSignLogButton = () => {
     return (<li id="login-item" className="nav-item">
-      <button onClick={() => this.props.openLoginSidebar(this.loginSidebar)} className="btn btn-outline-success my-2 my-sm-0 m-4">Login</button>
-
-      <button onClick={() => this.props.openSignUpSidebar(this.signUpSidebar)} className="btn btn-primary">Sign Up</button>
+      <button id="btn-login" onClick={() => this.props.openLoginSidebar(loginSidebar)} className="my-2 my-sm-0 m-4">Login</button>
+      <button id="btn-sign-up" onClick={() => this.props.openSignUpSidebar(signUpSidebar)}>Sign Up</button>
     </li>)
   }
 
   logout = () => {
     this.props.userLogOut();
-    return (<Redirect to="/home" />)
   }
 
   checkLoginRender = () => {
@@ -118,9 +132,9 @@ class Header extends Component {
             <ul className="navbar-nav menu-nav col-6">
               <li className="nav-item active">
                 <div className="dropdown">
-                  <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Categories
-                    </button>
+                  <h6 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories<i className="fa fa-angle-down ml-2"></i>
+                  </h6>
                   <Categories></Categories>
                 </div>
               </li>
@@ -138,6 +152,8 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     isLogin: state.UserReducer.isLogin,
+    myCourses: state.CourseReducer.list,
+    courses: state.CoursesReducer.Courses
   }
 }
 

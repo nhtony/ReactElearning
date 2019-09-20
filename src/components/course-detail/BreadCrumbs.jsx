@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 export default class BreadCrumbs extends PureComponent {
     render() {
         const { tenKhoaHoc } = this.props.courseDetail;
@@ -7,14 +8,14 @@ export default class BreadCrumbs extends PureComponent {
                 <div className="container">
                     <div className="archive__breadcrumbs">
                         <div className="breadcrumbs">
-                            <span itemScope itemType="http://data-vocabulary.org/Breadcrumb">
-                                <a className="home" href="https://demo.featherlayers.com/edupro-general-1/" itemProp="url"><span itemProp="title">Home</span></a>
+                            <span>
+                                <Link to='/home' className="home"><span itemProp="title">Home</span></Link>
                             </span><i className="fa fa-angle-right" />
-                            <span itemScope itemType="http://data-vocabulary.org/Breadcrumb">
-                                <a href="https://demo.featherlayers.com/edupro-general-1/course_category/business/" itemProp="url"><span itemProp="title">Business</span></a>
+                            <span>
+                                <Link to='/home'><span itemProp="title">Detail</span></Link>
                             </span>
                             <i className="fa fa-angle-right" />
-                            <span itemScope itemType="http://data-vocabulary.org/Breadcrumb">
+                            <span>
                                 <span itemProp="title">{tenKhoaHoc}</span>
                             </span>
                         </div>

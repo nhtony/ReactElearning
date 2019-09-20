@@ -15,7 +15,7 @@ class CourseCategory extends Component {
 
     render() {
         const title = "COURSE CATEGORY";
-        return (!this.props.catCoursesLoading) ? (
+        return (this.props.catCoursesLoaded) ? (
             <section className="course-category-page">
                 <BannerCate title={title} name={this.props.match.params.name}></BannerCate>
                 <section className="main-content">
@@ -37,7 +37,7 @@ class CourseCategory extends Component {
 const mapStateToProps = (state) => {
     return {
         CateCourses: state.CoursesReducer.CategoryCourses,
-        catCoursesLoading: state.CoursesReducer.catCoursesLoading
+        catCoursesLoaded: state.CoursesReducer.catCoursesLoaded
     }
 }
 const mapDispatchToProps = (dispatch) => {

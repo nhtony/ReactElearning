@@ -10,6 +10,8 @@ export default class Reviews extends Component {
             slidesToScroll: 1,
             arrows: false,
             fade: true,
+            autoplay:true,
+            autoplaySpeed: 5000
         };
         return (
             <section className="review">

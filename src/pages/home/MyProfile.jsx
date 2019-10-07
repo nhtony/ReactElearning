@@ -4,10 +4,23 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ProfileMain from '../../components/my-profile/ProfileMain';
 import AccountMain from '../../components/my-profile/AccountMain';
 import Notification from '../../components/my-profile/Notification';
-export default class MyProfile extends Component {
+import { connect } from 'react-redux';
+import { getProfileAction } from '../../redux/actions/User.action';
+import LoadingService from '../../common/LoadingService';
+import { getListCourseAction } from '../../redux/actions/Courses.action';
+import {getLocalStorage,userLogin} from '../../common/Config';
+
+
+class MyProfile extends Component {
+
+    componentDidMount() {
+        this.props.getCourse();
+        const {taiKhoan,accessToken} = getLocalStorage(userLogin);
+        this.props.getProfile(taiKhoan,accessToken);
+    }
 
     render() {
-        return (
+        return (this.props.profileLoaded) ? (
             <BrowserRouter>
                 <section className="my-profile-page">
                     <div className="container">
@@ -28,6 +41,22 @@ export default class MyProfile extends Component {
                     </div>
                 </section>
             </BrowserRouter>
-        )
+        ) : <LoadingService></LoadingService>
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        profileLoaded: state.UserReducer.profileLoaded
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProfile: (username,token) => {
+            dispatch(getProfileAction(username,token));
+        },
+        getCourse: () => {
+            dispatch(getListCourseAction());
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

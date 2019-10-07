@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import CourseItem from '../genaral/CourseItem'
+import CourseItem from '../common/CourseItem'
 export default class MainCate extends PureComponent {
 
     renderCourseItem = () => {

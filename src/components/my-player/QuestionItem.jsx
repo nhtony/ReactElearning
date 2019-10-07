@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { getLocalStorage, loginInfo } from '../../common/Config';
+import { getLocalStorage, userLogin } from '../../common/Config';
 export default class QuestionItem extends Component {
     render() {
-        let userInfor = (localStorage.getItem(loginInfo)) ? getLocalStorage(loginInfo) : {};
+        let userInfor = (localStorage.getItem(userLogin)) ? getLocalStorage(userLogin) : {};
         return (
             <div className="qa-item">
                 <div className="row">

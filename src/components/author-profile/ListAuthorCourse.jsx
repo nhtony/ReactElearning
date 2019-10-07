@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CourseItem from '../genaral/CourseItem';
+import CourseItem from '../common/CourseItem';
 export default class ListAuthorCourse extends Component {
 
     renderAuthorCourseItem = () => {
@@ -17,7 +17,7 @@ export default class ListAuthorCourse extends Component {
 
         return (
             <div className="feature-author-courses">
-                <h2 className="mb-5 text-center">ALL COURSES</h2>
+                <h2 className="mb-5 text-center">TẤT CẢ KHÓA HỌC</h2>
                 <div className="row">
                     {this.renderAuthorCourseItem()}
                 </div>

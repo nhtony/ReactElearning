@@ -15,16 +15,16 @@ import Reviews from './Reviews';
                 </div>
                 <ul className="nav nav-tabs mt-4" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About</a>
+                        <a className="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">Về khóa học</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="curriculum-tab" data-toggle="tab" href="#curriculum" role="tab" aria-controls="curriculum" aria-selected="false">Curriculum</a>
+                        <a className="nav-link" id="curriculum-tab" data-toggle="tab" href="#curriculum" role="tab" aria-controls="curriculum" aria-selected="false">Nội dung</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Instructor</a>
+                        <a className="nav-link" id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Giảng viên</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="review-course-tab" data-toggle="tab" href="#review-course" role="tab" aria-controls="review-course" aria-selected="false">Reviews</a>
+                        <a className="nav-link" id="review-course-tab" data-toggle="tab" href="#review-course" role="tab" aria-controls="review-course" aria-selected="false">Đánh giá</a>
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">

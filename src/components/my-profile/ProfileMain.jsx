@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editUserAction } from '../../redux/actions/Users.action';
 import { getProfileAction } from '../../redux/actions/User.action';
+import { getLocalStorage, userLogin } from '../../common/Config';
 
-const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
+const emailRe = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const phoneRegex = RegExp(
-    /[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
-);
+const phoneRe = /[0-9]/;
+
+const emailRegex = RegExp(emailRe);
+
+const phoneRegex = RegExp(phoneRe);
 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
@@ -92,7 +93,7 @@ class ProfileMain extends Component {
     }
 
     componentDidMount() {
-        this.props.getProfile(this.props.tk);
+        this.props.getProfile(this.props.tk, getLocalStorage(userLogin).accessToken);
     }
 
     render() {
@@ -102,13 +103,13 @@ class ProfileMain extends Component {
         return (
             <>
                 <div className="profile-title">
-                    <h3>Public profile</h3>
-                    <p>Add information about yourself</p>
+                    <h3>Thông tin cá nhân</h3>
+                    <p>Thêm một số thông tin về bạn</p>
                 </div>
                 <div className="profile-content">
                     <form className="my-form" onSubmit={this.handleOnSubmit}>
                         <div className="name my-input">
-                            Name:
+                            Tên:
                             <input type="text" name="hoTen" value={this.state.hoTen} onChange={this.handleOnchange} noValidate />
                         </div>
                         {formErrors.hoTen.length > 0 && (
@@ -123,14 +124,14 @@ class ProfileMain extends Component {
                             <span className="errorMessage">{formErrors.email}</span>
                         )}
                         <div className="phone-num my-input">
-                            Phone number:
+                            Số điện thoại:
                             <input type="text" name="soDT" value={this.state.soDT} onChange={this.handleOnchange} noValidate />
                         </div>
                         {formErrors.soDT.length > 0 && (
                             <span className="errorMessage">{formErrors.soDT}</span>
                         )}
                         <div className="profile-button">
-                            <button type="submit" className="save-button">Save</button>
+                            <button type="submit" className="save-button">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -149,8 +150,8 @@ const mapDispatchToProps = (dispatch) => {
         editUser: (useredit) => {
             dispatch(editUserAction(useredit))
         },
-        getProfile: (username) => {
-            dispatch(getProfileAction(username));
+        getProfile: (username, token) => {
+            dispatch(getProfileAction(username, token));
         }
     }
 }

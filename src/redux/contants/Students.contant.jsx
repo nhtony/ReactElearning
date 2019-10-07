@@ -9,3 +9,5 @@ export const ENROLL = "ENROLL";
 export const DISENROLL = "DISENROLL";
 
 export const SET_NOTIFY = "SET_NOTIFY";
+
+export const READ_NOTIFY = "READ_NOTIFY";

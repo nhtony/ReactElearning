@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BannerCate from '../../components/genaral/BannerCate'
+import BannerCate from '../../components/common/BannerCate'
 import AsideCate from '../../components/course-category/AsideCate'
 import MainCate from '../../components/course-category/MainCate'
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ class CourseCategory extends Component {
     }
 
     render() {
-        const title = "COURSE CATEGORY";
+        const title = "KHÓA HỌC THEO DANH MỤC";
         return (this.props.catCoursesLoaded) ? (
             <section className="course-category-page">
                 <BannerCate title={title} name={this.props.match.params.name}></BannerCate>

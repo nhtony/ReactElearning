@@ -4,7 +4,7 @@ import { getLocalStorage, setLocalStorage } from '../../common/Config';
 let initialState = {
     idcourse: "",
     comments: [],
-
+    rate: 0
 };
 
 const ReviewReducerStore = (state = initialState, action) => {
@@ -30,7 +30,10 @@ const ReviewReducerStore = (state = initialState, action) => {
             state.comments = (localStorage.getItem(state.idcourse)) ? getLocalStorage(state.idcourse) : [];
 
             return { ...state };
+        case types.GET_RATE:
 
+            state.rate = action.payload;
+            return { ...state };
 
         default:
             return { ...state };

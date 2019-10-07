@@ -52,7 +52,7 @@ export default class CourseContentTab extends Component {
                                     {item.title}
                                 </div>
                                 <div className="col-2 col-lectures">
-                                    {item.content.length} lectures
+                                    {item.content.length} bài học
                                 </div>
                                 <div className="col-2 col-times">
                                     {item.allTime}

@@ -75,7 +75,7 @@ class ReviewValueChart extends PureComponent {
                     </ul>
                 </div>
                 <div data-rating="0.0" className="rating">
-                    <span>({this.cmtQuatity} Reviews)</span>
+                    <span>({this.cmtQuatity} Lượt đánh giá)</span>
                 </div>
             </div>
         )

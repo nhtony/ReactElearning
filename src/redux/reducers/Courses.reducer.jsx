@@ -3,7 +3,9 @@ import * as types from '../contants/Courses.contant';
 let initialState = {
     Courses: [],
     Categories: [],
+    Result: null,
     CategoryCourses: [],
+    Pagination: {},
     isSuccess: false,
     isNotFound: false
 }
@@ -17,8 +19,6 @@ const CoursesReducerStore = (state = initialState, action) => {
             return { ...state, coursesLoaded: true };
         case types.GET_COURSES['REQUEST']:
             return { ...state, coursesLoaded: false };
-        case types.GET_COURSES['FAILED']:
-            return { ...state, coursesLoaded: true };
         // Thêm khóa học
         case types.ADD_COURSE['SUCCESS']:
             state.isSuccess = (typeof action.payload === Object) ? true : false;
@@ -60,20 +60,38 @@ const CoursesReducerStore = (state = initialState, action) => {
         case types.GET_CATEGORY_COURSES['FAILED']:
             return { ...state, catCoursesLoaded: true };
         //Tìm kiếm khóa học theo tên
-        case types.FIND_COURSE:
-            if (action.listSearch) {
-                let updateState = { ...state };
-                updateState.Courses = action.listSearch;
-                updateState.isNotFound = false;
-                return updateState;
+        case types.FIND_COURSE['SUCCESS']:
+            state.Result = {
+                ...state.Result,
+                courses: action.payload,
+                isNotFound: false
             }
-            else {
-                let updateState = { ...state, message: action.mess };
-                updateState.isNotFound = true;
-                return updateState;
+            return { ...state, isLoading: false };
+        case types.FIND_COURSE['REQUEST']:
+            state.Result = {
+                ...state.Result,
+                courses: [],
+                isNotFound: false
             }
+            return { ...state, isLoading: true };
+        case types.FIND_COURSE['FAILED']:
+            state.Result = {
+                ...state.Result,
+                courses: [],
+                message: action.payload,
+                isNotFound: true
+            }
+            return { ...state, isLoading: false };
+
+        //Lấy danh sách khóa học phân trang
+        case types.GET_PAGINATION_COURSES['SUCCESS']:
+            state.Pagination = action.payload;
+            return { ...state, paginationLoaded: true };
+        case types.GET_PAGINATION_COURSES['REQUEST']:
+            return { ...state, paginationLoaded: false };
+
         default:
-            return { ...state};
+            return { ...state };
     }
 }
 

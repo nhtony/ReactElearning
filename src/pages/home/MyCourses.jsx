@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BannerCate from '../../components/genaral/BannerCate'
+import BannerCate from '../../components/common/BannerCate'
 import MyCourseList from '../../components/my-courses/MyCourseList';
 import { connect } from 'react-redux';
 import { getMyCoursestAction } from '../../redux/actions/Course.action';
@@ -13,7 +13,7 @@ class MyCourses extends Component {
     }
 
     render() {
-        const title = "MY COURSES";
+        const title = "KHÓA HỌC CỦA TÔI";
         return (this.props.enCourseLoaded && this.props.coursesLoaded) ? (
             <section className="my-courses-page">
                 <BannerCate title={title}></BannerCate>

@@ -15,13 +15,13 @@ export default class BannerCate extends PureComponent {
                             <nav className="content-breadcrumb">
                                 <span className="root-branch">
                                     <Link className="home" to='/home'>
-                                        <span itemProp="title">Home</span>
+                                        <span itemProp="title">Trang chủ</span>
                                     </Link>
                                 </span>
                                 <i className="fa fa-angle-right m-2" />
                                 <span className="root-branch">
                                     <Link className="home" to='/home'>
-                                        <span itemProp="title">{this.props.author ? "Instructor": "Courses"}</span>
+                                        <span itemProp="title">{this.props.author ? "Giảng viên": "Danh sách khóa học"}</span>
                                     </Link>
                                 </span>
                                 <i className="fa fa-angle-right m-2" />

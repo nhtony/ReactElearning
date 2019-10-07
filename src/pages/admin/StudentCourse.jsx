@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { getListAction } from '../../redux/actions/Course.action';
 import { getProfileAction } from '../../redux/actions/User.action';
-import { listTypes } from '../../common/Config';
+import { listTypes, getLocalStorage, userLogin,adminLogin } from '../../common/Config';
 import TableStudentCourse from '../../components/admin/TableStudentCourse'
 class StudentCourse extends Component {
     
@@ -10,7 +10,7 @@ class StudentCourse extends Component {
         let taiKhoan = ""
         taiKhoan = this.props.match.params.tk;
         this.props.getCourseStudent(taiKhoan, listTypes.course.isenroll);
-        this.props.getProfile(taiKhoan);
+        this.props.getProfile(taiKhoan,getLocalStorage(adminLogin).accessToken || getLocalStorage(userLogin).accessToken);
     }
 
     render() {
@@ -24,8 +24,8 @@ const mapDispatchToProps = (dispatch) => {
         getCourseStudent: (username, listType) => {
             dispatch(getListAction(username, listType));
         },
-        getProfile: (username) => {
-            dispatch(getProfileAction(username));
+        getProfile: (username,token) => {
+            dispatch(getProfileAction(username,token));
         }
     }
 }
@@ -33,7 +33,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         StudentsCourse: state.CourseReducer.list,
-     
         profile: state.UserReducer.profile
     }
 }

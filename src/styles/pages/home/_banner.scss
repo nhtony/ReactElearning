@@ -47,6 +47,7 @@
         margin: 20px auto 0;
         position: relative;
         .input-group {
+          justify-content: center;
           .search {
             width: 70%;
             height: 50px;
@@ -59,6 +60,7 @@
             font-size: 16px;
             font-size: 1rem;
             color: #333;
+            
           }
           .btn_search {
             position: absolute;

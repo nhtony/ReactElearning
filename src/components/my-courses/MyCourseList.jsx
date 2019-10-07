@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CourseItem from '../genaral/CourseItem'
+import CourseItem from '../common/CourseItem'
 
 export default class MyCourseList extends Component {
 
@@ -8,7 +8,7 @@ export default class MyCourseList extends Component {
             return this.props.courses.find(item => item.maKhoaHoc === element.maKhoaHoc)
         });
         return myList.map((item, index) => {
-            return (<div key={index} className="col-3 mb-3"><CourseItem courseContent={item}></CourseItem></div>)
+            return (<div key={index} className="col-3 mb-3"><CourseItem isEnroll={true} courseContent={item}></CourseItem></div>)
         })
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getLocalStorage, loginInfo } from '../../common/Config';
+import { getLocalStorage, userLogin } from '../../common/Config';
 
 
 export default class ReviewItem extends Component {
@@ -22,7 +22,7 @@ export default class ReviewItem extends Component {
     render() {
         const { comment, rating, time } = this.props.content;
         const list = this.getListStar(rating);
-        let userInfor = (localStorage.getItem(loginInfo)) ? getLocalStorage(loginInfo) : {};
+        let userInfor = (localStorage.getItem(userLogin)) ? getLocalStorage(userLogin) : {};
         return (
             <li className="review-item">
                 <div className="row">

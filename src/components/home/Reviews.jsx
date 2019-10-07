@@ -15,7 +15,7 @@ export default class Reviews extends Component {
         };
         return (
             <section className="review">
-                <h2>Students Review</h2>
+                <h2>ĐÁNH GIÁ CỦA HỌC VIÊN</h2>
                 <div className="review-carousel">
                     <Slider {...settings}>
                         <div className="student">

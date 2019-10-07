@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
-import CourseItem from '../genaral/CourseItem';
+import CourseItem from '../common/CourseItem';
 import Slider from "react-slick";
 import BarLoader from 'react-spinners/BarLoader';
 import { css } from '@emotion/core';
@@ -49,7 +49,7 @@ class RelatedCourses extends PureComponent {
 
         return (this.props.coursesLoaded) ? (
             <section className="related-courses">
-                <h3 className="text-center">RELATED COURSES</h3>
+                <h3 className="text-center">KHÓA HỌC LIÊN QUAN</h3>
                 <Slider {...settings}>
                     {this.renderRelatedCourseItem(otherCourses)}
                 </Slider>

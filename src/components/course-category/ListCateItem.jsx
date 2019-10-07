@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { getCateCourseAction } from '../../redux/actions/Courses.action';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class ListCateItem extends PureComponent {
 
@@ -9,7 +9,7 @@ class ListCateItem extends PureComponent {
         return this.props.Categories.map((item, index) => {
             return (
                 <li key={index} className="cate-item ">
-                    <Link onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={`/home/course/category/${item.maDanhMuc}/${item.tenDanhMuc}`}>{item.tenDanhMuc}</Link>
+                    <NavLink activeClassName="active-nav" onClick={() => this.props.getCateCourses(item.maDanhMuc)} to={`/home/course/category/${item.maDanhMuc}/${item.tenDanhMuc}`}>{item.tenDanhMuc}</NavLink>
                 </li>
             )
         })

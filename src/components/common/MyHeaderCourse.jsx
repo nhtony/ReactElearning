@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PulseLoader from 'react-spinners/PulseLoader';
 import { css } from '@emotion/core';
 import { Link } from 'react-router-dom';
-import { getLocalStorage, loginInfo } from '../../common/Config';
+import { getLocalStorage, userLogin } from '../../common/Config';
 import { getMyCoursestAction } from '../../redux/actions/Course.action';
 import { getDetailCourseAction } from '../../redux/actions/Course.action';
 const override = css`
@@ -13,32 +13,34 @@ width: 30px;
 class MyHeaderCourse extends Component {
 
     componentDidMount() {
-        this.props.getMyCourse(getLocalStorage(loginInfo).taiKhoan);
+        this.props.getMyCourse(getLocalStorage(userLogin).taiKhoan);
+
     }
 
     renderMyCourse = () => {
         let myList = this.props.myCourses.map((element) => {
             return this.props.courses.find(item => item.maKhoaHoc === element.maKhoaHoc)
         });
-        return myList.slice(0, 4).map((item, index) => {
+        return myList.map((item, index) => {
             return (
                 <li className="header-course" key={index}>
                     <Link onClick={() => this.props.getInfoCourse(item.maKhoaHoc)} to={`/home/my/player/${item.maKhoaHoc}`} className="row header-course__item">
                         <img className="col-4" src={item.hinhAnh} alt="" />
                         <div className="info col-8">
                             <h6>{item.tenKhoaHoc}</h6>
-                            <p><span className="mr-1">By</span>{item.nguoiTao.hoTen}</p>
+                            <p><span className="mr-1">từ</span>{item.nguoiTao.hoTen}</p>
                         </div>
                     </Link>
                 </li>)
         })
+
     }
 
     render() {
         return (this.props.enCourseLoaded && this.props.coursesLoaded) ?
-            this.renderMyCourse()
+            (this.props.myCourses.length > 0) ?  this.renderMyCourse() : <p>Chưa có khóa học nào</p>
             : <PulseLoader css={override}
-            ></PulseLoader>
+            ></PulseLoader> 
     }
 }
 const mapStateToProps = (state) => {

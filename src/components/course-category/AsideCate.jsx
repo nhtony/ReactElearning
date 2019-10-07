@@ -10,7 +10,7 @@ export default class AsideCate extends PureComponent {
             <aside className="category-aside sticky">
                 <div className="all-cate-course">
                     <div className="widget-title">
-                        <h5>ALL COURSES</h5>
+                        <h5>TẤT CẢ</h5>
                     </div>
                     <div className="list-type row">
                         <ListCateItem></ListCateItem>

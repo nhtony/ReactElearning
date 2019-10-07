@@ -34,7 +34,7 @@ class SidebarLogin extends Component {
         let payload = (this.props.Sidebar.isOpenLogin) ? "login" : "";
         let style = (this.props.Sidebar.isOpenLogin) ? { width: '380px' } : { width: '0' };
         return (<div id="loginSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
-            <h4 className="text-center text-white mb-5">Login</h4>
+            <h4 className="text-center text-white mb-5">Đăng Nhập</h4>
             <div className="container">
                 <div className="row btn-part mb-5">
                     <div className="col-6">
@@ -45,15 +45,15 @@ class SidebarLogin extends Component {
                     </div>
                 </div>
                 <form className="input-part" onSubmit={this.handleOnSubmit}>
-                    <input className="input-form" type="text" placeholder="Username" name="taiKhoan" onChange={this.handleOnChange} />
-                    <input className="input-form" type="password" placeholder="Password" name="matKhau" onChange={this.handleOnChange} />
+                    <input className="input-form" type="text" placeholder="Tài khoản" name="taiKhoan" onChange={this.handleOnChange} />
+                    <input className="input-form" type="password" placeholder="Mật khẩu" name="matKhau" onChange={this.handleOnChange} />
                     <div className="action-part mt-5">
-                        <button className="btn-form btnLogin">Login</button>
+                        <button className="btn-form btnLogin">Đăng Nhập</button>
                     </div>
                 </form>
                 <div className="notes-part mt-5">
-                    <p>Forgot password</p>
-                    <p onClick={() => { this.props.openSignUpSidebar(this.signUpSidebar) }}>Create a new acount</p>
+                    <p>Quên mật khẩu</p>
+                    <p onClick={() => { this.props.openSignUpSidebar(this.signUpSidebar) }}>Tạo một tài khoản mới</p>
                 </div>
             </div>
         </div >);

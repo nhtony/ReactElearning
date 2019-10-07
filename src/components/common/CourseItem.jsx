@@ -6,7 +6,7 @@ import { getDetailCourseAction } from '../../redux/actions/Course.action';
 class CourseItem extends Component {
 
     render() {
-        const { maKhoaHoc, hinhAnh, tenKhoaHoc, nguoiTao, soLuongHocVien } = this.props.courseContent;
+        const { maKhoaHoc, hinhAnh, tenKhoaHoc, nguoiTao, luotXem } = this.props.courseContent;
         const uri = (this.props.isEnroll) ? `/home/my/player/${maKhoaHoc}` : `/home/course/detail/${maKhoaHoc}`;
         return (
             <div className="item-course-list">
@@ -26,7 +26,7 @@ class CourseItem extends Component {
                                 <img className="author-img" src="/img/1.jpg" alt="" />
                                 <div className="course-author__text">
                                     <h6>{nguoiTao.hoTen}</h6>
-                                    {(!this.props.approving) && <Link to={`/home/author/profile/${nguoiTao.hoTen}`}>VIEW PROFILE</Link>}
+                                    {(!this.props.approving) && <Link to={`/home/author/profile/${nguoiTao.hoTen}`}>XEM THÔNG TIN</Link>}
                                 </div>
                             </div>
                             <div className="featured-course__meta ">
@@ -40,7 +40,7 @@ class CourseItem extends Component {
                                         </button>}
                                 </div>
                                 <div>
-                                    <span><i className="fa fa-user mr-1"></i>{soLuongHocVien}</span>
+                                    <span><i className="fa fa-user mr-1"></i>{luotXem}</span>
                                 </div>
                             </div>
                         </div>

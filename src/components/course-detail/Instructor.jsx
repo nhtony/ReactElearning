@@ -6,7 +6,7 @@ class Instructor extends Component {
         const { hoTen } = author;
         return (
             <div className="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
-                <h4 className="pt-4 pb-4">INSTRUCTOR</h4>
+                <h4 className="pt-4 pb-4">GIẢNG VIÊN</h4>
                 <div className="main__content__author">
                     <div className="col-sm-2 author-avatar">
                         <img className="author-img" alt="hinh" src="/img/1.jpg" />

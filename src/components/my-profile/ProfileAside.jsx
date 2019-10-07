@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import { getLocalStorage, loginInfo } from '../../common/Config';
+import { NavLink } from 'react-router-dom';
+import { getLocalStorage, userLogin } from '../../common/Config';
 export default function ProfileAside() {
-    const { avatar, hoTen } = getLocalStorage(loginInfo);
+    const { avatar, hoTen } = getLocalStorage(userLogin);
     return (
         <aside className="my-profile-aside">
             <div className="my-info avatar">
@@ -10,10 +10,10 @@ export default function ProfileAside() {
                 <h6>{hoTen}</h6>
             </div>
             <ul className="my-menu-profile">
-                <li><Link to={`/home/my/profile/${getLocalStorage(loginInfo).taiKhoan}`}>Profile</Link></li>
-                <li><Link to={`/home/my/profile/account/${getLocalStorage(loginInfo).taiKhoan}`}>Account</Link></li>
-                <li><Link to={`/home/my/profile/notification/${getLocalStorage(loginInfo).taiKhoan}`}>Nofication</Link></li>
-                <li><a href={`/home/my/courses/${getLocalStorage(loginInfo).taiKhoan}`}>My courses</a></li>
+                <li><NavLink activeClassName="active-nav" to={`/home/my/profile/${getLocalStorage(userLogin).taiKhoan}`}>Thông tin cá nhân</NavLink></li>
+                <li><NavLink activeClassName="active-nav" to={`/home/my/profile/account/${getLocalStorage(userLogin).taiKhoan}`}>Tài khoản</NavLink></li>
+                <li><NavLink activeClassName="active-nav" to={`/home/my/profile/notification/${getLocalStorage(userLogin).taiKhoan}`}>Thông báo</NavLink></li>
+                <li><a href={`/home/my/courses/${getLocalStorage(userLogin).taiKhoan}`}>Khóa học của tôi</a></li>
             </ul>
         </aside>
     )

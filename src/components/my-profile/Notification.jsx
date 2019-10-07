@@ -1,43 +1,30 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { getAprrovingAction } from '../../redux/actions/Course.action';
-import LoadingService from '../../common/LoadingService';
-import { getListCourseAction } from '../../redux/actions/Courses.action';
-import ApprovingCourses from './ApprovingCourses';
-class Notification extends Component {
-
-    componentDidMount() {
-        this.props.getAppCourse(this.props.match.params.tk);
-        this.props.getListCourses();
-    }
+import NotiItem from './NotiItem';
+import { getLocalStorage, userLogin } from '../../common/Config';
 
 
-    render() {
-        return (this.props.appCourseLoaded && this.props.coursesLoaded) ? (
-            <div className="notifiaction">
-                <ApprovingCourses courses={this.props.courses} appCourses={this.props.appCourses}></ApprovingCourses>
-            </div>
-        ) : <LoadingService></LoadingService>
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getAppCourse: (username) => {
-            dispatch(getAprrovingAction(username));
-        },
-        getListCourses: () => {
-            dispatch(getListCourseAction());
+
+export default class Notification extends Component {
+
+
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.location.pathname === this.props.match.url) {
+            return false
+        }
+        else {
+            return true
         }
     }
-}
 
-const mapStateToProps = (state) => {
-    return {
-        appCourses: state.CourseReducer.appcourses,
-        appCourseLoaded: state.CourseReducer.appCourseLoaded,
-        courses: state.CoursesReducer.Courses,
-        coursesLoaded: state.CoursesReducer.coursesLoaded
+    render() {
+        const { taiKhoan } = getLocalStorage(userLogin)
+        const notificontent = getLocalStorage(taiKhoan);
+        return (<div className="notifiaction">
+            { notificontent.length > 0 ? notificontent.map((item, index) => {
+                return <NotiItem key={index} course={item}></NotiItem>
+            }) : <p>Không có thông báo nào.</p>}
+        </div>)
     }
+
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notification)

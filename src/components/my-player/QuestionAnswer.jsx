@@ -45,11 +45,11 @@ class QuestionAnswer extends Component {
                 <div className="qa-header">
                     <div className="row">
                         <div className="col-6">
-                            <b>60 questions in this course</b>
+                            <b>60 câu hỏi về khóa học này</b>
                         </div>
                         <div className="col-6 col-ask">
 
-                            <button onClick={() => this.showHideAskForm()}>Ask a new quenstion</button>
+                            <button onClick={() => this.showHideAskForm()}>Đặt câu hỏi</button>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ class QuestionAnswer extends Component {
             <div className="ask-form" onSubmit={this.handleSubmit}>
                 <form className="container">
                     <div className="input-group mb-3">
-                        <input name="qtitle" type="text" className="form-control" placeholder="Question title" onChange={this.handleOnchange} />
+                        <input name="qtitle" type="text" className="form-control" placeholder="Tiêu đề" onChange={this.handleOnchange} />
                         <div className="input-group-append">
                             <span className="input-group-text">@example.com</span>
                         </div>
@@ -126,11 +126,11 @@ class QuestionAnswer extends Component {
                                     style={{ marginRight: "5px" }}
                                 />
                             )}
-                            {loadingSubmit && <span>Loading</span>}
-                            {!loadingSubmit && <span>Post Question</span>}
+                            {loadingSubmit && <span>Đang tải...</span>}
+                            {!loadingSubmit && <span>Đăng</span>}
                         </button>
 
-                        <button className="cancel-btn" onClick={() => this.showHideAskForm()}>Cancel</button>
+                        <button className="cancel-btn" onClick={() => this.showHideAskForm()}>Hủy</button>
                     </div>
                 </form>
             </div>
@@ -143,8 +143,8 @@ class QuestionAnswer extends Component {
             {loading && (
                 <i className="fa fa-refresh fa-spin" style={{ marginRight: "5px" }} />
             )}
-            {loading && <span>Loading...</span>}
-            {!loading && <span>Load more</span>}
+            {loading && <span>Đang tải...</span>}
+            {!loading && <span>Xem thêm</span>}
         </button>)
     }
 

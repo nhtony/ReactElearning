@@ -12,18 +12,17 @@ class Topics extends Component {
         super(props);
         this.state = {
             allcourse: false,
-            colorActive: 'all'
+            colorActive: 'all',
         }
+      
     }
-
     render() {
         return (
             <section className="topic">
                 <div className="container-fluid">
                     <div className="topic__title">
                         <span><em /></span>
-                        <h2>Udema Popular Courses</h2>
-                        <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                        <h2>CÁC KHÓA HỌC THEO DANH MỤC</h2>
                     </div>
                     <div className="topic__content">
                         <ul className="filter-menu nav nav-tabs">
@@ -31,8 +30,9 @@ class Topics extends Component {
                             {this.rendenCateItem()}
                         </ul>
                         <div className="filter-item container">
-                            <ListTopicCourse allcourse={this.state.allcourse}></ListTopicCourse>
+                            <ListTopicCourse  allcourse={this.state.allcourse}></ListTopicCourse>
                         </div>
+                      
                     </div>
                 </div>
             </section>
@@ -94,7 +94,7 @@ class Topics extends Component {
         }, () => this.props.getCateCourses(idcate))
     }
 
-    getAllCourse = (id) => {
+    getAllCourse = () => {
         this.setState({
             allcourse: true
         });

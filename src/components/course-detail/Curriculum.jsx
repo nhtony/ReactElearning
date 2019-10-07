@@ -43,8 +43,8 @@ export default class Curriculum extends Component {
     renderAccordionItem = (content) => {
         return content.map((item, index) => {
             return (
-                <AccordionItem key={index} onClick={() => this.openCollapse(item.id)}>
-                    <AccordionItemHeading>
+                <AccordionItem key={index} >
+                    <AccordionItemHeading onClick={() => this.openCollapse(item.id)}>
                         <AccordionItemButton>
                             <div className="row">
                                 <div id={item.id} className="col-2 col-expand">
@@ -54,7 +54,7 @@ export default class Curriculum extends Component {
                                     {item.title}
                                 </div>
                                 <div className="col-2 col-lectures">
-                                    {item.content.length} lectures
+                                    {item.content.length} bài học
                                 </div>
                                 <div className="col-2 col-times">
                                     {item.allTime}
@@ -74,7 +74,7 @@ export default class Curriculum extends Component {
         const { lesson } = (courseContent.hasOwnProperty(this.props.maKH)) ? courseContent[this.props.maKH] : { lesson: [] };
         return (
             <div className="tab-pane mt-4  fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-                <h4 className="mb-4">CURRICULUM</h4>
+                <h4 className="mb-4">NỘI DUNG</h4>
                 <div className="curriculum-accor">
                     <Accordion allowZeroExpanded={true} allowMultipleExpanded={true}>
                         {this.renderAccordionItem(lesson)}

@@ -1,7 +1,7 @@
 import React from 'react'
-
-
-export default function ReviewCircle(props) {
+import { getRateAction } from '../../redux/actions/Review.action';
+import { connect } from 'react-redux';
+function ReviewCircle(props) {
 
     const reviewValue = props.reviewValue;
     const quantity = props.quantity;
@@ -20,11 +20,19 @@ export default function ReviewCircle(props) {
             total += result;
         }
     }
-    arrangeVal = (total / number).toFixed(1)
-
+    arrangeVal = (total / number).toFixed(1);
+    props.getRate(arrangeVal);
     return (
         <div className="ratingCircle col-sm-4">
             <span className="rating-circle">{arrangeVal}</span>
         </div>
     )
 }
+const mapDispatchToProps = dispatch => {
+    return {
+        getRate: (rate) => {
+            dispatch(getRateAction(rate));
+        }
+    }
+}
+export default connect(null,mapDispatchToProps)(ReviewCircle)

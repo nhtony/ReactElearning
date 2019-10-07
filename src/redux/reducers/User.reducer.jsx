@@ -1,8 +1,8 @@
 import * as types from '../contants/User.contant';
-import { getLocalStorage, loginInfo } from '../../common/Config';
+import { getLocalStorage, userLogin } from '../../common/Config';
 
 let initialState = {
-    isLogin: getLocalStorage(loginInfo) ? true : false,
+    isLogin: getLocalStorage(userLogin).accessToken ? true : false,
     profile: {},
 };
 
@@ -18,9 +18,11 @@ const UserReducerStore = (state = initialState, action) => {
             state.isLogin = true;
             return { ...state };
         //Lấy thông tin người dùng
-        case types.USER_PROFILE:
+        case types.USER_PROFILE['SUCCESS']:
             state.profile = action.payload;
-            return { ...state };
+            return { ...state, profileLoaded: true };
+        case types.USER_PROFILE['REQUEST']:
+            return { ...state, profileLoaded: false };
         //Dang ky khoa hoc
         case types.USER_ENROLL['SUCCESS']:
             return { ...state, enrollLoading: true };

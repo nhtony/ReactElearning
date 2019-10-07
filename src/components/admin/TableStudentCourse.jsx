@@ -289,7 +289,7 @@ function EnhancedTable(props) {
     const endisrollCourse = (idcourse) => {
         const obj = props.StudentsCourse.find(item => item.maKhoaHoc === idcourse);
         const noti = {
-            ...obj, content: 'Đã được ghi danh',
+            ...obj, content: 'đã được ghi danh',
             time: getCurrentTime()
         }
         // Hủy đăng ký
@@ -302,7 +302,7 @@ function EnhancedTable(props) {
         // Đăng ký
         else {
             props.handleCourse(idcourse, profile.taiKhoan, optionValue);
-            props.setNotify(noti);
+            props.setNotify(noti,profile.taiKhoan);
         }
     }
 
@@ -468,10 +468,9 @@ const mapDispatchToProps = (dispatch) => {
         handleCourse: (idcourse, username, listType) => {
             dispatch(courseAction(idcourse, username, listType));
         },
-        setNotify: (noti) => {
-            dispatch(setNoifyAction(noti));
+        setNotify: (noti,taiKhoan) => {
+            dispatch(setNoifyAction(noti,taiKhoan));
         }
-
     }
 }
 

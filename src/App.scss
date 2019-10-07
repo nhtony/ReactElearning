@@ -11,6 +11,7 @@
 @import "styles/layouts/header";
 @import "styles/layouts/footer";
 @import "styles/layouts/cover-spin";
+@import "styles/layouts/active";
 
 // Home
 @import "styles/pages/home/banner";
@@ -46,7 +47,10 @@
 @import "styles/pages/user-profile/profile-main";
 @import "styles/pages/user-profile/account-main";
 
-//Player 
+//Result 
+@import "styles/pages/result/result-page";
+
+//Player
 @import "styles/pages/player/player";
 @import "styles/pages/player/course-content-tab";
 @import "styles/pages/player/player-tabs";
@@ -74,6 +78,8 @@
 @import "styles/componets/my-header-course";
 @import "styles/componets/load-more-btn";
 @import "styles/componets/ask-form";
+@import "styles/componets/notify-item";
+@import "styles/componets/coures-resutl";
 
 // .slick-center .course__item{
 //     opacity: 1 !important;

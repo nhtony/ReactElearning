@@ -13,3 +13,9 @@ export const getIDAction = (idcourse) => {
     }
 }
 
+export const getRateAction = (rate) => {
+    return {
+        type: types.GET_RATE,
+        payload: rate
+    }
+}

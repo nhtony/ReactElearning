@@ -8,7 +8,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0);
   .navbar {
     padding: 0;
-
     .collapse {
       .menu-nav {
         justify-content: center;
@@ -34,12 +33,14 @@
 
         #btn-sign-up {
           @include button(80px, 35px, #ffdd3c, #3f4044);
-
           border-radius: 3px;
           outline: none;
         }
         .mycourse {
           color:  #b1b2b4;
+          h6{
+            @include text(16px, 400, #3f4044);
+          }
         }
       }
     }

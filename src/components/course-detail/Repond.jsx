@@ -48,7 +48,7 @@ class Repond extends PureComponent {
     }
 
     renderTitle = () => {
-        return (this.props.isLogin) ? (<h5 id="reply-title" className="comment-reply-title">Leave a comment hear </h5>) : (<h5 id="reply-title" className="comment-reply-title">Please login to comment !</h5>)
+        return (this.props.isLogin) ? (<h5 id="reply-title" className="comment-reply-title">Hãy để lại góp ý của bạn </h5>) : (<h5 id="reply-title" className="comment-reply-title">Để đóng góp ý kiến, xin vui lòng đăng nhập.</h5>)
     }
 
     renderReviewStars = () => {
@@ -84,7 +84,7 @@ class Repond extends PureComponent {
                 {this.renderTitle()}
                 {this.renderReviewStars()}
                 <form className="form-comment" onSubmit={this.handleSubmit}>
-                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="4" aria__required="true" placeholder="Your Comment" onChange={this.handleOnchange} required  ></textarea>
+                    <textarea className="p-3" id="comment" name="comment" cols="84" rows="4" aria__required="true" placeholder="Góp ý của bạn" onChange={this.handleOnchange} required  ></textarea>
                     <div className="submit-btn">
                         <button style={(!this.props.isLogin) ? style.disible : style.enable} disabled={!this.props.isLogin} type="submit">
                             {loading && (
@@ -93,8 +93,8 @@ class Repond extends PureComponent {
                                     style={{ marginRight: "5px" }}
                                 />
                             )}
-                            {loading && <span>Loading</span>}
-                            {!loading && <span>SUBMIT</span>}
+                            {loading && <span>Đang tải...</span>}
+                            {!loading && <span>ĐĂNG</span>}
                         </button>
                     </div>
                 </form>

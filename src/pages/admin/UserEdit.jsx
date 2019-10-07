@@ -3,11 +3,12 @@ import FormUser from '../../components/admin/FormUser';
 import { connect } from 'react-redux';
 import { getProfileAction } from '../../redux/actions/User.action';
 import { Redirect } from 'react-router-dom';
+import { getLocalStorage, userLogin } from '../../common/Config';
 class UserEdit extends Component {
     componentDidMount() {
         let taiKhoan = "";
         taiKhoan = this.props.match.params.tk;
-        this.props.getProfile(taiKhoan);
+        this.props.getProfile(taiKhoan,getLocalStorage(userLogin).accessToken);
     }
     render() {
         let form = {
@@ -19,8 +20,8 @@ class UserEdit extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProfile: (username) => {
-            dispatch(getProfileAction(username));
+        getProfile: (username,token) => {
+            dispatch(getProfileAction(username,token));
         }
     }
 }

@@ -1,15 +1,11 @@
 import * as types from '../contants/Admin.contant';
-import Axios from 'axios';
-import { API_USER_LOGIN, loginInfo, setLocalStorage, userLogoutStorage } from '../../common/Config';
+import { adminLogin, setLocalStorage, userLogin } from '../../common/Config';
 import swal from 'sweetalert2';
-export const adminLoginAction = (userInfo) => {
+import UserService from '../../services/User.service';
+export const adminLoginAction = (data) => {
     return (dispatch) => {
-        Axios({
-            method: 'POST',
-            url: API_USER_LOGIN,
-            data: userInfo
-        }).then((res) => {
-            const userLogin = {
+        UserService.login(data).then((res) => {
+            const objLogin = {
                 taiKhoan: res.data.taiKhoan,
                 hoTen: res.data.hoTen,
                 avt: '',
@@ -17,20 +13,21 @@ export const adminLoginAction = (userInfo) => {
             }
             if (res.data.maLoaiNguoiDung === "GV") {
                 successAlert("Admin login success");
-                setLocalStorage(loginInfo, userLogin);
+                setLocalStorage(adminLogin, objLogin);
                 dispatch({ type: types.ADMIN_LOGIN });
             }
             else {
                 swal.fire("Message", "Does not accept !!", 'error');
             }
         }).catch((err) => {
-            swal.fire("Message", err.response.data, 'error');
+            swal.fire("Message", err, 'error');
         })
     }
 }
 
 export const adminLogoutAction = () => {
-    userLogoutStorage();
+    localStorage.removeItem(adminLogin);
+    localStorage.removeItem(userLogin);
     return {
         type: types.ADMIN_LOG_OUT
     }

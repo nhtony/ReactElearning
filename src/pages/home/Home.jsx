@@ -4,22 +4,24 @@ import Features from '../../components/home/Features';
 import ListCourse from '../../components/home/ListCourse';
 import Topics from '../../components/home/Topics';
 import Reviews from '../../components/home/Reviews';
-import SidebarSignUp from '../../components/genaral/SidebarSignUp';
-import SidebarLogin from '../../components/genaral/SidebarLogin';
+import SidebarSignUp from '../../components/common/SidebarSignUp';
+import SidebarLogin from '../../components/common/SidebarLogin';
 import LoadingService from '../../common/LoadingService';
 import { connect } from 'react-redux';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
 
 class Home extends Component {
 
+
     componentDidMount() {
         this.props.getCourses();
     }
 
-    render() {
+
+    render() { 
         return (this.props.coursesLoaded) ? (
             <section className="home-page">
-                <Banner></Banner>
+                <Banner {...this.props}></Banner>
                 <SidebarSignUp></SidebarSignUp>
                 <SidebarLogin></SidebarLogin>
                 <Features></Features>

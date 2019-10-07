@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Slider from "react-slick";
-import CourseItem from '../genaral/CourseItem';
+import CourseItem from '../common/CourseItem';
 
 export default class ListCourse extends Component {
 
@@ -25,8 +25,7 @@ export default class ListCourse extends Component {
         <div className="container-fluid">
           <div className="courses__title">
             <span><em /></span>
-            <h2>Udema Categories Courses</h2>
-            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+            <h2>DANH SÁCH KHÓA HỌC</h2>
           </div>
         </div>
         <div className="courses__content container-fluid">

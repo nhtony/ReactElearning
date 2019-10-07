@@ -1,15 +1,9 @@
 import * as types from '../contants/Admin.contant';
-import { decodeToken } from '../../authen/DecodeToken'
-import { loginInfo, getLocalStorage } from '../../common/Config';
+import { adminLogin, getLocalStorage } from '../../common/Config';
 
-let deVal = "";
-if (getLocalStorage(loginInfo)) {
-    const accesstoken = getLocalStorage(loginInfo).accessToken;
-    deVal = Object.values(decodeToken(accesstoken));
-}
 
 let initialState = {
-    isLogin: (deVal[1] === "GV") ? true : false
+    isLogin: getLocalStorage(adminLogin).accessToken ? true : false
 }
 
 const AdminReducerStore = (state = initialState, action) => {
@@ -21,6 +15,7 @@ const AdminReducerStore = (state = initialState, action) => {
             state.isLogin = false;
             return { ...state };
         default:
+
             return { ...state };
     }
 }

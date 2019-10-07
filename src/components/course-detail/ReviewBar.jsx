@@ -14,7 +14,7 @@ export default function ReviewBar(props) {
     }
     return (
         <li className="key_4">
-            <span className="rating-breakdown__key">{name} Star</span>
+            <span className="rating-breakdown__key">{name} Sao</span>
             <div className="progress">
                 <div role="progressbar" className="progress-bar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} style={style}>
                 </div>

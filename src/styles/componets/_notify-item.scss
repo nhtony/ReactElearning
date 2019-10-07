@@ -1,0 +1,14 @@
+.notify-item {
+  padding: 10px 5px;
+  border-bottom: 1px solid #eee;
+  &:hover {
+    background-color: #eee;
+  }
+  &__content {
+    text-decoration: none !important;
+    .col-text {
+      @include text(14px, normal
+      , #505763);
+    }
+  }
+}

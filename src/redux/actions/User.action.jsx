@@ -1,39 +1,31 @@
 import * as types from '../contants/User.contant';
-import Axios from 'axios';
-import { API_USER_SIGN_UP, API_USER_LOGIN, loginInfo, setLocalStorage, API_USER_PROFILE, API_USER_ENROLL, getLocalStorage } from '../../common/Config';
+import {  userLogin, setLocalStorage, } from '../../common/Config';
 import swal from 'sweetalert2';
 import { userLogoutStorage } from '../../common/Config';
+import UserService from '../../services/User.service';
 
 export const signUpAction = (userInfo) => {
     return (dispatch) => {
         dispatch({ type: types.USER_SIGN_UP['REQUEST'] });
-        Axios({
-            method: 'POST',
-            url: API_USER_SIGN_UP,
-            data: userInfo
-        }).then((res) => {
+        UserService.signUp(userInfo).then((res) => {
             successAlert("Sign up success");
             dispatch({ type: types.USER_SIGN_UP['SUCCESS'], payload: res.data });
         }).catch((err) => {
-            console.log("TCL: signUpAction -> err", err.response.data)
+            swal.fire("Message", err.response.data, 'error');
         })
     }
 }
 
 export const loginAction = (userInfo, avt) => {
     return (dispatch) => {
-        Axios({
-            method: 'POST',
-            url: API_USER_LOGIN,
-            data: userInfo
-        }).then((res) => {
-            const userLogin = {
+        UserService.login(userInfo).then((res) => {
+            const objLogin = {
                 taiKhoan: res.data.taiKhoan,
                 hoTen: res.data.hoTen,
                 avatar: avt,
                 accessToken: res.data.accessToken
             }
-            setLocalStorage(loginInfo, userLogin);
+            setLocalStorage(userLogin, objLogin);
             dispatch({ type: types.USER_LOGIN['SUCCESS'], payload: res.data });
             successAlert("Login success");
         }).catch((err) => {
@@ -42,19 +34,10 @@ export const loginAction = (userInfo, avt) => {
     }
 }
 
-export const getProfileAction = (username) => {
+export const getProfileAction = (username, accessToken) => {
     return (dispatch) => {
-        Axios({
-            method: 'POST',
-            url: API_USER_PROFILE,
-            data: {
-                "taiKhoan": username
-            },
-            headers: {
-                "Authorization": "Bearer  " + getLocalStorage(loginInfo).accessToken
-            }
-        }).then((res) => {
-            dispatch({ type: types.USER_PROFILE, payload: res.data });
+       UserService.getProfilte(username,accessToken).then((res) => {
+            dispatch({ type: types.USER_PROFILE['SUCCESS'], payload: res.data });
         }).catch((err) => {
             console.log("TCL: getProfileAction -> err", err.response.data)
         })
@@ -64,14 +47,7 @@ export const getProfileAction = (username) => {
 export const userEnrollAction = (data) => {
     return (dispatch) => {
         dispatch({ type: types.USER_ENROLL['REQUEST'] });
-        Axios({
-            method: 'POST',
-            url: API_USER_ENROLL,
-            data: data,
-            headers: {
-                "Authorization": "Bearer  " + getLocalStorage(loginInfo).accessToken
-            }
-        }).then((res) => {
+        UserService.enrollCourse(data).then((res) => {
             dispatch({ type: types.USER_ENROLL['SUCCESS'], payload: res.data });
             successAlert("Enroll success");
         }).catch((err) => {

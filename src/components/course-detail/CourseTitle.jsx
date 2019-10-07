@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
 import { courseContent } from '../../common/CourseService';
-export default class CourseTitle extends PureComponent {
+import { connect } from 'react-redux';
+
+class CourseTitle extends PureComponent {
     render() {
-        const { tenKhoaHoc, soLuongHocVien, maKhoaHoc } = this.props.courseDetail;
+        const { tenKhoaHoc, luotXem, maKhoaHoc } = this.props.courseDetail;
         const { duration } = (courseContent.hasOwnProperty(maKhoaHoc)) ? courseContent[maKhoaHoc] : {};
         return (
             <div className="single__head">
@@ -12,16 +14,16 @@ export default class CourseTitle extends PureComponent {
                             <h2 className="page__title">{tenKhoaHoc}</h2>
                             <div className="single__box row">
                                 <div className="students-number col col-2">
-                                    <i className="fa fa-user mr-1" /><span>{soLuongHocVien}</span>
-                                    <p>STUDENTS</p>
+                                    <i className="fa fa-user mr-1" /><span>{luotXem}</span>
+                                    <p>HỌC VIÊN</p>
                                 </div>
                                 <div className="rating-star col col-2">
-                                    <i className="fa fa-star  mr-1" /><span className="rating-score">0.0</span>
-                                    <p>REVIEWS (0)</p>
+                                    <i className="fa fa-star  mr-1" /><span className="rating-score">{(isNaN(this.props.rate)) ? '0.0' :  this.props.rate }</span>
+                                    <p>ĐÁNH GIÁ ({this.props.comments.length})</p>
                                 </div>
                                 <div className="learning-hours col col-2">
                                     <i className="fa fa-clock-o mr-1" /><span>{duration}</span>
-                                    <p>LEARNING HOURS</p>
+                                    <p>THỜI LƯỢNG</p>
                                 </div>
                             </div>
                         </div>
@@ -31,3 +33,6 @@ export default class CourseTitle extends PureComponent {
         )
     }
 }
+const mapStateToProps = state => ({ rate: state.ReviewReducer.rate, comments: state.ReviewReducer.comments });
+
+export default connect(mapStateToProps, null)(CourseTitle)

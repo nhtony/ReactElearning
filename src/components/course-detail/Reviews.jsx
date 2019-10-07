@@ -50,13 +50,13 @@ class Reviews extends Component {
     render() {
         return (
             <div className="tab-pane fade" id="review-course" role="tabpanel" aria-labelledby="review-course-tab">
-                <h4 className="pt-4 pb-4">REVIEWS</h4>
+                <h4 className="pt-4 pb-4">ĐÁNH GIÁ</h4>
                 <ReviewValueChart></ReviewValueChart>
                 <Repond maKH={this.props.maKH}></Repond>
                 <ul className="review-list">
                     {this.renderReviewItem()}
                 </ul>
-                <div className="load-more text-right">
+                <div className="load-more">
                     {this.renderLoadMoreButton()}
                 </div>
             </div>

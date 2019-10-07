@@ -9,10 +9,10 @@ export default class BreadCrumbs extends PureComponent {
                     <div className="archive__breadcrumbs">
                         <div className="breadcrumbs">
                             <span>
-                                <Link to='/home' className="home"><span itemProp="title">Home</span></Link>
+                                <Link to='/home' className="home"><span itemProp="title">Trang chủ</span></Link>
                             </span><i className="fa fa-angle-right" />
                             <span>
-                                <Link to='/home'><span itemProp="title">Detail</span></Link>
+                                <Link to='/home'><span itemProp="title">Chi tiết</span></Link>
                             </span>
                             <i className="fa fa-angle-right" />
                             <span>

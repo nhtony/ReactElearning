@@ -6,13 +6,13 @@ import Google from './Google';
 import { GP } from '../../common/Config';
 import { sidebarAction, openAfterAction } from '../../redux/actions/RightSidebar.action';
 
-const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
+const emailRe = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const phoneRegex = RegExp(
-    /[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
-);
+const phoneRe = /[0-9]/;
+
+const emailRegex = RegExp(emailRe);
+
+const phoneRegex = RegExp(phoneRe);
 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
@@ -63,7 +63,7 @@ class SidebarSignUp extends Component {
         switch (name) {
             case "taiKhoan":
                 formErrors.taiKhoan =
-                    value.length < 1 ? "Username is require" : "";
+                    value.length < 1 ? "Vui lòng nhập tài khoản" : "";
                 break;
             case "matKhau":
                 formErrors.matKhau =
@@ -71,15 +71,15 @@ class SidebarSignUp extends Component {
                 break;
             case "hoTen":
                 formErrors.hoTen =
-                    value.length < 1 ? "Name is require" : "";
+                    value.length < 1 ? "Vui lòng nhập họ tên" : "";
                 break;
             case "soDT":
-                formErrors.soDT = phoneRegex.test(value) ? "" : "invalid phone";
+                formErrors.soDT = phoneRegex.test(value) ? "" : "Không đúng định dạng";
                 break;
             case "email":
                 formErrors.email = emailRegex.test(value)
                     ? ""
-                    : "invalid email address";
+                    : "Không đúng định dạng";
                 break;
             default:
                 break;
@@ -93,30 +93,16 @@ class SidebarSignUp extends Component {
             const objUser = { ...this.state }
             delete objUser.formErrors;
             this.props.signUp(objUser);
-            this.resetForm();
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
     }
-
-    resetForm = () => {
-        this.setState({
-            taiKhoan: '',
-            matKhau: '',
-            hoTen: '',
-            soDT: '',
-            maLoaiNguoiDung: '',
-            maNhom: '',
-            email: ''
-        })
-    }
-
     renderSidebar = () => {
         let style = (this.props.Sidebar.isOpenSignUp) ? { width: '380px' } : { width: '0' }
         let payload = (this.props.Sidebar.isOpenSignUp) ? "signUp" : "";
         const { formErrors } = this.state;
         return (<div id="signupSidebar" style={style} className="right-sidebar mostly-customized-scrollbar">
-            <h4 className="text-center text-white mb-5">Sign up</h4>
+            <h4 className="text-center text-white mb-5">Đăng Ký</h4>
             <div className="container">
                 <div className="row btn-part mb-5">
                     <div className="col-6">
@@ -127,33 +113,33 @@ class SidebarSignUp extends Component {
                     </div>
                 </div>
                 <form className="input-part" onSubmit={this.handleOnSubmit}>
-                    <input style={{marginBottom:formErrors.taiKhoan.length > 0 ? 0 : '20px'}} className="input-form" type="text" placeholder="Username" name="taiKhoan" value={this.state.taiKhoan} onChange={this.handleOnChange} />
+                    <input style={{ marginBottom: formErrors.taiKhoan.length > 0 ? 0 : '20px' }} className="input-form" type="text" placeholder="Tài khoản" name="taiKhoan" value={this.state.taiKhoan} onChange={this.handleOnChange} />
                     {formErrors.taiKhoan.length > 0 && (
                         <span className="errorMessage">{formErrors.taiKhoan}</span>
                     )}
-                    <input style={{marginBottom:formErrors.matKhau.length > 0 ? 0 : '20px'}} className="input-form" type="password" placeholder="Password" name="matKhau" value={this.state.matKhau} onChange={this.handleOnChange} />
+                    <input style={{ marginBottom: formErrors.matKhau.length > 0 ? 0 : '20px' }} className="input-form" type="password" placeholder="Mật khẩu" name="matKhau" value={this.state.matKhau} onChange={this.handleOnChange} />
                     {formErrors.matKhau.length > 0 && (
                         <span className="errorMessage">{formErrors.matKhau}</span>
                     )}
-                    <input style={{marginBottom:formErrors.hoTen.length > 0 ? 0 : '20px'}} className="input-form" type="text" placeholder="Fullname" name="hoTen" value={this.state.hoTen} onChange={this.handleOnChange} />
+                    <input style={{ marginBottom: formErrors.hoTen.length > 0 ? 0 : '20px' }} className="input-form" type="text" placeholder="Họ và tên" name="hoTen" value={this.state.hoTen} onChange={this.handleOnChange} />
                     {formErrors.hoTen.length > 0 && (
                         <span className="errorMessage">{formErrors.hoTen}</span>
                     )}
-                    <input style={{marginBottom:formErrors.soDT.length > 0 ? 0 : '20px'}} className="input-form" type="tel" placeholder="Phone number" name="soDT" value={this.state.soDT} onChange={this.handleOnChange} />
+                    <input style={{ marginBottom: formErrors.soDT.length > 0 ? 0 : '20px' }} className="input-form" type="tel" placeholder="Số điện thoại" name="soDT" value={this.state.soDT} onChange={this.handleOnChange} />
                     {formErrors.soDT.length > 0 && (
                         <span className="errorMessage">{formErrors.soDT}</span>
                     )}
-                    <input style={{marginBottom:formErrors.email.length > 0 ? 0 : '20px'}} className="input-form" type="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange} />
+                    <input style={{ marginBottom: formErrors.email.length > 0 ? 0 : '20px' }} className="input-form" type="email" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange} />
                     {formErrors.email.length > 0 && (
                         <span className="errorMessage">{formErrors.email}</span>
                     )}
                     <div className="action-part mt-3">
-                        <button className="btn-form btnLogin">Sign up</button>
+                        <button className="btn-form btnLogin">Đăng Ký</button>
                     </div>
 
                 </form>
                 <div className="notes-part mt-3">
-                    <p onClick={() => { this.props.openSignUpSidebar(this.loginSidebar) }}>Already have a account?</p>
+                    <p onClick={() => { this.props.openSignUpSidebar(this.loginSidebar) }}>Bạn đã có tài khoản?</p>
                 </div>
             </div>
         </div >)
@@ -161,7 +147,6 @@ class SidebarSignUp extends Component {
 
     componentDidUpdate() {
         if (this.props.signUpSuccess) {
-            console.log("TCL: SidebarSignUp -> componentDidUpdate -> this.props.signUpSuccess", this.props.signUpSuccess)
             this.props.openAfterSignUp();
         }
     }

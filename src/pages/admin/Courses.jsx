@@ -8,8 +8,8 @@ class Courses extends Component {
         this.props.getListCourse();
     }
 
-    render() {
-        return (<TableCourses></TableCourses>)
+    render() {  
+        return (<TableCourses {...this.props} ></TableCourses>)
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -1,5 +1,5 @@
 import * as types from '../contants/User.contant';
-import {  userLogin, setLocalStorage, } from '../../common/Config';
+import { userLogin, setLocalStorage, } from '../../common/Config';
 import swal from 'sweetalert2';
 import { userLogoutStorage } from '../../common/Config';
 import UserService from '../../services/User.service';
@@ -36,7 +36,7 @@ export const loginAction = (userInfo, avt) => {
 
 export const getProfileAction = (username, accessToken) => {
     return (dispatch) => {
-       UserService.getProfilte(username,accessToken).then((res) => {
+        UserService.getProfilte(username, accessToken).then((res) => {
             dispatch({ type: types.USER_PROFILE['SUCCESS'], payload: res.data });
         }).catch((err) => {
             console.log("TCL: getProfileAction -> err", err.response.data)
@@ -45,11 +45,16 @@ export const getProfileAction = (username, accessToken) => {
 }
 
 export const userEnrollAction = (data) => {
+   
+
+    const obj = {
+        maKhoaHoc: data.maKhoaHoc,
+        taiKhoan: data.taiKhoan
+    }
     return (dispatch) => {
-        dispatch({ type: types.USER_ENROLL['REQUEST'] });
-        UserService.enrollCourse(data).then((res) => {
-            dispatch({ type: types.USER_ENROLL['SUCCESS'], payload: res.data });
-            successAlert("Enroll success");
+        UserService.enrollCourse(obj).then((res) => {
+            dispatch({ type: types.USER_ENROLL['SUCCESS'], payload: data });
+            successAlert(res.data);
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error');
         })

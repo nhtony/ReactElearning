@@ -36,13 +36,13 @@ export const setNoifyAction = (noti, taiKhoan) => {
     }
 }
 
-export const readNoifyAction = (tenKhoaHoc, taiKhoan) => {
+export const readNoifyAction = (taiKhoan, maKhoaHoc) => {
     return (dispatch) => {
         dispatch({
             type: types.READ_NOTIFY,
             payload: {
-                tenKhoaHoc,
-                taiKhoan
+                taiKhoan,
+                maKhoaHoc
             }
         })
     }

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { adminLogoutAction } from '../../redux/actions/Admin.action';
 
 class Navbar extends Component {
-
     render() {
         return (
             <nav className="navbar navbar-expand-sm navbar-light bg-light w-100">
@@ -17,7 +16,7 @@ class Navbar extends Component {
                             </a>
                             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
                                 <button className="dropdown-item" >Thông tin cá nhân</button>
-                                <a href="/home" onClick={() =>this.props.logOut()} className="dropdown-item" >Thoát</a>
+                                <a href="/home" onClick={() => this.props.logOut()} className="dropdown-item" >Thoát</a>
                             </div>
                         </li>
                     </ul>
@@ -26,6 +25,8 @@ class Navbar extends Component {
         )
     }
 }
+
+
 const DispatchToProps = (dispatch) => {
     return {
         logOut: () => {

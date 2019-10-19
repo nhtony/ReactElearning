@@ -5,11 +5,7 @@ import PageNotFound from './common/PageNotFound';
 import AdminAuth from './authen/guard/AdminGuard';
 import LoginAdmin from './pages/admin/LoginAdmin';
 import LoadingService from './common/LoadingService';
-
 const HomeTemplate = lazy(() => import('./templates/HomeTemplate'));
-
-
-
 const AdminTemplate = lazy(() => {
   return new Promise(resolve => {
     setTimeout(() => resolve(import('./templates/AdminTemplate')), 1000)
@@ -30,7 +26,7 @@ function App() {
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Suspense>
- 
+
     </BrowserRouter >
   );
 }

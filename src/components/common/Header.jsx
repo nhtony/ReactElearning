@@ -51,20 +51,13 @@ class Header extends Component {
 
   renderAvatar = () => {
     const user = getLocalStorage(userLogin);
-    const avatar = (user) ? user.avatar : '';
-    const hoten = (user) ? user.hoTen : '';
-    return (avatar) ?
-      <div className="d-flex align-items-center">
-        <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mb-0 mr-5 mycourse">Khóa học của tôi<i className="ml-2 fa fa-angle-down"></i></p>
-        <img onMouseEnter={() => this.hoverOn("avtDropdownMenu")} src={user.avatar} alt="" />
-        {notificontent.length > 0 && <span className="badge badge-danger text-white ml-2">{notificontent.length}</span>}
+    const avatar = user.avatar || '/img/avatar.png';
+    return (<div className="d-flex align-items-center">
+      <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mb-0 mr-5 mycourse">Khóa học của tôi<i className="ml-2 fa fa-angle-down"></i></p>
+      <img onMouseEnter={() => this.hoverOn("avtDropdownMenu")} src={avatar} alt="" />
+      {notificontent.length > 0 && <span className="badge badge-danger text-white ml-2">{notificontent.length}</span>}
+    </div>)
 
-      </div> :
-      <div className="d-flex align-items-center">
-        <p onMouseEnter={() => this.hoverOn("courseDropdownMenu")} className="mycourse mb-0 mr-5">Khóa học của tôi<i className="ml-2 fa fa-angle-down"></i></p>
-        <h6 onMouseEnter={() => this.hoverOn("avtDropdownMenu")} className="mb-0">{hoten}</h6>
-        {notificontent.length > 0 && <span className="badge badge-danger text-white ml-2">{notificontent.length}</span>}
-      </div>
   }
 
 
@@ -88,9 +81,7 @@ class Header extends Component {
             </Link>
           </li>
           <li className="dropdown-item" onClick={() => this.logout()}>
-            <Link className="link-item" to='/home'>
-              <i className="fa fa-lock  mr-2" /><span>Đăng xuất</span>
-            </Link>
+            <i className="fa fa-lock  mr-2" /><span>Đăng xuất</span>
           </li>
         </ul>
         <ul id="courseDropdownMenu" onMouseEnter={() => this.hoverOn("courseDropdownMenu")} onMouseLeave={() => this.hoverOff("courseDropdownMenu")} className="dropdown-menu">
@@ -111,6 +102,8 @@ class Header extends Component {
 
   logout = () => {
     this.props.userLogOut();
+    this.props.history.replace('/home');
+    window.location.reload();
   }
 
   checkLoginRender = () => {
@@ -126,11 +119,6 @@ class Header extends Component {
     this.props.getCategories();
   }
 
-
-  componentWillUpdate() {
-    const { taiKhoan } = getLocalStorage(userLogin)
-    notificontent = getLocalStorage(taiKhoan);
-  }
 
   render() {
     window.onscroll = () => this.scrollFunction();
@@ -160,6 +148,13 @@ class Header extends Component {
       </header>
     )
   }
+
+  componentWillUpdate() {
+    const { taiKhoan } = getLocalStorage(userLogin);
+    const { notification } = localStorage.getItem(taiKhoan) ? getLocalStorage(taiKhoan) : { notification: [] }
+    notificontent = notification;
+  }
+
 }
 
 const mapStateToProps = (state) => {

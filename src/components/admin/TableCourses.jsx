@@ -22,16 +22,19 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { findCourseAction, deleteCourseAction } from '../../redux/actions/Courses.action';
+import MenuButton from './MenuButton';
+
+
+
+
 
 const headRows = [
-    { id: 'maKhoaHoc', numeric: false, disablePadding: true, label: 'ID' },
-    { id: 'biDanh', numeric: false, disablePadding: true, label: 'Short name' },
-    { id: 'tenKhoaHoc', numeric: false, disablePadding: true, label: 'Name' },
-    { id: 'moTa', numeric: false, disablePadding: true, label: 'Desc' },
-    { id: 'luotXem', numeric: false, disablePadding: true, label: 'views' },
-    { id: 'ngayTao', numeric: false, disablePadding: true, label: 'Date' },
-    { id: 'soLuongHocVien', numeric: true, disablePadding: true, label: 'Students' },
-    { id: 'setting', numeric: true, disablePadding: true, label: 'Setting' }
+    { id: 'maKhoaHoc', numeric: false, disablePadding: true, label: 'Mã khóa học' },
+    { id: 'biDanh', numeric: false, disablePadding: true, label: 'Bí danh' },
+    { id: 'tenKhoaHoc', numeric: false, disablePadding: true, label: 'Tên khóa học' },
+    // { id: 'moTa', numeric: false, disablePadding: true, label: 'Mô tả' },
+    { id: 'ngayTao', numeric: false, disablePadding: true, label: 'Ngày tạo' },
+    { id: 'setting', numeric: true, disablePadding: true, label: 'Hành động' }
 ];
 
 let listDelete = [];
@@ -70,6 +73,7 @@ function EnhancedTableHead(props) {
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
+
     return (
         <TableHead>
             <TableRow>
@@ -144,6 +148,8 @@ const useToolbarStyles = makeStyles(theme => ({
     },
 }));
 
+
+
 const xoa = () => {
     listDelete.forEach(idcourse => {
         takeProps.deleteCourse(idcourse);
@@ -167,7 +173,7 @@ const EnhancedTableToolbar = props => {
               </Typography>
                 ) : (
                         <Typography variant="h6" id="tableTitle">
-                           Bảng: Khóa học
+                            Bảng: Khóa học
               </Typography>
                     )}
             </div>
@@ -225,7 +231,7 @@ const useStyles = makeStyles(theme => ({
 
 function EnhancedTable(props) {
     takeProps = props;
-    var rows = takeProps.Courses;
+    var rows = (takeProps.Result) ? takeProps.Result.courses : takeProps.Courses;
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -233,6 +239,7 @@ function EnhancedTable(props) {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [keywords, setKewords] = React.useState('');
 
     function handleRequestSort(event, property) {
         const isDesc = orderBy === property && order === 'desc';
@@ -283,13 +290,11 @@ function EnhancedTable(props) {
     }
 
     function handleOnchange(event) {
-        let keyWord = event.target.value;
-        if (keyWord) {
-            props.findCourse(keyWord);
-        }
-        else {
-            props.findCourse();
-        }
+        setKewords(event.target.value);
+    }
+
+    function timKiem() {
+        props.findCourse(keywords)
     }
 
     const renderTable = () => {
@@ -335,14 +340,13 @@ function EnhancedTable(props) {
                                         </TableCell>
                                         <TableCell padding="none" >{row.biDanh}</TableCell>
                                         <TableCell padding="none">{row.tenKhoaHoc}</TableCell>
-                                        <TableCell padding="none" >{row.moTa}</TableCell>
-                                        <TableCell padding="none" >{row.luotXem}</TableCell>
+                                        {/* <TableCell className={cellStyle.root} padding="none" >{row.moTa}</TableCell> */}
+
 
                                         <TableCell padding="none" >{row.ngayTao}</TableCell>
-                                        <TableCell align="center">{row.soLuongHocVien}</TableCell>
+
                                         <TableCell padding="none" align="center" >
-                                            <Link to={"/admin/edit-course/" + row.maKhoaHoc} className="btn btn-danger mr-3">Cập nhật</Link>
-                                            <Link to={"/admin/students/" + row.maKhoaHoc} className="btn btn-outline-primary" >Học viên</Link>
+                                            <MenuButton {...props} maKH={row.maKhoaHoc} questions={props.questions[row.maKhoaHoc]}></MenuButton>
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -376,8 +380,8 @@ function EnhancedTable(props) {
             <div className="action-group mb-5 mt-5 row">
                 <div className="col-5 input-group">
                     <input type="text" className="form-control" name="hoTen" placeholder="Name" onChange={handleOnchange} />
-                    <div className="input-group-append">
-                        <span className="btn btn-secondary">Search</span>
+                    <div onClick={() => timKiem()} className="input-group-append">
+                        <span className="btn btn-secondary">Tìm kiếm</span>
                     </div>
                 </div>
                 <div className="col-7 text-right">
@@ -414,8 +418,10 @@ function EnhancedTable(props) {
 const mapStateToProps = (state) => {
     return {
         Courses: state.CoursesReducer.Courses,
+        Result: state.CoursesReducer.Result,
         message: state.CoursesReducer.message,
         isNotFound: state.CoursesReducer.isNotFound,
+        questions: state.QuestionReducer.questions
     }
 }
 

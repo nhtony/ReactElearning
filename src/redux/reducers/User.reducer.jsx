@@ -1,5 +1,5 @@
 import * as types from '../contants/User.contant';
-import { getLocalStorage, userLogin } from '../../common/Config';
+import { getLocalStorage, userLogin, setLocalStorage } from '../../common/Config';
 
 let initialState = {
     isLogin: getLocalStorage(userLogin).accessToken ? true : false,
@@ -7,6 +7,7 @@ let initialState = {
 };
 
 const UserReducerStore = (state = initialState, action) => {
+    const arr = [];
     switch (action.type) {
         // Đăng ký
         case types.USER_SIGN_UP['SUCCESS']:
@@ -25,9 +26,16 @@ const UserReducerStore = (state = initialState, action) => {
             return { ...state, profileLoaded: false };
         //Dang ky khoa hoc
         case types.USER_ENROLL['SUCCESS']:
+            if (localStorage.getItem(action.payload.taiKhoan)) {
+                let newLocal = JSON.parse(localStorage.getItem(action.payload.taiKhoan))
+                newLocal.require.push(action.payload);
+                setLocalStorage(action.payload.taiKhoan, { ...newLocal });
+            }
+            else {
+                arr.push(action.payload);
+                setLocalStorage(action.payload.taiKhoan, { require: arr, notification: [] });
+            }
             return { ...state, enrollLoading: true };
-        case types.USER_ENROLL['REQUEST']:
-            return { ...state, enrollLoading: false };
         //Đăng xuất
         case types.USER_LOG_OUT:
             state.isLogin = false;

@@ -63,7 +63,7 @@ const CoursesReducerStore = (state = initialState, action) => {
         case types.FIND_COURSE['SUCCESS']:
             state.Result = {
                 ...state.Result,
-                courses: action.payload,
+                courses: action.payload ? action.payload : state.Courses,
                 isNotFound: false
             }
             return { ...state, isLoading: false };

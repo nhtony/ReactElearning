@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PulseLoader from 'react-spinners/PulseLoader';
 import { css } from '@emotion/core';
-import { Link } from 'react-router-dom';
 import { getLocalStorage, userLogin } from '../../common/Config';
 import { getMyCoursestAction } from '../../redux/actions/Course.action';
 import { getDetailCourseAction } from '../../redux/actions/Course.action';
@@ -13,8 +12,9 @@ width: 30px;
 class MyHeaderCourse extends Component {
 
     componentDidMount() {
-        this.props.getMyCourse(getLocalStorage(userLogin).taiKhoan);
-
+        if (localStorage.getItem(userLogin)) {
+            this.props.getMyCourse(getLocalStorage(userLogin).taiKhoan)
+        }
     }
 
     renderMyCourse = () => {
@@ -24,13 +24,13 @@ class MyHeaderCourse extends Component {
         return myList.map((item, index) => {
             return (
                 <li className="header-course" key={index}>
-                    <Link onClick={() => this.props.getInfoCourse(item.maKhoaHoc)} to={`/home/my/player/${item.maKhoaHoc}`} className="row header-course__item">
+                    <a onClick={() => this.props.getCourseDetail(item.maKhoaHoc)} href={`/home/my/player/${item.maKhoaHoc}`} className="row header-course__item">
                         <img className="col-4" src={item.hinhAnh} alt="" />
                         <div className="info col-8">
                             <h6>{item.tenKhoaHoc}</h6>
                             <p><span className="mr-1">từ</span>{item.nguoiTao.hoTen}</p>
                         </div>
-                    </Link>
+                    </a>
                 </li>)
         })
 
@@ -38,9 +38,9 @@ class MyHeaderCourse extends Component {
 
     render() {
         return (this.props.enCourseLoaded && this.props.coursesLoaded) ?
-            (this.props.myCourses.length > 0) ?  this.renderMyCourse() : <p>Chưa có khóa học nào</p>
+            (this.props.myCourses.length > 0) ? this.renderMyCourse() : <p>Chưa có khóa học nào</p>
             : <PulseLoader css={override}
-            ></PulseLoader> 
+            ></PulseLoader>
     }
 }
 const mapStateToProps = (state) => {
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getInfoCourse: (idcourse) => {
+        getCourseDetail: (idcourse) => {
             dispatch(getDetailCourseAction(idcourse));
         },
         getMyCourse: (username) => {

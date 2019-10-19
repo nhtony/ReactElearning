@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import StarRatingComponent from 'react-star-rating-component';
 import { submitReviewAction, getIDAction } from '../../redux/actions/Review.action';
 import { connect } from 'react-redux';
+import { getLocalStorage, userLogin } from '../../common/Config';
 
 class Repond extends PureComponent {
 
@@ -25,10 +26,13 @@ class Repond extends PureComponent {
     handleSubmit = (event) => {
         event.preventDefault();
         this.setState({ loading: true });
+        let userInfor = (localStorage.getItem(userLogin)) ? getLocalStorage(userLogin) : {};
         const obj = {
             rating: this.state.rating,
             comment: this.state.comment,
-            time: this.state.time
+            time: this.state.time,
+            name: userInfor.hoTen,
+            avt: userInfor.avatar
         }
         setTimeout(() => {
             this.setState({ loading: false,comment: "" });

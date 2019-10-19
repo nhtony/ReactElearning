@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getLocalStorage, userLogin } from '../../common/Config';
+
 import { readNoifyAction } from '../../redux/actions/Students.action';
+
+
 class NotiItem extends Component {
+
     render() {
-        const { hinhAnh, maKhoaHoc, tenKhoaHoc } = this.props.course;
-        const { taiKhoan } = getLocalStorage(userLogin);
+        const { maKhoaHoc, tenKhoaHoc, hinhAnh, taiKhoan, content } = this.props.notification
         return (
             <div className="notify-item">
-                <a href={`/home/my/player/${maKhoaHoc}`} className="row notify-item__content" onClick={() => this.props.readNotify(tenKhoaHoc, taiKhoan)}>
+                <a href={`/home/my/player/${maKhoaHoc}`} className="row notify-item__content" onClick={() => this.props.readNotify(taiKhoan, maKhoaHoc)}>
                     <div className="col-1">
                         <div className="avatar">
-                            {/* <img src={hinhAnh} alt="" /> */}
+                            <img src={hinhAnh} alt="" />
                         </div>
                     </div>
                     <div className="col-11 col-text">
-                        {tenKhoaHoc}  {this.props.notiContents.slice(0, 1).map(item => (item.content))}
+                        {tenKhoaHoc} {content}
                     </div>
                 </a>
             </div>
@@ -26,15 +28,10 @@ class NotiItem extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        readNotify: (tenKhoaHoc, taiKhoan) => {
-            return (dispatch(readNoifyAction(tenKhoaHoc, taiKhoan)))
+        readNotify: (tenKhoaHoc, maKhoaHoc) => {
+            return (dispatch(readNoifyAction(tenKhoaHoc, maKhoaHoc)))
         }
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        notiContents: state.StudentsReducer.notiContents
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotiItem)
+export default connect(null, mapDispatchToProps)(NotiItem)

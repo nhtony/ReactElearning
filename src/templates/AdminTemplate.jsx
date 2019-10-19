@@ -4,6 +4,7 @@ import Navbar from '../components/admin/Navbar';
 import Sidebar from '../components/admin/Sidebar';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AdminNotification from '../pages/admin/AdminNotification';
 
 const Admin = lazy(() => import('../pages/admin/Admin'));
 const UserAdd = lazy(() => import('../pages/admin/UserAdd'));
@@ -33,7 +34,8 @@ class AdminTemplate extends Component {
                                     <Route path={'/admin/students/:mkh'} component={Students}></Route>
                                     <Route path={'/admin/course-of-student/:tk'} component={StudentCourse}></Route>
                                     <Route path={'/admin/users'} component={Users}></Route>
-                                    <Route path={'/admin/courses'} component={Courses}></Route>
+                                    <Route path={'/admin/courses'} render={props => (<Courses {...props}></Courses>)} ></Route>
+                                    <Route path={'/admin/notification'} component={AdminNotification}></Route>
                                     <Route path={''} component={Admin}></Route>
                                 </Switch>
                             </Suspense>

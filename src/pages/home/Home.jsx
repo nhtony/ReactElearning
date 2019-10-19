@@ -30,6 +30,7 @@ class Home extends Component {
                 <Reviews></Reviews>
             </section>
         ) : <LoadingService></LoadingService>
+    
     }
 }
 const mapStateToProps = (state) => {

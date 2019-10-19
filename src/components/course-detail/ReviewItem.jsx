@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getLocalStorage, userLogin } from '../../common/Config';
+
 
 
 export default class ReviewItem extends Component {
@@ -18,18 +18,19 @@ export default class ReviewItem extends Component {
         })
     }
 
-
     render() {
-        const { comment, rating, time } = this.props.content;
+        const { comment, rating, time, avt, name } = this.props.content;
+
+
         const list = this.getListStar(rating);
-        let userInfor = (localStorage.getItem(userLogin)) ? getLocalStorage(userLogin) : {};
+
         return (
             <li className="review-item">
                 <div className="row">
                     <div className="col-4 review-info">
-                        <img className="review-img" src={userInfor.avatar} alt="" />
+                        <img className="review-img" src={avt} alt="" />
                         <div className="info">
-                            <h6>{userInfor.hoTen}</h6>
+                            <h6>{name}</h6>
                             <p>{time}</p>
                         </div>
                     </div>

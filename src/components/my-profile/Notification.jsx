@@ -17,11 +17,11 @@ export default class Notification extends Component {
     }
 
     render() {
-        const { taiKhoan } = getLocalStorage(userLogin)
-        const notificontent = getLocalStorage(taiKhoan);
+        const { taiKhoan } = getLocalStorage(userLogin);
+        const { notification } = getLocalStorage(taiKhoan);
         return (<div className="notifiaction">
-            { notificontent.length > 0 ? notificontent.map((item, index) => {
-                return <NotiItem key={index} course={item}></NotiItem>
+            {notification.length > 0 ? notification.map((item, index) => {
+                return <NotiItem key={index} notification={item}></NotiItem>
             }) : <p>Không có thông báo nào.</p>}
         </div>)
     }

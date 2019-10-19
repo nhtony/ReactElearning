@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { userLogin } from '../../common/Config';
-const MyCourseAuth = ({ path, Component }) => {
+const CanDirective = ({ path, Component }) => {
     return (
         <Route path={path} render={(routeProps) => {
             return (localStorage.getItem(userLogin)) ? <Component {...routeProps} /> : <Redirect to="/home"></Redirect>
         }} />
     );
 };
-export default MyCourseAuth;
+export default CanDirective;

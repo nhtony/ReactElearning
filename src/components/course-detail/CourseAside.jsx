@@ -37,7 +37,11 @@ class CourseAside extends Component {
 
         const enrollObj = {
             maKhoaHoc: maKhoaHoc,
-            taiKhoan: (this.props.isLogin) ? getLocalStorage(userLogin).taiKhoan : ""
+            hinhAnh: this.props.courseDetail.hinhAnh,
+            taiKhoan: (this.props.isLogin) ? getLocalStorage(userLogin).taiKhoan : "",
+            avatar: (this.props.isLogin) ? getLocalStorage(userLogin).avatar : "",
+            hoTen: (this.props.isLogin) ? getLocalStorage(userLogin).hoTen : "",
+            tenKhoaHoc: this.props.courseDetail.tenKhoaHoc
         }
 
         return (

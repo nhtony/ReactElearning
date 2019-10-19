@@ -5,7 +5,7 @@ const { taiKhoan } = getLocalStorage(userLogin);
 
 let initialState = {
     list: [],
-    notiContents: (localStorage.getItem(taiKhoan)) ? getLocalStorage(taiKhoan) : [],
+    notiContents: [],
 };
 
 const StudentsReducerStore = (state = initialState, action) => {
@@ -26,15 +26,29 @@ const StudentsReducerStore = (state = initialState, action) => {
             state.list = state.list.filter(item => item.taiKhoan !== action.payload);
             return { ...state };
         case types.SET_NOTIFY:
-            state.notiContents.push(action.payload.noti);
-            setLocalStorage(action.payload.taiKhoan, state.notiContents);
+            if (localStorage.getItem(taiKhoan)) {
+                let newLocal = JSON.parse(localStorage.getItem(action.payload.taiKhoan));
+                newLocal.notification.push(action.payload.noti);
+                let index = newLocal.require.findIndex(item => item.maKhoaHoc === action.payload.noti.maKhoaHoc);
+                if (index !== -1) {
+                    newLocal.require.splice(index, 1);
+                }
+                setLocalStorage(action.payload.taiKhoan, { ...newLocal });
+            }
+            else {
+                state.notiContents.push(action.payload.noti);
+                setLocalStorage(action.payload.taiKhoan, { require: [], notification: state.notiContents });
+            }
             return { ...state };
         case types.READ_NOTIFY:
-            let index = state.notiContents.findIndex(item => item.tenKhoaHoc === action.payload.tenKhoaHoc);
-            if (index !== -1) {
-                state.notiContents.splice(index, 1);
+            if (localStorage.getItem(action.payload.taiKhoan)) {
+                let newLocal = JSON.parse(localStorage.getItem(action.payload.taiKhoan));
+                let index = newLocal.notification.findIndex(item => item.maKhoaHoc === action.payload.maKhoaHoc);
+                if (index !== -1) {
+                    newLocal.notification.splice(index, 1);
+                }
+                setLocalStorage(action.payload.taiKhoan, { ...newLocal });
             }
-            setLocalStorage(action.payload.taiKhoan, state.notiContents);
             return { ...state };
         default:
             return { ...state };

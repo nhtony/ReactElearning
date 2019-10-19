@@ -4,6 +4,7 @@ import PlayerTabs from '../../components/my-player/PlayerTabs'
 import { courseContent } from '../../common/CourseService';
 import { connect } from 'react-redux';
 import { getListCourseAction } from '../../redux/actions/Courses.action';
+import { getIDAction } from '../../redux/actions/Question.action';
 import LoadingService from '../../common/LoadingService';
 class MyPlayer extends Component {
 
@@ -14,8 +15,10 @@ class MyPlayer extends Component {
         }
     }
 
+  
     componentDidMount(){
         this.props.getCourse();
+        this.props.getIdCourse(this.props.match.params.mkh);
     }
 
     render() {
@@ -47,6 +50,9 @@ const mapDispatchToProps = (dispatch) => {
 
         getCourse: () => {
             dispatch(getListCourseAction());
+        },
+        getIdCourse: (idcourse) => {
+            dispatch(getIDAction(idcourse))
         }
     }
 }

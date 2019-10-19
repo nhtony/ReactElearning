@@ -42,7 +42,7 @@ export const editCourseAction = (courseEdit, fd) => {
             CourseService.uploadFile(fd).then((res) => {
                 console.log("TCL: addCourseAction -> res", res.data)
             }).catch((err) => {
-                console.log("TCL: editCourseAction -> err", err)
+                console.log("TCL: editCourseAction -> err", err.response.data)
             })
         }).catch((err) => {
             swal.fire("Message", err.response.data, 'error')
@@ -63,17 +63,19 @@ export const deleteCourseAction = (idcourse) => {
 }
 
 export const findCourseAction = (name) => {
+    console.log("TCL: findCourseAction -> name", name)
     return (dispatch) => {
-        dispatch({
-            type: types.FIND_COURSE['REQUEST']
-        });
-        CourseService.findCourse(name).then((res) => {
-            setTimeout(() => {
+        if (name !== '') {
+            CourseService.findCourse(name).then((res) => {
                 dispatch(action(types.FIND_COURSE['SUCCESS'], res.data));
-            }, 1000);
-        }).catch((err) => {
-            dispatch(action(types.FIND_COURSE['FAILED'], err.response.data));
-        })
+            }).catch((err) => {
+                console.log("TCL: findCourseAction -> err", err.response.data)
+                // dispatch(action(types.FIND_COURSE['FAILED'], err.response.data));
+            })
+        }
+        else{
+            dispatch(action(types.FIND_COURSE['SUCCESS'],null));
+        }
     }
 }
 
@@ -110,7 +112,6 @@ export const getCoursesPagination = () => {
             console.log("TCL: getCoursesPagination -> err", err)
         })
     }
-
 }
 
 const action = (type, payload) => ({

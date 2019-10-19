@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import QuestionItem from './QuestionItem';
 import { connect } from 'react-redux';
-import { submitQuestionAction, getIDAction } from '../../redux/actions/Question.action';
+import { submitQuestionAction } from '../../redux/actions/Question.action';
+import { getLocalStorage, userLogin } from '../../common/Config';
+import Answers from './Answers';
 
 class QuestionAnswer extends Component {
 
@@ -14,7 +16,9 @@ class QuestionAnswer extends Component {
             qtitle: '',
             qcontent: '',
             time: "",
-            showform: false
+            showform: false,
+            showAnswer: false,
+            chosenQuestion: {}
         };
         this.loadMore = this.loadMore.bind(this);
     }
@@ -32,29 +36,46 @@ class QuestionAnswer extends Component {
     }
 
     renderQuestionItem = () => {
-        return this.props.question.slice(0, this.state.visible).map((item, index) => {
-            return (<QuestionItem question={item} key={index}></QuestionItem>)
+
+        const arr = (Object.entries(this.props.questions).length === 0 && this.props.questions.constructor === Object) ? [] : this.props.questions[this.props.maKH];
+        return arr.slice(0, this.state.visible).map((item, index) => {
+            return (<QuestionItem showHideAnswer={this.showHideAnswer} question={item} key={index}></QuestionItem>)
         })
+    }
+
+    renderAnswers = (qs) => {
+        return (
+            <>
+                <QuestionItem chosen={true} question={qs}></QuestionItem>
+                <Answers question={qs}></Answers>
+            </>
+
+        )
     }
 
     renderListQuetion = () => {
 
+        const arr = (Object.entries(this.props.questions).length === 0 && this.props.questions.constructor === Object) ? [] : this.props.questions[this.props.maKH];
 
         return (
             <>
                 <div className="qa-header">
                     <div className="row">
-                        <div className="col-6">
-                            <b>60 câu hỏi về khóa học này</b>
+                        {!this.state.showAnswer ? <> <div className="col-6">
+                            <b>{arr.length} câu hỏi về khóa học này</b>
                         </div>
-                        <div className="col-6 col-ask">
+                            <div className="col-6 col-ask">
+                                <button onClick={() => this.showHideAskForm()}>Đặt câu hỏi</button>
+                            </div></> :
+                            <div className="col-12 col-ask">
+                                <button onClick={() => this.showHideAnswer()}>Tất cả câu hỏi</button>
+                            </div>
+                        }
 
-                            <button onClick={() => this.showHideAskForm()}>Đặt câu hỏi</button>
-                        </div>
                     </div>
                 </div>
                 <div className="qa-list">
-                    {this.renderQuestionItem()}
+                    {this.state.showAnswer ? this.renderAnswers(this.state.chosenQuestion) : this.renderQuestionItem()}
                 </div>
                 <div className="load-more text-center mt-4">
                     {this.renderLoadMoreButton()}
@@ -66,10 +87,15 @@ class QuestionAnswer extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.setState({ loadingSubmit: true });
+        const userInfo = getLocalStorage(userLogin);
+
         const obj = {
             qtitle: this.state.qtitle,
             qcontent: this.state.qcontent,
-            time: this.state.time
+            time: this.state.time,
+            name: userInfo.hoTen,
+            avt: userInfo.avatar || '/img/avatar.png',
+            answers: []
         }
         setTimeout(() => {
             this.setState({ loadingSubmit: false, showform: !this.state.showform });
@@ -97,6 +123,13 @@ class QuestionAnswer extends Component {
         })
     }
 
+    showHideAnswer = (qs) => {
+        this.setState({
+            showAnswer: !this.state.showAnswer,
+            chosenQuestion: qs
+        })
+    }
+
     renderAskForm = () => {
         const { loadingSubmit, qcontent, qtitle } = this.state;
         const style = {
@@ -108,8 +141,8 @@ class QuestionAnswer extends Component {
             }
         }
         return (
-            <div className="ask-form" onSubmit={this.handleSubmit}>
-                <form className="container">
+            <div className="ask-form" >
+                <form className="container" onSubmit={this.handleSubmit}>
                     <div className="input-group mb-3">
                         <input name="qtitle" type="text" className="form-control" placeholder="Tiêu đề" onChange={this.handleOnchange} />
                         <div className="input-group-append">
@@ -139,7 +172,9 @@ class QuestionAnswer extends Component {
 
     renderLoadMoreButton = () => {
         const { loading } = this.state;
-        return (<button disabled={false} className="load-more-btn" onClick={this.loadMore}>
+        const arr = (Object.entries(this.props.questions).length === 0 && this.props.questions.constructor === Object) ? [] : this.props.questions[this.props.maKH];
+
+        return (this.state.visible > arr.length) ? null : (<button disabled={false} className="load-more-btn" onClick={this.loadMore}>
             {loading && (
                 <i className="fa fa-refresh fa-spin" style={{ marginRight: "5px" }} />
             )}
@@ -148,33 +183,23 @@ class QuestionAnswer extends Component {
         </button>)
     }
 
-    componentDidMount() {
-        this.props.getIdCourse(this.props.maKH);
-    }
-
     render() {
-
         return (
             <div className="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
                 {this.state.showform ? this.renderAskForm() : this.renderListQuetion()}
             </div>
         );
     }
-
-
 }
 const mapStateToProps = (state) => {
     return {
-        question: state.QuestionReducer.question
+        questions: state.QuestionReducer.questions
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         askQuestion: (question) => {
             dispatch(submitQuestionAction(question))
-        },
-        getIdCourse: (idcourse) => {
-            dispatch(getIDAction(idcourse))
         }
     }
 }

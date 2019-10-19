@@ -12,3 +12,10 @@ export const getIDAction = (idcourse) => {
         idcourse: idcourse
     }
 }
+
+export const submitAnswerAction = (answer) => {
+    return {
+        type: types.SUBMIT_A_ANSWER,
+        payload: answer,
+    }
+}

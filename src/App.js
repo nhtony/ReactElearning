@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import './App.scss';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PageNotFound from './common/PageNotFound';
 import AdminAuth from './authen/guard/AdminGuard';
 import LoginAdmin from './pages/admin/LoginAdmin';
@@ -23,10 +23,10 @@ function App() {
           <Route path={'/admin/login'} component={LoginAdmin}></Route>
           <AdminAuth path={'/admin'} Component={AdminTemplate}>
           </AdminAuth>
+          <Redirect from='/' to='/home' />
           <Route path="*" component={PageNotFound} />
         </Switch>
-      </Suspense>
-
+      </Suspense> 
     </BrowserRouter >
   );
 }
